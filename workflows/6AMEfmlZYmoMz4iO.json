@@ -1,0 +1,239 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "readUrl",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "extractAndSummarize": {
+      "main": [
+        [
+          {
+            "node": "translate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "translate": {
+      "main": [
+        [
+          {
+            "node": "storeArticle",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "readUrl": {
+      "main": [
+        [
+          {
+            "node": "extractAndSummarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-09-09T21:19:42.059Z",
+  "id": "6AMEfmlZYmoMz4iO",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "extract&summarize",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "39c3123f-7d10-4b7f-8d60-b7590322ef01",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        140,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://article-extractor-and-summarizer.p.rapidapi.com/summarize",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "url",
+              "value": "={{ $json.url }}"
+            },
+            {
+              "name": "lang",
+              "value": "en"
+            },
+            {
+              "name": "engine",
+              "value": "2"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-host",
+              "value": "article-extractor-and-summarizer.p.rapidapi.com"
+            },
+            {
+              "name": "x-rapidapi-key",
+              "value": "5fc944689fmshc8a838af0f22342p1489ecjsn37b075f5c4c3"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0724071a-e789-407f-bf62-0bf73ae0e4cf",
+      "name": "extractAndSummarize",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        580,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://microsoft-translator-text.p.rapidapi.com/translate",
+        "sendQuery": true,
+        "specifyQuery": "=keypair",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "api-version",
+              "value": "3.0"
+            },
+            {
+              "name": "profanityAction",
+              "value": "NoAction"
+            },
+            {
+              "name": "textType",
+              "value": "plain"
+            },
+            {
+              "name": "to",
+              "value": "es"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-host",
+              "value": "microsoft-translator-text.p.rapidapi.com"
+            },
+            {
+              "name": "x-rapidapi-key",
+              "value": "5fc944689fmshc8a838af0f22342p1489ecjsn37b075f5c4c3"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"Text\": \"{{$json.summary.replaceAll('\\n', '').replaceAll('-', '').replaceAll('\"', '')}}\"\n  }\n] ",
+        "options": {}
+      },
+      "id": "4aeb1277-a305-4df5-a685-856b37a2dc62",
+      "name": "translate",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        800,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "databaseId": 137650,
+        "tableId": 353319,
+        "returnAll": true,
+        "additionalOptions": {
+          "filters": {
+            "fields": [
+              {
+                "field": 2632251,
+                "operator": "empty"
+              }
+            ]
+          }
+        }
+      },
+      "id": "edd08f00-49be-4c27-998a-34bc299e3707",
+      "name": "readUrl",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        360,
+        360
+      ],
+      "credentials": {
+        "baserowApi": {
+          "id": "T6ikemrOmdHh9O44",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "databaseId": 137650,
+        "tableId": 353319,
+        "rowId": "={{ $('readUrl').item.json.id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": 2632209,
+              "fieldValue": "={{ $json.translations[0].text }}"
+            },
+            {
+              "fieldId": 2632251,
+              "fieldValue": "1"
+            }
+          ]
+        }
+      },
+      "id": "efc189ad-d3b6-440a-afdf-014f501f53f8",
+      "name": "storeArticle",
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        360
+      ],
+      "credentials": {
+        "baserowApi": {
+          "id": "T6ikemrOmdHh9O44",
+          "name": "Baserow account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-09-09T22:48:05.000Z",
+  "versionId": "e4c3da77-e37f-424e-af37-da0a5527a099"
+}
