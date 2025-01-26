@@ -1,0 +1,67 @@
+{
+  "active": false,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-09-19T21:56:01.154Z",
+  "id": "7l7XYSBcMEYlEgxq",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ErrorWorkflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5164d4a0-70e2-4238-807b-dcd32a69b394",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "535379164",
+        "text": "=¡Ha ocurrido un error con el workflow  {{ $json.workflow.name }}!\n\n🚨 Error: {{ $json.execution.error.message }}\n⏮️ Último nodo ejecutado: {{ $json.execution.lastNodeExecuted }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "1665d255-da9e-462d-b163-9b54fafa922f",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1040,
+        360
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "WoFc2ZrhyptngMoX",
+          "name": "WorkFlowErrorBot"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-10-09T20:37:25.000Z",
+  "versionId": "c90133e6-2b60-4a56-9fe8-17393738a55b"
+}
