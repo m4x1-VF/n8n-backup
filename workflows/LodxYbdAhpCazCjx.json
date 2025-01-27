@@ -1,0 +1,452 @@
+{
+  "active": false,
+  "connections": {
+    "getURLS": {
+      "main": [
+        [
+          {
+            "node": "isNotScraped",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "doNothingDone",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "scrapeURL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "scrapeURL": {
+      "main": [
+        [
+          {
+            "node": "createDoc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "updateRowScraped": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "isNotScraped": {
+      "main": [
+        [
+          {
+            "node": "Limit10",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "doNothingFalse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "getURLS",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "createDoc": {
+      "main": [
+        [
+          {
+            "node": "updateDoc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "updateDoc": {
+      "main": [
+        [
+          {
+            "node": "updateRowScraped",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit10": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-16T14:34:32.748Z",
+  "id": "LodxYbdAhpCazCjx",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "scrapeSitemap1",
+  "nodes": [
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1a81Uz-t92UMEvWiGDl3n2qafx1bOeoIOOnCKn_QObw4",
+          "mode": "list",
+          "cachedResultName": "sitemap1_opositatest",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a81Uz-t92UMEvWiGDl3n2qafx1bOeoIOOnCKn_QObw4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a81Uz-t92UMEvWiGDl3n2qafx1bOeoIOOnCKn_QObw4/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "473548ae-557d-49dd-907b-09f81d103d23",
+      "name": "getURLS",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        140,
+        320
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "PEKMfK7IJS1efHkk",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a9b937b6-0bd2-4f20-a14f-14bcf48bed86",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        840,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://r.jina.ai/{{ $json.URL }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Target-Selector",
+              "value": ".Post-content"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f8343719-79d7-4ae6-9666-05101c2fc07c",
+      "name": "scrapeURL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        360
+      ],
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1a81Uz-t92UMEvWiGDl3n2qafx1bOeoIOOnCKn_QObw4",
+          "mode": "list",
+          "cachedResultName": "sitemap1_opositatest",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a81Uz-t92UMEvWiGDl3n2qafx1bOeoIOOnCKn_QObw4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1a81Uz-t92UMEvWiGDl3n2qafx1bOeoIOOnCKn_QObw4/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "SCRAPED": "TRUE",
+            "row_number": "={{ $('Limit10').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "SCRAPED",
+              "displayName": "SCRAPED",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0678d320-97f0-49cd-8488-ad0e3fe28a1a",
+      "name": "updateRowScraped",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1800,
+        360
+      ],
+      "retryOnFail": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "PEKMfK7IJS1efHkk",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "c4c71898-f506-4346-bd07-9c803e4309ed",
+              "leftValue": "={{ $json.SCRAPED }}",
+              "rightValue": "FALSE",
+              "operator": {
+                "type": "boolean",
+                "operation": "false",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ae4fa90d-161a-4663-9219-fd97a8a6bc94",
+      "name": "isNotScraped",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.1,
+      "position": [
+        360,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "amount": 15
+      },
+      "id": "4aa5020a-72bb-4a69-b6d2-bcd4db70e3ff",
+      "name": "Wait",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2040,
+        360
+      ],
+      "webhookId": "cd1dd754-3551-4742-89d3-4a724f97c120"
+    },
+    {
+      "parameters": {},
+      "id": "d6ee5d21-17ae-4f2e-99d0-54e94bffe1f8",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "folderId": "1VXOcDt4_EDF6zT6Dfpl9oIaljtWdzY6b",
+        "title": "={{ $('Limit10').item.json.URL }}"
+      },
+      "id": "f515db5b-b398-469a-9a22-1f7b91456288",
+      "name": "createDoc",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        360
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "KrDkzMeZDuIuG3yE",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentURL": "={{ $json.id }}",
+        "actionsUi": {
+          "actionFields": [
+            {
+              "action": "insert",
+              "text": "={{ $('scrapeURL').item.json.data }}"
+            }
+          ]
+        }
+      },
+      "id": "1a4837a2-e647-4781-b125-0982c902d20d",
+      "name": "updateDoc",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        1560,
+        360
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "KrDkzMeZDuIuG3yE",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "f62d4eaf-66c7-4146-868d-730a6d0d1919",
+      "name": "doNothingFalse",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        600,
+        520
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "75a430be-e9fc-4852-b8f6-85b896595f28",
+      "name": "doNothingDone",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        180
+      ]
+    },
+    {
+      "parameters": {
+        "maxItems": 10
+      },
+      "id": "2a121ff8-2d9d-4aba-9cf4-18a62de246c3",
+      "name": "Limit10",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        600,
+        340
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Madrid",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7l7XYSBcMEYlEgxq"
+  },
+  "staticData": {
+    "node:triggerEveryDay23": {
+      "documentId": "1Q00AAhVeJykBOYPgZqnJcBW1gmo6cst942vcuThhdaY",
+      "sheetId": 0,
+      "lastRevision": 469,
+      "lastRevisionLink": "https://docs.google.com/spreadsheets/export?id=1Q00AAhVeJykBOYPgZqnJcBW1gmo6cst942vcuThhdaY&revision=469&exportFormat=xlsx"
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2024-10-08T22:05:26.316Z",
+      "updatedAt": "2024-10-08T22:05:26.316Z",
+      "id": "RaOXPmfs99jcWVk9",
+      "name": "scrape"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2024-10-16T14:49:58.000Z",
+  "versionId": "f55a0f30-aaca-4be0-9b48-f7302cf10387"
+}
