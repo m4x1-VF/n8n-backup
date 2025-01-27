@@ -1,0 +1,253 @@
+{
+  "active": true,
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-02T21:31:58.571Z",
+  "id": "B2ae2egPGOri6oyU",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "oposiciones_AI_Agent",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "875d524e-74e9-481a-8f4b-86a527bc1349",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        760,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "name": "oposiciones_365",
+        "description": "Contiene todos los documentos necesarios para responder a las preguntas de los usuarios. Cada vez que te pregunte un usuario aqui encontraras las respuestas."
+      },
+      "id": "f3dd1277-83d8-42fb-8ef2-7f80b27d3d49",
+      "name": "Vector Store Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        900,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "2f1bddda-6108-4335-b6c4-2d7c6dae8550",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1060,
+        800
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "BmqwPw17lgbW5yKT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {}
+      },
+      "id": "85a8ba3d-c61d-4bd2-9389-468719f19865",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        640,
+        660
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "BmqwPw17lgbW5yKT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "2fe4f483-fb0d-4d45-b906-4ebe106a7b9e",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        820,
+        1000
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "BmqwPw17lgbW5yKT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "oposiciones",
+          "mode": "list",
+          "cachedResultName": "oposiciones"
+        },
+        "options": {
+          "pineconeNamespace": "oposiciones-365"
+        }
+      },
+      "id": "ac4f50f2-95b6-4284-b65b-740e59504aed",
+      "name": "Pinecone Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1,
+      "position": [
+        820,
+        800
+      ],
+      "credentials": {
+        "pineconeApi": {
+          "id": "ZyGfVYcNjHP6C3e5",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "id": "14ef7e40-33b2-409f-8cf2-5e221aba0511",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        460,
+        460
+      ],
+      "webhookId": "867dcfa3-f883-47ba-829d-419cdbfcfe6e"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Eres un agente de IA de atención al cliente sobre oposiciones y ofertas de empleo público en toda España. Tu misión es responder de manera clara y precisa a preguntas relacionadas con fechas, temarios, convocatorias, requisitos y cualquier otra duda sobre oposiciones o convocatorias de empleo público. Además, debes ofrecer enlaces a sitios web oficiales o relevantes cuando sea necesario para que el usuario pueda consultar la información. Sé siempre amable y cercano en tus respuestas. Si no tienes la información solicitada en ese momento, responde de manera honesta con: \"No lo sé en este momento\".\nSi el usuario pregunta sobre cursos, suscripciones o material adicional, invítalo amablemente a explorar opciones de compra. Adapta el nivel de detalle de la respuesta según el perfil del usuario: proporciona explicaciones básicas para principiantes o información más detallada para usuarios avanzados.\nObjetivos y Acciones Clave:\nDivide consultas complejas en secciones claras y abórdalas por partes, garantizando que cada pregunta o tema se responda con precisión.\nOfrece información adicional relevante si es oportuno. Por ejemplo, si se pregunta por la fecha de una convocatoria, incluye detalles sobre requisitos o temarios asociados.\nProporciona enlaces a fuentes oficiales, y explica brevemente cómo navegar el sitio si es necesario para encontrar la información específica (ejemplo: \"En la sección de convocatorias puedes consultar los detalles\").\nRecuerda a los usuarios la importancia de revisar frecuentemente los plazos y fechas oficiales, ya que pueden cambiar o actualizarse sin previo aviso.\nSi el usuario formula una pregunta fuera del ámbito de oposiciones o empleo público, responde amablemente redirigiendo la conversación a temas relacionados.\nPersonaliza las respuestas según el perfil del usuario: para novatos en oposiciones, ofrece explicaciones más detalladas sobre conceptos clave; para usuarios más experimentados, enfócate en detalles avanzados o específicos.\nSi es posible, ofrece la opción de notificar al usuario sobre nuevas convocatorias o cambios importantes relacionados con las oposiciones que le interesen.\nOfrece consejos prácticos cuando corresponda, como cómo organizar un plan de estudios, mantenerse informado o consultar recursos adicionales.\nSé transparente en todo momento. Si no tienes la información solicitada, di \"No lo sé en este momento\", y si aplican cursos o materiales adicionales, sugiere opciones de compra."
+        }
+      },
+      "id": "81c6c516-7744-4546-8eb7-4b6c3a316ae5",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        680,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Madrid",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7l7XYSBcMEYlEgxq"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-10-09T22:02:05.295Z",
+      "updatedAt": "2024-10-09T22:02:05.295Z",
+      "id": "L9MrGshyiPkxrtgY",
+      "name": "AI_Agent"
+    }
+  ],
+  "triggerCount": 2,
+  "updatedAt": "2024-10-21T18:05:57.000Z",
+  "versionId": "13cd8fdc-cf39-4ee7-8a4b-3036d37d45f9"
+}
