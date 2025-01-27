@@ -126,17 +126,6 @@
         ]
       ]
     },
-    "Execute Workflow": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Schedule Trigger": {
       "main": [
         [
@@ -220,6 +209,17 @@
           },
           {
             "node": "Globals",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
             "type": "main",
             "index": 0
           }
@@ -671,7 +671,8 @@
         1820,
         746.1164603611751
       ],
-      "typeVersion": 1
+      "typeVersion": 1,
+      "onError": "continueRegularOutput"
     }
   ],
   "pinData": {},
@@ -698,6 +699,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-01-23T22:50:35.000Z",
-  "versionId": "386d9b08-24f3-45e4-8f98-f94e8d9ee2f2"
+  "updatedAt": "2025-01-27T21:48:24.000Z",
+  "versionId": "fddf3d95-9777-4df8-bc20-0fb0831e1495"
 }
