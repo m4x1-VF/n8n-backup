@@ -1,0 +1,593 @@
+{
+  "active": false,
+  "connections": {
+    "idCliente": {
+      "main": [
+        [
+          {
+            "node": "getCliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "searchFolderMonth": {
+      "main": [
+        [
+          {
+            "node": "deleteFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "urlUpdatedFactura": {
+      "main": [
+        [
+          {
+            "node": "sendUpdateFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "createUpdatedFactura": {
+      "main": [
+        [
+          {
+            "node": "uploadUpdatedFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getCliente": {
+      "main": [
+        [
+          {
+            "node": "searchFolderYear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "searchFolderYear": {
+      "main": [
+        [
+          {
+            "node": "searchFolderMonth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sendUpdateFactura": {
+      "main": [
+        [
+          {
+            "node": "checkSendMailUpdated",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "deleteFactura": {
+      "main": [
+        [
+          {
+            "node": "updateDataFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "updateFactura": {
+      "main": [
+        [
+          {
+            "node": "idCliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "uploadUpdatedFactura": {
+      "main": [
+        [
+          {
+            "node": "urlUpdatedFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "updateDataFactura": {
+      "main": [
+        [
+          {
+            "node": "createUpdatedFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-12-22T19:45:12.448Z",
+  "id": "QFV17cYNqPFH7lDh",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "templateId": "2314"
+  },
+  "name": "Actualizar factura",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "get",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $json.idCliente }}",
+          "mode": "id"
+        }
+      },
+      "id": "54a58edc-591d-4bcd-aae0-dca8af1272a7",
+      "name": "getCliente",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        60,
+        -780
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "EFqvCk0GvRvyndDm",
+          "name": "Notion account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb882f15-ac23-458a-9423-64466af9fb97",
+              "name": "idCliente",
+              "value": "={{ $json.properties.Cliente.relation[0].id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3e2d427c-5726-459e-8d99-84c0448a7102",
+      "name": "idCliente",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        -780
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=name = \"{{ new Date().toLocaleString('es-ES', { month: 'long' }) }}\"",
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1rcDSdXDx-FGznCoHjntc4OMOLe0ec2cn",
+            "mode": "list",
+            "cachedResultName": "2025",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1rcDSdXDx-FGznCoHjntc4OMOLe0ec2cn"
+          }
+        },
+        "options": {}
+      },
+      "id": "54ab1450-f941-44f5-8d05-812f213901b8",
+      "name": "searchFolderMonth",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -80,
+        -440
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$('getCliente').item.json.property_email}}",
+        "subject": "=Factura mes de {{ new Date()\n  .toLocaleString('es-ES', { month: 'long' }) }} actualizada",
+        "emailType": "text",
+        "message": "=Hola {{$('getCliente').item.json.name}}\nAqui tienes el enlace para poder descargar la factura actualizada del mes de {{ new Date()\n  .toLocaleString('es-ES', { month: 'long' }) }}.\nDescargar factura: {{ $('createUpdatedFactura').item.json.download_url }}\n\nUn saludo",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "0f7cac0b-95bd-4a64-adc8-b32b89f6770b",
+      "name": "sendUpdateFactura",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1260,
+        -680
+      ],
+      "webhookId": "b500ed95-232f-4b1d-b2ab-0663dd69bbe5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lQd3ZF7G7ysIPuaQ",
+          "name": "Gmail account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "205fbc3e-b33f-496b-8b86-136e1a79dfee",
+              "name": "fecha",
+              "value": "={{  new Date($('updateFactura').item.json.created_time).toLocaleDateString(\"es-ES\")  }}",
+              "type": "string"
+            },
+            {
+              "id": "50aac7f0-7fb2-4ead-a341-e9bfea91c08e",
+              "name": "numeroFactura",
+              "value": "={{ $('updateFactura').item.json.properties['Número de factura'].rich_text[0].plain_text }}",
+              "type": "string"
+            },
+            {
+              "id": "4898c8c9-eb51-4f5d-9e9b-79ef1825ab29",
+              "name": "cliente",
+              "value": "={{ $('getCliente').item.json.property_nombre + \" \" + $('getCliente').item.json.property_apellidos }}",
+              "type": "string"
+            },
+            {
+              "id": "f0690dcb-cafa-450b-b9a8-1cd08e315bef",
+              "name": "nif",
+              "value": "={{ $('getCliente').item.json.property_nif }}",
+              "type": "string"
+            },
+            {
+              "id": "2f84a3aa-4d3f-49ce-af3b-63b761c62aa9",
+              "name": "direccion",
+              "value": "={{$('getCliente').item.json.property_direcci_n}}",
+              "type": "string"
+            },
+            {
+              "id": "7b491c63-0dcc-471a-85eb-e7fdf96902ee",
+              "name": "cp",
+              "value": "={{$('getCliente').item.json.property_cp}}",
+              "type": "string"
+            },
+            {
+              "id": "98e09281-b25d-4cff-a631-b4e02aec3365",
+              "name": "ciudad",
+              "value": "={{$('getCliente').item.json.property_ciudad}}",
+              "type": "string"
+            },
+            {
+              "id": "d32d647b-2b44-4f05-8db0-660b1d5f9b03",
+              "name": "concepto",
+              "value": "={{ $('updateFactura').item.json.properties.Concepto.title[0].text.content }}",
+              "type": "string"
+            },
+            {
+              "id": "733ca7d7-7ae3-43fc-ae67-58b0d6c5f92d",
+              "name": "cantidad",
+              "value": "={{ $('updateFactura').item.json.properties.Cantidad.number }}",
+              "type": "number"
+            },
+            {
+              "id": "4e57985b-5369-4c8b-a96b-518aef854713",
+              "name": "precio",
+              "value": "={{ $('updateFactura').item.json.properties['Precio unitario'].number.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}",
+              "type": "string"
+            },
+            {
+              "id": "17b2db52-42ac-403a-8d81-5d1bcf792935",
+              "name": "conceptoTotal",
+              "value": "={{ $('updateFactura').item.json.properties.Total.formula.number.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}",
+              "type": "string"
+            },
+            {
+              "id": "3be4934d-01ca-4187-82f0-952f983acc39",
+              "name": "subtotal",
+              "value": "={{ $('updateFactura').item.json.properties.Total.formula.number.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}",
+              "type": "string"
+            },
+            {
+              "id": "04d57c0d-6e6b-46bd-a37a-45c613c7c971",
+              "name": "iva",
+              "value": "={{ $('updateFactura').item.json.properties.IVA.formula.number.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}",
+              "type": "string"
+            },
+            {
+              "id": "82f8c955-68ca-48fd-a222-e8473515cec9",
+              "name": "total",
+              "value": "={{ $('updateFactura').item.json.properties['Total factura'].formula.number.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a950ee6d-d477-4fec-a27a-f9b9ba796d2d",
+      "name": "updateDataFactura",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        280,
+        -780
+      ]
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=data",
+        "name": "={{ $('createUpdatedFactura').item.binary.data.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('searchFolderMonth').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "9b0777c5-2b62-4a5d-8186-1bca769712a5",
+      "name": "uploadUpdatedFactura",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        760,
+        -680
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('updateFactura').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Factura|url",
+              "ignoreIfEmpty": true,
+              "urlValue": "={{ $json.webContentLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bc41e5c7-d153-4c99-a9fe-7f004c413ab2",
+      "name": "urlUpdatedFactura",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1000,
+        -680
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "EFqvCk0GvRvyndDm",
+          "name": "Notion account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "pdf",
+        "pdfTemplateId": "1b877b23333c68f4",
+        "jsonParameters": true,
+        "download": true,
+        "propertiesJson": "={\n  \"fecha\": \"{{ $json.fecha }}\",\n  \"numeroFactura\": \"{{ $json.numeroFactura }}\",\n  \"cliente\": \"{{ $json.cliente }}\",\n  \"nif\": \"{{ $json.nif }}\",\n  \"direccion\": \"{{ $json.direccion }}\",\n  \"cp\": \"{{ $json.cp }}\",\n  \"ciudad\": \"{{ $json.ciudad }}\",\n  \"concepto\": \"{{ $json.concepto }}\",\n  \"cantidad\": \"{{ $json.cantidad }}\",\n  \"precio\": \"{{ $json.precio }}\",\n  \"conceptoTotal\": \"{{ $json.conceptoTotal }}\",\n  \"subtotal\": \"{{ $json.subtotal }}\",\n  \"iva\": \"{{ $json.iva }}\",\n  \"total\": \"{{ $json.total }}\"\n} ",
+        "options": {
+          "fileName": "={{ $json.numeroFactura + \"-\" + $json.cliente }}"
+        }
+      },
+      "id": "3bd3d5df-ae8a-4e4b-8beb-8a3408162ee5",
+      "name": "createUpdatedFactura",
+      "type": "n8n-nodes-base.apiTemplateIo",
+      "typeVersion": 1,
+      "position": [
+        520,
+        -780
+      ],
+      "credentials": {
+        "apiTemplateIoApi": {
+          "id": "ACWeYhEb3QlfpdDY",
+          "name": "APITemplate.io account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=name = \"{{ new Date().getFullYear() }}\"",
+        "limit": 1,
+        "filter": {
+          "folderId": {
+            "__rl": true,
+            "value": "1blxID37AfP5_TdJgjQ0OqKw0kWKM-PuN",
+            "mode": "list",
+            "cachedResultName": "Facturas",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1blxID37AfP5_TdJgjQ0OqKw0kWKM-PuN"
+          }
+        },
+        "options": {}
+      },
+      "id": "807a2997-813d-46e3-99d0-2665ef935cd2",
+      "name": "searchFolderYear",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -260,
+        -440
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('updateFactura').item.json.id }}",
+          "mode": "id"
+        },
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Envio mail act factura|checkbox",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b4680deb-e8b3-43c4-a557-5a039cdd5db7",
+      "name": "checkSendMailUpdated",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1500,
+        -680
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "EFqvCk0GvRvyndDm",
+          "name": "Notion account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteFile",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('updateFactura').item.json.properties.Factura.url.match(/id=([^&]+)/)[1] }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "f8d3f948-aa8e-4a6c-a82d-8503a98ea214",
+      "name": "deleteFactura",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        80,
+        -440
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyX",
+              "value": 3,
+              "unit": "minutes"
+            }
+          ]
+        },
+        "event": "pagedUpdatedInDatabase",
+        "databaseId": {
+          "__rl": true,
+          "value": "1683dd75-2f4e-80e5-9ac4-d1b209a529e8",
+          "mode": "list",
+          "cachedResultName": "Facturas",
+          "cachedResultUrl": "https://www.notion.so/1683dd752f4e80e59ac4d1b209a529e8"
+        },
+        "simple": false
+      },
+      "id": "1d8334ae-355b-4f5c-96e4-a0796d1cff29",
+      "name": "updateFactura",
+      "type": "n8n-nodes-base.notionTrigger",
+      "typeVersion": 1,
+      "position": [
+        -520,
+        -680
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "EFqvCk0GvRvyndDm",
+          "name": "Notion account Monica"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Madrid",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:Notion Trigger": {
+      "lastTimeChecked": "2024-12-14T00:09:00.000Z"
+    },
+    "node:getFactura": {
+      "lastTimeChecked": "2024-12-22T19:35:00.000Z",
+      "possibleDuplicates": [
+        "16485139-e001-802b-9c32-f564419591ad"
+      ]
+    },
+    "node:updateFactura": {
+      "lastTimeChecked": "2025-01-04T18:30:00.000Z",
+      "possibleDuplicates": [
+        "1713dd75-2f4e-80c3-8756-e44b59463ec7",
+        "1713dd75-2f4e-8009-84d2-ee676edcd267"
+      ]
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-04T18:33:33.000Z",
+  "versionId": "279b6aed-e881-4cbd-ab06-fe7567bd309d"
+}
