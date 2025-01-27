@@ -1,0 +1,124 @@
+{
+  "active": false,
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-23T22:18:32.141Z",
+  "id": "PMw7nR1ibI9AmcoU",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Api_Example",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "083cd87d-f38d-4062-b8a7-39088f6cacb3",
+              "name": "firstName",
+              "value": "Maximiliano",
+              "type": "string"
+            },
+            {
+              "id": "53996cec-7cad-4786-9b77-05918e2bf3cf",
+              "name": "lastName",
+              "value": "Vilariño",
+              "type": "string"
+            },
+            {
+              "id": "c66556d5-5835-457d-b5e3-8428ce1f1171",
+              "name": "age",
+              "value": "43",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fee48c78-3d77-4c1a-a520-96c08b9f6e47",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        560,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n\"firstName\": \"{{ $json.firstName }}\",\n\"lastName\": \"{{ $json.lastName }}\",\n\"age\": \"{{ $json.age }}\"\n}",
+        "options": {}
+      },
+      "id": "44000a8c-c9e8-4c70-a3ce-b7cdcdcc51ec",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        780,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "path": "34ca9d69-309e-4ab1-9899-60fbccd2d554",
+        "authentication": "basicAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "ed7f83fa-df71-45a3-bc3f-e71be0ea741d",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        340,
+        320
+      ],
+      "webhookId": "34ca9d69-309e-4ab1-9899-60fbccd2d554",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "hVHnvAZKJ7BbfvhU",
+          "name": "testCredential"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2024-10-23T22:28:38.878Z",
+      "updatedAt": "2024-10-23T22:28:38.878Z",
+      "id": "Ui7xRYBFAlN0ulWL",
+      "name": "api"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2024-10-24T10:20:00.000Z",
+  "versionId": "d5ad88c2-d4d8-4e1d-b83f-f415ab097777"
+}
