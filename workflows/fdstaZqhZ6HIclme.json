@@ -1,0 +1,187 @@
+{
+  "active": false,
+  "connections": {
+    "Set ChatInput": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webscraper Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Set ChatInput",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item List Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-09-24T20:52:44.721Z",
+  "id": "fdstaZqhZ6HIclme",
+  "meta": null,
+  "name": "AI Agente Chat",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a4243d4f-5be2-4071-878d-265973b24607",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1420,
+        340
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9695c156-c882-4e43-8a4e-70fbdc1a63de",
+              "name": "chatInput",
+              "type": "string",
+              "value": "Puedes obtener los últimos 10 incidencias en https://github.com/n8n-io/n8n/issues? "
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5380897e-285d-4709-90c7-a1fa89881d4e",
+      "name": "Set ChatInput",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1260,
+        160
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {},
+      "id": "6c7e70c6-bfcd-4133-8699-4fe8091a5fe1",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        1100,
+        160
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "toolDescription": "Call this tool to fetch a webpage content.",
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v0/scrape",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "parametersBody": {
+          "values": [
+            {
+              "name": "url"
+            },
+            {
+              "name": "pageOptions",
+              "valueProvider": "fieldValue",
+              "value": "={{ {\n  onlyMainContent: true,\n  replaceAllPathsWithAbsolutePaths: true,\n  removeTags: 'img,svg,video,audio'\n} }}"
+            }
+          ]
+        },
+        "optimizeResponse": true,
+        "dataField": "data",
+        "fieldsToInclude": "selected",
+        "fields": "markdown"
+      },
+      "id": "bc88ccb2-a949-4da5-8a8a-1c089c035f92",
+      "name": "Webscraper Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "position": [
+        1580,
+        360
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {
+          "separator": "\\n\\n"
+        }
+      },
+      "id": "d362a95e-e6ba-4f36-b17f-67a23b58b25b",
+      "name": "Item List Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserItemList",
+      "typeVersion": 1,
+      "position": [
+        1720,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "75fd84e8-d553-4dea-9c34-a1597b312a53",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1460,
+        160
+      ],
+      "typeVersion": 1.6
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2024-09-24T20:52:44.721Z",
+  "versionId": "d7790fef-9cf8-4f32-8a34-ce351ef207f5"
+}
