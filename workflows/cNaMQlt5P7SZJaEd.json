@@ -1,0 +1,228 @@
+{
+  "active": true,
+  "connections": {
+    "extractUrlPdf": {
+      "main": [
+        [
+          {
+            "node": "setUrlPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "setUrlPdf": {
+      "main": [
+        [
+          {
+            "node": "downloadPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "downloadPdf": {
+      "main": [
+        [
+          {
+            "node": "uploadPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "triggerEveryWeek": {
+      "main": [
+        [
+          {
+            "node": "extractUrlPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "extractUrlPdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-10-17T22:38:09.277Z",
+  "id": "cNaMQlt5P7SZJaEd",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Boletin Semanal de Empleo Publico",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer fc-a3bf2ccba0d64deabccb25ee9a2d691d"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"url\": \"https://administracion.gob.es/pag_Home/empleoPublico/boletin.html\",\n  \"formats\": [\n    \"extract\"\n  ],\n  \"extract\": {\n    \"prompt\": \"extrae la url de la etiqueta href del enlace con la clase 'boton-tarjeta' y title = 'Boletín empleo público' y devuelvemelo en un campo que se llame href\"\n  }\n}",
+        "options": {}
+      },
+      "id": "f139c5c3-d0a3-43a0-b1d8-04df763576cf",
+      "name": "extractUrlPdf",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        540,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "76dbcf2e-2052-4eeb-a8aa-9c40e1f81761",
+              "name": "href",
+              "value": "={{ $json.data.extract.href }}",
+              "type": "string"
+            },
+            {
+              "id": "c1c8bbe1-066b-4cd0-bf0c-4ea43b0fe1a6",
+              "name": "title",
+              "value": "={{ $json.data.metadata.keywords }}_{{$now}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "95d338e7-9816-46b1-b01b-1390323f531c",
+      "name": "setUrlPdf",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        760,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.href }}",
+        "options": {}
+      },
+      "id": "274d1555-4ff8-4fe3-988b-d6f9f6a1d0ed",
+      "name": "downloadPdf",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        980,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "name": "={{ $('setUrlPdf').item.json.title }}",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1ekvCcZp0OjfWdfVpvEagltp9d2h1ptRj",
+          "mode": "list",
+          "cachedResultName": "RAG_Archivos",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1ekvCcZp0OjfWdfVpvEagltp9d2h1ptRj"
+        },
+        "options": {}
+      },
+      "id": "2b84fa3c-4243-44af-91ad-8d714afe9a56",
+      "name": "uploadPdf",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1200,
+        360
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tffgympi1PA8yOJL",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "triggerAtDay": [
+                3
+              ],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "5e4147f9-33d0-4c3d-a6b6-e9ff34047938",
+      "name": "triggerEveryWeek",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        320,
+        360
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "7d337a1f-6f8a-434f-abe5-d4b6ba55efa7",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        320,
+        540
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Madrid",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": "7l7XYSBcMEYlEgxq"
+  },
+  "staticData": {
+    "node:triggerEveryWeek": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2024-10-17T22:39:14.730Z",
+      "updatedAt": "2024-10-17T22:39:14.730Z",
+      "id": "qZFaKukEdyLQxpcT",
+      "name": "empleo"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-22T09:30:36.000Z",
+  "versionId": "9d41321c-5e7a-4c39-bc12-a177b18730b7"
+}
