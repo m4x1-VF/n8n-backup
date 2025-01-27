@@ -162,6 +162,17 @@
           }
         ]
       ]
+    },
+    "DataFactura": {
+      "main": [
+        [
+          {
+            "node": "createFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2024-12-12T22:47:54.584Z",
@@ -732,6 +743,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-04T18:57:23.000Z",
-  "versionId": "99cb80fb-51cd-4ff9-9764-93ccf55d04d7"
+  "updatedAt": "2025-01-27T21:45:56.000Z",
+  "versionId": "f14f4e5e-44bb-443b-a6a7-32ef1ba3de52"
 }
