@@ -1,0 +1,466 @@
+{
+  "active": false,
+  "connections": {
+    "Perplexity": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Trigger": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Perplexity",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Experto en Twitter": {
+      "main": [
+        [
+          {
+            "node": "X",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Experto en Linkedin": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Experto en SEO": {
+      "main": [
+        [
+          {
+            "node": "Wordpress",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-09-08T21:09:08.665Z",
+  "id": "9TY2ps1oJFHKKVmg",
+  "meta": null,
+  "name": "Public in social media",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api-inference.huggingface.co/models/meta-llama/Llama-3.2-3B",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "inputs",
+              "value": "como hacer un buen prompt para un agente AI"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "19561b18-0f92-41be-ab8c-151bb6348478",
+      "name": "Perplexity",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        900,
+        700
+      ]
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.message.content }}",
+        "additionalFields": {}
+      },
+      "id": "e2e72334-7a79-4b49-a603-c974c5b1c8af",
+      "name": "X",
+      "type": "n8n-nodes-base.twitter",
+      "typeVersion": 2,
+      "position": [
+        1500,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "documentId": {
+          "__rl": true,
+          "value": "1_O6dEGqoVDQ2l581hFAKPZAUst4tFPHKcka8iHeljuA",
+          "mode": "list",
+          "cachedResultName": "Articles",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_O6dEGqoVDQ2l581hFAKPZAUst4tFPHKcka8iHeljuA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_O6dEGqoVDQ2l581hFAKPZAUst4tFPHKcka8iHeljuA/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "93917690-57cb-4414-807a-6e514614b19a",
+      "name": "Google Sheets Trigger",
+      "type": "n8n-nodes-base.googleSheetsTrigger",
+      "typeVersion": 1,
+      "position": [
+        80,
+        700
+      ],
+      "credentials": {
+        "googleSheetsTriggerOAuth2Api": {
+          "id": "STbhLhr33Ivt2Dgv",
+          "name": "Google Sheets Trigger account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "bbd5d48c-7976-4fd5-9065-e4b2df7ab05f",
+              "leftValue": "={{ $json.published }}",
+              "rightValue": "FALSE",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "24f62e5e-5875-4358-a3e0-e621f903b528",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        660,
+        720
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "c0ca6785-9c3a-414a-8ee6-bd6e318ddc96",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        400,
+        700
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "33a30d0b-935e-4a53-8a0c-f62e3e842a53",
+      "name": "No Operation, do nothing1",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        660,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-2024-08-06",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-2024-08-06"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Actúa como un gerente de redes sociales y genera una publicación de Linkedin. La publicación debe involucrar a la audiencia con una introducción atractiva, proporcionar detalles esenciales y fomentar la interacción a través de \"likes\", comentarios y retweets. Opcionalmente, Termina con un llamado a la acción claro invitando a unirte a mi comunidad de profesionales y expertos en IA y negocios online llamada VA360 en https://va360.pro. Incluye hashtags opcionales [#VA360, #BuildInPublic] y dentro del propio tweet. No incluyas ** y ni los hagas en negrita. Escribe siempre en primera persona. Si el resumen está en inglés u otro idioma tu siempre escribe en español en un tono distendido y amable pero cercano.\n\nAquí hay un resumen del artículo que quiero que readaptes: {{ $json.choices[0].message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8ee8fb2f-8264-4389-9870-4b50667baf68",
+      "name": "Experto en Linkedin",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        1180,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-2024-08-06",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-2024-08-06"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Actúa como un gerente de redes sociales y genera una publicación de Twitter. La publicación debe involucrar a la audiencia con una introducción atractiva, proporcionar detalles esenciales y fomentar la interacción a través de \"likes\", comentarios y retweets. Opcionalmente, Termina con un llamado a la acción claro invitando a unirte a mi comunidad de profesionales y expertos en IA y negocios online llamada VA360 en https://va360.pro. Incluye hashtags opcionales [#VA360, #BuildInPublic] y dentro del propio tweet. No incluyas ** y ni los hagas en negrita. Escribe siempre en primera persona. Si el resumen está en inglés u otro idioma tu siempre escribe en español en un tono distendido y amable pero cercano.\n\nAquí hay un resumen del artículo que quiero que readaptes: {{ $json.choices[0].message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a6936e09-baa5-4d86-9e25-de8ff6867eda",
+      "name": "Experto en Twitter",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        1180,
+        660
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-2024-08-06",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-2024-08-06"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Actúa como un gerente de redes sociales y genera una publicación orientada a SEO con más de 400 palabras. La publicación debe involucrar a la audiencia con una introducción atractiva, proporcionar detalles esenciales y fomentar la interacción a través de \"likes\", comentarios y retweets. Opcionalmente, Termina con un llamado a la acción claro invitando a unirte a mi comunidad de profesionales y expertos en IA y negocios online llamada VA360 en https://va360.pro. Incluye hashtags opcionales [#VA360, #BuildInPublic] y dentro del propio tweet. No incluyas ** y ni los hagas en negrita. Escribe siempre en primera persona. Si el resumen está en inglés u otro idioma tu siempre escribe en español en un tono distendido y amable pero cercano.\n\nAquí hay un resumen del artículo que quiero que readaptes: {{ $json.choices[0].message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a8d5b981-c793-4978-9b04-834722ab4f2d",
+      "name": "Experto en SEO",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        1180,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "a0d6e95e-e653-42f9-999d-714159d6de68",
+      "name": "LinkedIn",
+      "type": "n8n-nodes-base.linkedIn",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        540
+      ]
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "id": "8c31edbd-9d7d-40cc-be01-39458789a8b3",
+      "name": "Wordpress",
+      "type": "n8n-nodes-base.wordpress",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1_O6dEGqoVDQ2l581hFAKPZAUst4tFPHKcka8iHeljuA",
+          "mode": "list",
+          "cachedResultName": "Articles",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_O6dEGqoVDQ2l581hFAKPZAUst4tFPHKcka8iHeljuA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_O6dEGqoVDQ2l581hFAKPZAUst4tFPHKcka8iHeljuA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Google Sheets Trigger').item.json.ID }}",
+            "published": "TRUE",
+            "summarized": "={{ $json.generated_text }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Article",
+              "displayName": "Article",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "published",
+              "displayName": "published",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "summarized",
+              "displayName": "summarized",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "015e5e02-8741-4958-8811-a2f27aa62709",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1080,
+        940
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "PEKMfK7IJS1efHkk",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-01-27T21:43:31.000Z",
+  "versionId": "9cbb702d-a822-4319-99e5-6a2075b52b23"
+}
