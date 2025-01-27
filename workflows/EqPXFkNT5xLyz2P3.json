@@ -1,0 +1,208 @@
+{
+  "active": false,
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "OpenWeatherMap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenWeatherMap": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2024-09-06T18:53:19.730Z",
+  "id": "EqPXFkNT5xLyz2P3",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "WeatherTelegramBot",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "c0d51704-9ff8-4c79-ac98-b3b4540786cd",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        640,
+        400
+      ],
+      "webhookId": "95366173-5d56-427e-b6df-8501eb6521cd",
+      "credentials": {
+        "telegramApi": {
+          "id": "1HWOvyIDwApyzLdc",
+          "name": "Telegram_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=Ciudad: {{ $json[\"city\"] }}\nTiempo: {{ $json[\"description\"] }}\nTemperatura mínima: {{ $json[\"temp_min\"] }} \nTemperatura máxima: {{ $json[\"temp_max\"] }}\nHumedad: {{ $json[\"humidity\"] }}\nAmanecer: {{ $json[\"sunrise\"] }}\nPuesta del sol: {{ $json[\"sunset\"] }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "id": "71cb5592-9aff-4c5e-bc1b-02b149eabccb",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1680,
+        400
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "1HWOvyIDwApyzLdc",
+          "name": "Telegram_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "cityName": "={{ $json.message.text }}",
+        "language": "es"
+      },
+      "id": "10cd6f99-2294-4be6-887f-245f5ddb2bb8",
+      "name": "OpenWeatherMap",
+      "type": "n8n-nodes-base.openWeatherMap",
+      "typeVersion": 1,
+      "position": [
+        860,
+        400
+      ],
+      "credentials": {
+        "openWeatherMapApi": {
+          "id": "pNML7WhFZ6Nlehbi",
+          "name": "OpenWeatherMapAPI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "214697bd-4039-4828-9e15-d9c3d27bf8d4",
+              "name": "description",
+              "value": "={{ $json.weather[0].description }} {{ $('OpenWeatherMap').item.json.weather[0].description }}",
+              "type": "string"
+            },
+            {
+              "id": "d84f3d2c-409f-4244-8576-321602cd157d",
+              "name": "temp_min",
+              "value": "={{ Math.round($('OpenWeatherMap').item.json.main.temp_min )}}",
+              "type": "string"
+            },
+            {
+              "id": "92ade55a-2a4d-47ef-aa99-551aefda0129",
+              "name": "temp_max",
+              "value": "={{ $('OpenWeatherMap').item.json.main.temp_max }}",
+              "type": "string"
+            },
+            {
+              "id": "878e3e88-42f3-44ba-818b-77bb464bbc64",
+              "name": "humidity",
+              "value": "={{ $('OpenWeatherMap').item.json.main.humidity }}",
+              "type": "string"
+            },
+            {
+              "id": "bb975331-077a-4165-a6b3-cd2704744d0f",
+              "name": "sunrise",
+              "value": "={{ $json.sunrise }}",
+              "type": "string"
+            },
+            {
+              "id": "a6cb6659-ee2f-4497-aa31-c12c17b32a36",
+              "name": "sunset",
+              "value": "={{ $json.sunset }}",
+              "type": "string"
+            },
+            {
+              "id": "12b1487a-7a76-4a35-9312-cdd82150c404",
+              "name": "city",
+              "value": "={{ $('OpenWeatherMap').item.json.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "670be6c6-22e3-4278-9c4f-7c299deef685",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1380,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const formatTimeFromTimestamp = (timestampInSeconds) => {\n    const timestampInMilliseconds = timestampInSeconds * 1000;\n    const date = new Date(timestampInMilliseconds);\n    const hours = String(date.getHours()).padStart(2, '0');\n    const minutes = String(date.getMinutes()).padStart(2, '0');\n    const seconds = String(date.getSeconds()).padStart(2, '0');\n\n    return `${hours}:${minutes}:${seconds}`;\n};\nconst sunrise = formatTimeFromTimestamp($item(\"0\").$node[\"OpenWeatherMap\"].json[\"sys\"][\"sunrise\"] );\nconst sunset = formatTimeFromTimestamp($item(\"0\").$node[\"OpenWeatherMap\"].json[\"sys\"][\"sunset\"]);\nreturn [{\n        sunrise:sunrise,\n        sunset: sunset}];\n\n"
+      },
+      "id": "4e908d0c-2248-4f53-b41a-c62c5b67f6d6",
+      "name": "Code",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        400
+      ],
+      "alwaysOutputData": false
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Madrid",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2024-09-09T21:14:55.000Z",
+  "versionId": "92f9fb8f-3d7e-46e0-bc01-4203e793702a"
+}
