@@ -1,0 +1,826 @@
+{
+  "active": true,
+  "connections": {
+    "idCliente": {
+      "main": [
+        [
+          {
+            "node": "getCliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "searchFolderMonth": {
+      "main": [
+        [
+          {
+            "node": "ifMonthFolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "searchFolderYear": {
+      "main": [
+        [
+          {
+            "node": "ifYearFolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "createYearFolder": {
+      "main": [
+        [
+          {
+            "node": "searchFolderMonth",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ifYearFolder": {
+      "main": [
+        [
+          {
+            "node": "searchFolderMonth",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "createYearFolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ifMonthFolder": {
+      "main": [
+        [
+          {
+            "node": "DataFactura",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "createMonthFolder",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getCliente": {
+      "main": [
+        [
+          {
+            "node": "searchFolderYear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "createMonthFolder": {
+      "main": [
+        [
+          {
+            "node": "DataFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sendEmailFactura": {
+      "main": [
+        [
+          {
+            "node": "checkSendMail",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "getFacturas": {
+      "main": [
+        [
+          {
+            "node": "idCliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DataFactura": {
+      "main": [
+        [
+          {
+            "node": "createFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "getFacturas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "urlFactura": {
+      "main": [
+        [
+          {
+            "node": "sendEmailFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "uploadFactura": {
+      "main": [
+        [
+          {
+            "node": "urlFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "createFactura": {
+      "main": [
+        [
+          {
+            "node": "uploadFactura",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Trigger-Midnight": {
+      "main": [
+        [
+          {
+            "node": "getFacturas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-01-30T19:12:41.462Z",
+  "id": "Y2532WeZ8S4oHLkb",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "templateId": "2314"
+  },
+  "name": "Crear factura Monica",
+  "nodes": [
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "get",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $json.idCliente }}",
+          "mode": "id"
+        }
+      },
+      "id": "143b66bb-5b3b-47f6-86fc-22777d6c911e",
+      "name": "getCliente",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1000,
+        0
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "EFqvCk0GvRvyndDm",
+          "name": "Notion account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fb882f15-ac23-458a-9423-64466af9fb97",
+              "name": "idCliente",
+              "value": "={{ $json.property_cliente[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "745f7616-be39-46a8-8572-0958ab4ff693",
+      "name": "idCliente",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1240,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "inputDataFieldName": "=data",
+        "name": "={{ $('createFactura').item.binary.data.fileName }}",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('ifMonthFolder').item.json.id || $('createMonthFolder').item.json.id}}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "27171144-f7b9-4aff-b1b0-da60560af4f6",
+      "name": "uploadFactura",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        900,
+        -40
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('getFacturas').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Factura|url",
+              "urlValue": "={{ $json.webViewLink }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "75f2c1ba-aa5f-450c-b421-8a9bf2b3b5d7",
+      "name": "urlFactura",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        -40
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "EFqvCk0GvRvyndDm",
+          "name": "Notion account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ new Date().toLocaleString('es-ES', { month: 'long' }) }}",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "={{ $('searchFolderYear').item.json.id || $('createYearFolder').item.json.id }}",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "decd026a-863e-4140-94dc-e42533e07252",
+      "name": "createMonthFolder",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        240,
+        120
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "205fbc3e-b33f-496b-8b86-136e1a79dfee",
+              "name": "fecha",
+              "value": "=  {{ new Date($('getFacturas').item.json.property_fecha_de_emisi_n.start).toLocaleDateString(\"es-ES\")}}",
+              "type": "string"
+            },
+            {
+              "id": "50aac7f0-7fb2-4ead-a341-e9bfea91c08e",
+              "name": "numeroFactura",
+              "value": "={{ $('getFacturas').item.json.property_n_mero_de_factura }}",
+              "type": "string"
+            },
+            {
+              "id": "4898c8c9-eb51-4f5d-9e9b-79ef1825ab29",
+              "name": "cliente",
+              "value": "={{ $('getCliente').item.json.property_nombre + \" \" + $('getCliente').item.json.property_apellidos }}",
+              "type": "string"
+            },
+            {
+              "id": "f0690dcb-cafa-450b-b9a8-1cd08e315bef",
+              "name": "nif",
+              "value": "={{ $('getCliente').item.json.property_nif }}",
+              "type": "string"
+            },
+            {
+              "id": "2f84a3aa-4d3f-49ce-af3b-63b761c62aa9",
+              "name": "direccion",
+              "value": "={{$('getCliente').item.json.property_direcci_n}}",
+              "type": "string"
+            },
+            {
+              "id": "7b491c63-0dcc-471a-85eb-e7fdf96902ee",
+              "name": "cp",
+              "value": "={{$('getCliente').item.json.property_cp}}",
+              "type": "string"
+            },
+            {
+              "id": "98e09281-b25d-4cff-a631-b4e02aec3365",
+              "name": "ciudad",
+              "value": "={{$('getCliente').item.json.property_ciudad}}",
+              "type": "string"
+            },
+            {
+              "id": "d32d647b-2b44-4f05-8db0-660b1d5f9b03",
+              "name": "concepto",
+              "value": "={{ $('getFacturas').item.json.property_concepto }}",
+              "type": "string"
+            },
+            {
+              "id": "733ca7d7-7ae3-43fc-ae67-58b0d6c5f92d",
+              "name": "cantidad",
+              "value": "={{ $('getFacturas').item.json.property_cantidad}}",
+              "type": "number"
+            },
+            {
+              "id": "4e57985b-5369-4c8b-a96b-518aef854713",
+              "name": "precio",
+              "value": "={{ $('getFacturas').item.json.property_precio_unitario.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}",
+              "type": "string"
+            },
+            {
+              "id": "17b2db52-42ac-403a-8d81-5d1bcf792935",
+              "name": "conceptoTotal",
+              "value": "={{ $('getFacturas').item.json.property_total.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}}",
+              "type": "string"
+            },
+            {
+              "id": "3be4934d-01ca-4187-82f0-952f983acc39",
+              "name": "subtotal",
+              "value": "={{ $('getFacturas').item.json.property_total.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}}",
+              "type": "string"
+            },
+            {
+              "id": "04d57c0d-6e6b-46bd-a37a-45c613c7c971",
+              "name": "iva",
+              "value": "={{ $('getFacturas').item.json.property_iva.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}",
+              "type": "string"
+            },
+            {
+              "id": "82f8c955-68ca-48fd-a222-e8473515cec9",
+              "name": "total",
+              "value": "={{ $('getFacturas').item.json.property_total_factura.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f5209dd7-765c-435c-bdf0-779ef7dc1e39",
+      "name": "DataFactura",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        420,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "pdf",
+        "pdfTemplateId": "1b877b23333c68f4",
+        "jsonParameters": true,
+        "download": true,
+        "propertiesJson": "={\n  \"fecha\": \"{{ $json.fecha }}\",\n  \"numeroFactura\": \"{{ $json.numeroFactura }}\",\n  \"cliente\": \"{{ $json.cliente }}\",\n  \"nif\": \"{{ $json.nif }}\",\n  \"direccion\": \"{{ $json.direccion }}\",\n  \"cp\": \"{{ $json.cp }}\",\n  \"ciudad\": \"{{ $json.ciudad }}\",\n  \"concepto\": \"{{ $json.concepto }}\",\n  \"cantidad\": \"{{ $json.cantidad }}\",\n  \"precio\": \"{{ $json.precio }}\",\n  \"conceptoTotal\": \"{{ $json.conceptoTotal }}\",\n  \"subtotal\": \"{{ $json.subtotal }}\",\n  \"iva\": \"{{ $json.iva }}\",\n  \"total\": \"{{ $json.total }}\"\n} ",
+        "options": {
+          "fileName": "={{ $json.numeroFactura + \"-\" + $json.cliente }}"
+        }
+      },
+      "id": "250ccad9-35dc-463a-92ca-37248193cb45",
+      "name": "createFactura",
+      "type": "n8n-nodes-base.apiTemplateIo",
+      "typeVersion": 1,
+      "position": [
+        660,
+        -40
+      ],
+      "credentials": {
+        "apiTemplateIoApi": {
+          "id": "ACWeYhEb3QlfpdDY",
+          "name": "APITemplate.io account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=name = '{{ new Date().toLocaleString(\"es-ES\", { month: \"long\" }) }}' and mimeType = 'application/vnd.google-apps.folder'",
+        "filter": {
+          "driveId": {
+            "__rl": true,
+            "value": "My Drive",
+            "mode": "list",
+            "cachedResultName": "My Drive",
+            "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "={{ $('searchFolderYear').item.json.id }}",
+            "mode": "id"
+          },
+          "whatToSearch": "folders"
+        },
+        "options": {}
+      },
+      "id": "6ee6d0be-ba61-4be8-bd26-901f0ae87af0",
+      "name": "searchFolderMonth",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -220,
+        -20
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "fileFolder",
+        "searchMethod": "query",
+        "queryString": "=name = '{{ new Date().getFullYear().toString() }}' and mimeType = 'application/vnd.google-apps.folder'",
+        "filter": {
+          "driveId": {
+            "__rl": true,
+            "value": "My Drive",
+            "mode": "list",
+            "cachedResultName": "My Drive",
+            "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+          },
+          "folderId": {
+            "__rl": true,
+            "value": "1XBkF7LD6Newm7y786nbACNrTOg3Sj5Px",
+            "mode": "list",
+            "cachedResultName": "Facturas",
+            "cachedResultUrl": "https://drive.google.com/drive/folders/1XBkF7LD6Newm7y786nbACNrTOg3Sj5Px"
+          }
+        },
+        "options": {}
+      },
+      "id": "398b65bc-ce8d-45e3-b30b-91c9a2122ecb",
+      "name": "searchFolderYear",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -780,
+        0
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "folder",
+        "name": "={{ new Date().getFullYear() }}",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1XBkF7LD6Newm7y786nbACNrTOg3Sj5Px",
+          "mode": "list",
+          "cachedResultName": "Facturas",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1XBkF7LD6Newm7y786nbACNrTOg3Sj5Px"
+        },
+        "options": {}
+      },
+      "id": "baa5dad0-2d27-4251-9aad-511c04da5bad",
+      "name": "createYearFolder",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -380,
+        120
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "Ot0qcsaZbHJafOC2",
+          "name": "Google Drive account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "403f55fd-8e55-4c8c-af57-3b1bb7090f74",
+              "leftValue": "={{ $('searchFolderYear').item.json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "959afc91-057d-4c6a-ac65-304f37064cc2",
+      "name": "ifYearFolder",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -560,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "403f55fd-8e55-4c8c-af57-3b1bb7090f74",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "495a0c7b-6fa0-405c-94f9-43d890f78b76",
+      "name": "ifMonthFolder",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        40,
+        -20
+      ]
+    },
+    {
+      "parameters": {
+        "sendTo": "={{$('getCliente').item.json.property_email}}",
+        "subject": "=Factura mes de {{ \n  new Date(new Date().setMonth(new Date().getMonth() - 1))\n    .toLocaleString('es-ES', { month: 'long' })\n}}\n",
+        "emailType": "text",
+        "message": "=Hola {{ $('getCliente').item.json.name }}\nAqui tienes el enlace para poder descargar la factura del mes de {{ \n  new Date(new Date().setMonth(new Date().getMonth() - 1))\n    .toLocaleString('es-ES', { month: 'long' })\n}}.\nDescargar factura: {{ $('createFactura').item.json.download_url }}\n\nUn saludo",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "ed7bc507-2855-4d7b-8872-d9060f043158",
+      "name": "sendEmailFactura",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1340,
+        -40
+      ],
+      "webhookId": "1b2aa496-499c-440b-bede-1a051b653573",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "lQd3ZF7G7ysIPuaQ",
+          "name": "Gmail account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "update",
+        "pageId": {
+          "__rl": true,
+          "value": "={{ $('getFacturas').item.json.id }}",
+          "mode": "id"
+        },
+        "simple": false,
+        "propertiesUi": {
+          "propertyValues": [
+            {
+              "key": "Envio mail factura|checkbox",
+              "checkboxValue": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b0e3e44a-eb03-4d7d-a216-95047a58b327",
+      "name": "checkSendMail",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        1560,
+        -40
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "EFqvCk0GvRvyndDm",
+          "name": "Notion account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "databasePage",
+        "operation": "getAll",
+        "databaseId": {
+          "__rl": true,
+          "value": "1683dd75-2f4e-80e5-9ac4-d1b209a529e8",
+          "mode": "list",
+          "cachedResultName": "Facturas",
+          "cachedResultUrl": "https://www.notion.so/1683dd752f4e80e59ac4d1b209a529e8"
+        },
+        "returnAll": true,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "key": "=Envio mail factura|checkbox",
+              "condition": "equals"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "08faf637-2ed0-4c5d-b1a2-cf125cc5760d",
+      "name": "getFacturas",
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 2.2,
+      "position": [
+        -1480,
+        0
+      ],
+      "credentials": {
+        "notionApi": {
+          "id": "EFqvCk0GvRvyndDm",
+          "name": "Notion account Monica"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "c20f483c-cf94-4256-bf03-14e7fa253489",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1760,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "id": "2b613581-b70d-4404-931c-759fb5e8eaf3",
+      "name": "Trigger-Midnight",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1760,
+        200
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Europe/Madrid",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": {
+    "node:Notion Trigger": {
+      "lastTimeChecked": "2024-12-14T00:09:00.000Z"
+    },
+    "node:getFactura": {
+      "lastTimeChecked": "2025-01-04T18:30:00.000Z",
+      "possibleDuplicates": [
+        "1713dd75-2f4e-80c3-8756-e44b59463ec7",
+        "1713dd75-2f4e-8009-84d2-ee676edcd267"
+      ]
+    },
+    "node:updateFactura": {
+      "lastTimeChecked": "2024-12-22T19:39:00.000Z",
+      "possibleDuplicates": [
+        "16485139-e001-802b-9c32-f564419591ad"
+      ]
+    },
+    "node:Trigger-Midnight": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [
+    {
+      "createdAt": "2025-01-30T19:12:39.156Z",
+      "updatedAt": "2025-01-30T19:12:39.156Z",
+      "id": "BZ1U3F42uulpXbrh",
+      "name": "monica"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-01-30T19:55:51.000Z",
+  "versionId": "6bf3826c-81f9-4b91-b252-ca45def0cc8b"
+}
