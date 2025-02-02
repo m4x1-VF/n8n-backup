@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "idCliente": {
       "main": [
@@ -805,6 +805,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-16T07:36:09.000Z",
+  "updatedAt": "2025-01-30T19:46:05.000Z",
   "versionId": "c0f02ebf-7621-440b-a659-a01c3d3cf320"
 }
