@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "idCliente": {
       "main": [
@@ -256,7 +256,7 @@
     {
       "parameters": {
         "sendTo": "={{$('getCliente').item.json.property_email}}",
-        "subject": "=Factura mes de {{ new Date()\n  .toLocaleString('es-ES', { month: 'long' }) }} actualizada",
+        "subject": "=Factura mes de {{ \n  new Date(new Date().setMonth(new Date().getMonth() - 1))\n    .toLocaleString('es-ES', { month: 'long' })\n}} actualizada",
         "emailType": "text",
         "message": "=Hola {{$('getCliente').item.json.name}}\nAqui tienes el enlace para poder descargar la factura actualizada del mes de {{ \n  new Date(new Date().setMonth(new Date().getMonth() - 1))\n    .toLocaleString('es-ES', { month: 'long' })\n}}.\nDescargar factura: {{ $('createUpdatedFactura').item.json.download_url }}\n\nUn saludo",
         "options": {
@@ -714,6 +714,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-25T12:30:17.000Z",
-  "versionId": "5f020cf7-9b75-48a2-9a83-302641ce4c8b"
+  "updatedAt": "2025-01-30T19:45:59.000Z",
+  "versionId": "cb3c0ad5-4f9e-406c-8574-edd30c6eaa9d"
 }
