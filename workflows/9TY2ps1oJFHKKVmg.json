@@ -70,17 +70,6 @@
         ]
       ]
     },
-    "Experto en Linkedin": {
-      "main": [
-        [
-          {
-            "node": "LinkedIn",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Experto en SEO": {
       "main": [
         [
@@ -97,6 +86,17 @@
         [
           {
             "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Experto en Linkedin": {
+      "main": [
+        [
+          {
+            "node": "LinkedIn",
             "type": "main",
             "index": 0
           }
@@ -250,32 +250,6 @@
       "typeVersion": 1,
       "position": [
         660,
-        540
-      ]
-    },
-    {
-      "parameters": {
-        "modelId": {
-          "__rl": true,
-          "value": "gpt-4o-2024-08-06",
-          "mode": "list",
-          "cachedResultName": "GPT-4O-2024-08-06"
-        },
-        "messages": {
-          "values": [
-            {
-              "content": "=Actúa como un gerente de redes sociales y genera una publicación de Linkedin. La publicación debe involucrar a la audiencia con una introducción atractiva, proporcionar detalles esenciales y fomentar la interacción a través de \"likes\", comentarios y retweets. Opcionalmente, Termina con un llamado a la acción claro invitando a unirte a mi comunidad de profesionales y expertos en IA y negocios online llamada VA360 en https://va360.pro. Incluye hashtags opcionales [#VA360, #BuildInPublic] y dentro del propio tweet. No incluyas ** y ni los hagas en negrita. Escribe siempre en primera persona. Si el resumen está en inglés u otro idioma tu siempre escribe en español en un tono distendido y amable pero cercano.\n\nAquí hay un resumen del artículo que quiero que readaptes: {{ $json.choices[0].message.content }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "8ee8fb2f-8264-4389-9870-4b50667baf68",
-      "name": "Experto en Linkedin",
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.4,
-      "position": [
-        1180,
         540
       ]
     },
@@ -452,6 +426,38 @@
           "name": "Google Sheets account"
         }
       }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o-2024-08-06",
+          "mode": "list",
+          "cachedResultName": "GPT-4O-2024-08-06"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Actúa como un gerente de redes sociales y genera una publicación de Linkedin. La publicación debe involucrar a la audiencia con una introducción atractiva, proporcionar detalles esenciales y fomentar la interacción a través de \"likes\", comentarios y retweets. Opcionalmente, Termina con un llamado a la acción claro invitando a unirte a mi comunidad de profesionales y expertos en IA y negocios online llamada VA360 en https://va360.pro. Incluye hashtags opcionales [#VA360, #BuildInPublic] y dentro del propio tweet. No incluyas ** y ni los hagas en negrita. Escribe siempre en primera persona. Si el resumen está en inglés u otro idioma tu siempre escribe en español en un tono distendido y amable pero cercano.\n\nAquí hay un resumen del artículo que quiero que readaptes: {{ $json.choices[0].message.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8ee8fb2f-8264-4389-9870-4b50667baf68",
+      "name": "Experto en Linkedin",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.4,
+      "position": [
+        1180,
+        540
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "BmqwPw17lgbW5yKT",
+          "name": "OpenAi account"
+        }
+      }
     }
   ],
   "pinData": {},
@@ -461,6 +467,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-01-27T21:43:31.000Z",
-  "versionId": "9cbb702d-a822-4319-99e5-6a2075b52b23"
+  "updatedAt": "2025-02-08T23:05:13.000Z",
+  "versionId": "713a1528-f7fc-496c-a0df-1a20a01f005a"
 }
