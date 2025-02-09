@@ -593,6 +593,17 @@
           "cachedResultUrl": "https://www.notion.so/15585139e00180c8a396fdd24488fd6e"
         },
         "returnAll": true,
+        "filterType": "manual",
+        "matchType": "allFilters",
+        "filters": {
+          "conditions": [
+            {
+              "key": "Actualizada|checkbox",
+              "condition": "equals",
+              "checkboxValue": true
+            }
+          ]
+        },
         "options": {}
       },
       "id": "974633f7-68d4-4205-b4a1-f41637aecf75",
@@ -714,6 +725,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-30T19:45:59.000Z",
-  "versionId": "cb3c0ad5-4f9e-406c-8574-edd30c6eaa9d"
+  "updatedAt": "2025-02-03T19:06:32.000Z",
+  "versionId": "09f6133e-4d0e-4861-819b-9c0b98337c94"
 }
