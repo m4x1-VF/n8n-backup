@@ -1,0 +1,448 @@
+{
+  "active": false,
+  "connections": {
+    "Extraer Link": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Extraer Link",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Translate-text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Translate-text": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-02-02T21:26:21.709Z",
+  "id": "Etbn4yqSGti2MGqL",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "YouTube Video Summarizer GPT AI",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Youtube Guión MDZ",
+        "formDescription": "Creador de contenido para Youtube.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Ingrese la URL",
+              "placeholder": "https://www.youtube.com/",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -760,
+        580
+      ],
+      "id": "62fe561c-9d34-46f7-85eb-80ef211edd13",
+      "name": "On form submission",
+      "webhookId": "51d65eb7-6327-4630-9eb3-87daf3a743b4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a2857bd5-76e7-4db5-ac53-86ad4ee37445",
+              "name": "link_youtube",
+              "value": "={{ $json['Ingrese la URL'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -540,
+        580
+      ],
+      "id": "bfdb832f-86df-415f-97a6-6ea40439ce4b",
+      "name": "Extraer Link"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Obtener la URL desde los datos entrantes\nconst url = $json.link_youtube;\n\n// Función para extraer el ID del video de YouTube\nfunction getYouTubeVideoID(url) {\n    const regex = /[?&]v=([a-zA-Z0-9_-]{11})/;\n    const match = url.match(regex);\n    return match ? match[1] : null;\n}\n\n// Extraer el ID del video\nconst videoID = getYouTubeVideoID(url);\n\n// Devolver el ID como resultado\nreturn { videoID };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -360,
+        580
+      ],
+      "id": "f036594c-9163-4578-aecc-a002aa62741b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "url": "https://youtube-video-summarizer-gpt-ai.p.rapidapi.com/api/v1/get-transcript-v2",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "video_id",
+              "value": "={{ $json.videoID }}"
+            },
+            {
+              "name": "platform",
+              "value": "youtube"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "5fc944689fmshc8a838af0f22342p1489ecjsn37b075f5c4c3"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "youtube-video-summarizer-gpt-ai.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -180,
+        580
+      ],
+      "id": "dae8c0a9-175d-4ce0-b398-b2af3e515b3f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Initialize an empty string to hold the concatenated transcript\nlet combinedTranscript = \"\";\n\n// Safeguard against undefined paths and ensure required properties exist\nif (\n    $json.data &&\n    $json.data.transcripts &&\n    $json.data.transcripts.es_auto && // Cambiado de en_auto_auto a es_auto_auto\n    $json.data.transcripts.es_auto.custom\n) {\n    // Access the 'custom' array\n    const customArray = $json.data.transcripts.es_auto.custom;\n\n    // Loop through the 'custom' array to extract and append the 'text' property\n    for (const item of customArray) {\n        if (item.text) {\n            combinedTranscript += item.text + \" \"; // Add a space between texts\n        }\n    }\n}\n\n// Return the combined transcript as a new field\nreturn {\n    json: {\n        combinedTranscript: combinedTranscript.trim() // Clean extra spaces\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        700
+      ],
+      "id": "7224df0f-589c-4b17-a3d8-42820d843d0a",
+      "name": "Code1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "content": "### Youtube Transcript",
+        "height": 200,
+        "width": 920,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -580,
+        540
+      ],
+      "id": "93cc811e-d1b2-4bde-8c8d-11d35df320b0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1a54b1d-a2e6-4ade-b209-5b8f3550478e",
+              "name": "data.transcripts",
+              "value": "={{ $json.data.transcripts }}",
+              "type": "object"
+            },
+            {
+              "id": "d7da5e30-1090-4c67-a3e6-b7947a0a251e",
+              "name": "title",
+              "value": "={{ $json.data.videoInfo.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        580
+      ],
+      "id": "9264d62d-3fa6-45ed-9001-5fa3edd0abc3",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2a716f89-cd6b-432a-b8ac-4cf16efa8276",
+              "name": "transcript_final",
+              "value": "={{ $json.combinedTranscript || $json.trans}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        980,
+        560
+      ],
+      "id": "7657a883-277b-4e3f-8385-46e1568b4e26",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Initialize an empty string to hold the concatenated transcript\nlet combinedTranscript = \"\";\n\n// Safeguard against undefined paths and ensure required properties exist\nif (\n    $json.data &&\n    $json.data.transcripts &&\n    $json.data.transcripts.en_auto && // Cambiado de en_auto_auto a en_auto\n    $json.data.transcripts.en_auto.custom\n) {\n    // Access the 'custom' array\n    const customArray = $json.data.transcripts.en_auto.custom;\n\n    // Loop through the 'custom' array to extract and append the 'text' property\n    for (const item of customArray) {\n        if (item.text) {\n            combinedTranscript += item.text + \" \"; // Add a space between texts\n        }\n    }\n}\n\n// Return the combined transcript as a new field\nreturn {\n    json: {\n        combinedTranscript: combinedTranscript.trim() // Clean extra spaces\n    }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        460,
+        460
+      ],
+      "id": "34279bf6-80ea-4e6a-8495-6654defbb77f",
+      "name": "Code2",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ Object.keys($json.data.transcripts).includes(\"en_auto\") }}",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Ingles"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "49bc3338-e491-443f-b1b2-fb8d787d40b0",
+                    "leftValue": "={{ Object.keys($json.data.transcripts).includes(\"es_auto\") }}",
+                    "rightValue": "{\"es_auto\":",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Español"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        160,
+        580
+      ],
+      "id": "7dcabb8f-3ef6-4573-8653-6b9ebef028a2",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://google-translate113.p.rapidapi.com/api/v1/translator/text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-host",
+              "value": "google-translate113.p.rapidapi.com"
+            },
+            {
+              "name": "x-rapidapi-key",
+              "value": "5fc944689fmshc8a838af0f22342p1489ecjsn37b075f5c4c3"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "auto"
+            },
+            {
+              "name": "to",
+              "value": "es"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.combinedTranscript }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ce8d5ff9-d99e-42fa-a0f6-51b78234d487",
+      "name": "Translate-text",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        680,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-02-02T21:26:32.747Z",
+      "updatedAt": "2025-02-02T21:26:32.747Z",
+      "id": "jNSyMNOU2KoLc90J",
+      "name": "youTube"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-02-08T23:16:29.000Z",
+  "versionId": "95b507f6-256f-46ff-8162-696351a573fc"
+}
