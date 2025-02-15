@@ -1,0 +1,120 @@
+{
+  "active": true,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-02-13T12:57:57.258Z",
+  "id": "gaTJ1X8Ce03MH24X",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "DSG AI",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "mode": "webhook",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "38a40d8c-a8e1-4680-8802-73d519f11bbc",
+      "name": "When chat message received",
+      "webhookId": "49da6d60-cf53-49bb-b47c-8efa4877862f"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        220,
+        0
+      ],
+      "id": "6c0a2cc8-da16-43e2-9a2d-1620e72754d1",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-lite-preview-02-05:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        180,
+        220
+      ],
+      "id": "c27d37cb-3fd1-4058-91e1-dbc3ea9b21a4",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "aDdfkNGscmtesLt4",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        320,
+        220
+      ],
+      "id": "31dd94be-21d3-4004-8d85-3a13844c7395",
+      "name": "Window Buffer Memory"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 2,
+  "updatedAt": "2025-02-13T14:58:46.000Z",
+  "versionId": "62965b7e-d768-441a-bc77-d33a1e6f66de"
+}
