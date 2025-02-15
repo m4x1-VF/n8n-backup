@@ -79,7 +79,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "text": "=Ciudad: {{ $json[\"city\"] }}\nTiempo: {{ $json[\"description\"] }}\nTemperatura mínima: {{ $json[\"temp_min\"] }} \nTemperatura máxima: {{ $json[\"temp_max\"] }}\nHumedad: {{ $json[\"humidity\"] }}\nAmanecer: {{ $json[\"sunrise\"] }}\nPuesta del sol: {{ $json[\"sunset\"] }}",
+        "text": "=🌍 *Ciudad:* {{ $json[\"city\"] }}\n☁️ *Tiempo:* {{ $json[\"description\"] }}\n---\n🌡️ *Temperatura mínima:* {{ $json[\"temp_min\"] }}°C\n🔥 *Temperatura máxima:* {{ $json[\"temp_max\"] }}°C\n💧 *Humedad:* {{ $json[\"humidity\"] }}%\n---\n🌅 *Amanecer:* {{ $json[\"sunrise\"] }}\n🌆 *Puesta del sol:* {{ $json[\"sunset\"] }}",
         "additionalFields": {
           "appendAttribution": false
         }
@@ -201,8 +201,21 @@
     "callerPolicy": "workflowsFromSameOwner"
   },
   "staticData": null,
-  "tags": [],
+  "tags": [
+    {
+      "createdAt": "2025-02-12T14:53:46.726Z",
+      "updatedAt": "2025-02-12T14:53:46.726Z",
+      "id": "4ETeLxR0j9juWBGl",
+      "name": "bot"
+    },
+    {
+      "createdAt": "2025-02-12T14:53:37.338Z",
+      "updatedAt": "2025-02-12T14:53:37.338Z",
+      "id": "xi5uAEkMWzCnrGZS",
+      "name": "telegram"
+    }
+  ],
   "triggerCount": 1,
-  "updatedAt": "2024-09-09T21:14:55.000Z",
-  "versionId": "92f9fb8f-3d7e-46e0-bc01-4203e793702a"
+  "updatedAt": "2025-02-12T14:53:58.000Z",
+  "versionId": "59e17737-96bc-4b9f-bb38-b0cc2108f50c"
 }
