@@ -67,7 +67,7 @@
       "main": [
         [
           {
-            "node": "DataFactura",
+            "node": "getFacturas",
             "type": "main",
             "index": 0
           }
@@ -85,7 +85,7 @@
       "main": [
         [
           {
-            "node": "searchFolderYear",
+            "node": "DataFactura",
             "type": "main",
             "index": 0
           }
@@ -96,7 +96,7 @@
       "main": [
         [
           {
-            "node": "DataFactura",
+            "node": "getFacturas",
             "type": "main",
             "index": 0
           }
@@ -125,22 +125,11 @@
         ]
       ]
     },
-    "DataFactura": {
-      "main": [
-        [
-          {
-            "node": "createFactura",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "When clicking ‘Test workflow’": {
       "main": [
         [
           {
-            "node": "getFacturas",
+            "node": "searchFolderYear",
             "type": "main",
             "index": 0
           }
@@ -185,6 +174,17 @@
         [
           {
             "node": "getFacturas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DataFactura": {
+      "main": [
+        [
+          {
+            "node": "createFactura",
             "type": "main",
             "index": 0
           }
@@ -259,7 +259,7 @@
         },
         "folderId": {
           "__rl": true,
-          "value": "={{ $('ifMonthFolder').item.json.id || $('createMonthFolder').item.json.id}}",
+          "value": "={{ $('searchFolderMonth').item.json.id || $('createMonthFolder').item.json.id}}",
           "mode": "id"
         },
         "options": {}
@@ -269,8 +269,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        900,
-        -40
+        -60,
+        0
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -304,8 +304,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        1120,
-        -40
+        160,
+        0
       ],
       "credentials": {
         "notionApi": {
@@ -335,8 +335,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        240,
-        120
+        -240,
+        -280
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -442,8 +442,8 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        420,
-        -40
+        -680,
+        0
       ]
     },
     {
@@ -462,8 +462,8 @@
       "type": "n8n-nodes-base.apiTemplateIo",
       "typeVersion": 1,
       "position": [
-        660,
-        -40
+        -300,
+        0
       ],
       "credentials": {
         "apiTemplateIoApi": {
@@ -476,18 +476,14 @@
       "parameters": {
         "resource": "fileFolder",
         "searchMethod": "query",
-        "queryString": "=name = '{{ new Date().toLocaleString(\"es-ES\", { month: \"long\" }) }}' and mimeType = 'application/vnd.google-apps.folder'",
+        "queryString": "=name = '{{ new Date().toLocaleString(\"es-ES\", { month: \"long\" }) }}'\n",
+        "limit": 1,
         "filter": {
-          "driveId": {
-            "mode": "list",
-            "value": "My Drive"
-          },
           "folderId": {
             "__rl": true,
             "value": "={{ $('searchFolderYear').item.json.id }}",
             "mode": "id"
-          },
-          "whatToSearch": "folders"
+          }
         },
         "options": {}
       },
@@ -496,8 +492,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -220,
-        -20
+        -800,
+        -400
       ],
       "alwaysOutputData": true,
       "credentials": {
@@ -512,6 +508,7 @@
         "resource": "fileFolder",
         "searchMethod": "query",
         "queryString": "=name = '{{ new Date().getFullYear().toString() }}' and mimeType = 'application/vnd.google-apps.folder'",
+        "limit": 1,
         "filter": {
           "driveId": {
             "__rl": true,
@@ -535,8 +532,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -780,
-        0
+        -1560,
+        -380
       ],
       "alwaysOutputData": true,
       "credentials": {
@@ -569,8 +566,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -380,
-        120
+        -1040,
+        -260
       ],
       "credentials": {
         "googleDriveOAuth2Api": {
@@ -609,8 +606,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -560,
-        0
+        -1260,
+        -380
       ]
     },
     {
@@ -629,7 +626,7 @@
               "rightValue": "",
               "operator": {
                 "type": "string",
-                "operation": "exists",
+                "operation": "notEmpty",
                 "singleValue": true
               }
             }
@@ -643,8 +640,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        40,
-        -20
+        -500,
+        -400
       ]
     },
     {
@@ -662,8 +659,8 @@
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        1340,
-        -40
+        380,
+        0
       ],
       "webhookId": "8393b04c-b556-4d39-8d80-2163d5806a7c",
       "credentials": {
@@ -698,8 +695,8 @@
       "type": "n8n-nodes-base.notion",
       "typeVersion": 2.2,
       "position": [
-        1560,
-        -40
+        600,
+        0
       ],
       "credentials": {
         "notionApi": {
@@ -805,6 +802,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-01-30T19:46:05.000Z",
-  "versionId": "c0f02ebf-7621-440b-a659-a01c3d3cf320"
+  "updatedAt": "2025-02-10T11:53:05.000Z",
+  "versionId": "dc742b5f-9374-4831-b804-be4590e26e63"
 }
