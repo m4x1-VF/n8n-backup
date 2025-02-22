@@ -277,10 +277,10 @@
       "lastTimeChecked": "2024-11-12T13:00:46Z"
     },
     "node:triggerCreated": {
-      "lastTimeChecked": "2025-02-12T19:22:10Z"
+      "lastTimeChecked": "2025-02-19T13:00:00Z"
     },
     "node:triggerUpdated": {
-      "lastTimeChecked": "2025-02-12T19:22:10Z"
+      "lastTimeChecked": "2025-02-18T13:00:28Z"
     }
   },
   "tags": [
@@ -292,6 +292,6 @@
     }
   ],
   "triggerCount": 2,
-  "updatedAt": "2024-11-20T09:07:22.000Z",
+  "updatedAt": "2025-02-17T07:45:28.000Z",
   "versionId": "665d1e3e-ae91-4717-9582-79cf2a5bc02c"
 }
