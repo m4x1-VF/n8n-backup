@@ -1,0 +1,146 @@
+{
+  "active": false,
+  "connections": {
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-02-21T12:21:47.181Z",
+  "id": "Q1AuZcPuvv8VDpgZ",
+  "meta": null,
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -260,
+        -80
+      ],
+      "id": "2b39e725-e76e-45a5-8371-4f23fd1f8a15",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -40,
+        -80
+      ],
+      "id": "85c648fd-249c-4446-ab32-ad9ce09c3ef2",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "sourceData": "binary",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "data",
+              "cssSelector": "body",
+              "returnValue": "html"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        180,
+        -80
+      ],
+      "id": "1edab420-31c4-4395-9877-2774ca3318e7",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -80
+      ],
+      "id": "6fbab9bb-abe4-45c7-8d30-3520badcf275",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "data",
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -520,
+        -80
+      ],
+      "id": "c94ecbff-2be2-4ace-abb8-5c693966f97b",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {
+    "Edit Fields": [
+      {
+        "json": {
+          "assistant": "ESTO ES UNA PRUEBA Y QUE ESTÁ SUJETO A FALLOS.\n\nAquí tienes algunas opciones de pasamanería disponibles. Si necesitas más información sobre un producto específico, puedes hacer clic en el nombre para visitar la página de detalles.\n\n- PASAMANERÍA ROMBOS LENTEJUELA BEIGE P- 6,40 MT.\n- PASAMANERÍA CADENA ESPIGA-ORO\n- PASAMANERÍA CADENA FLECHAS 2CM - NEGRO\n- PASAMANERÍA CADENA FLECHAS 2CM - ORO\n- PASAMANERÍA CADENA FLECHAS 2CM - PLATA\n\nSi deseas conocer los precios, por favor visita la página web del producto haciendo clic en el título correspondiente."
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-02-21T13:28:31.000Z",
+  "versionId": "5bc19d12-84d2-46f4-b7fd-caa1ae3f65c8"
+}
