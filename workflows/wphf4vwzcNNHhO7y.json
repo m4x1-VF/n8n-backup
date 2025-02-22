@@ -1,0 +1,486 @@
+{
+  "active": false,
+  "connections": {
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Telegram1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI2": {
+      "main": [
+        [
+          {
+            "node": "Auto-detect and translate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram": {
+      "main": [
+        [
+          {
+            "node": "Translate image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram1": {
+      "main": [
+        [
+          {
+            "node": "OpenAI2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text to Speech": {
+      "main": [
+        [
+          {
+            "node": "Audio reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Translate image": {
+      "main": [
+        [
+          {
+            "node": "Text reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Auto-detect and translate",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Translate image",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Auto-detect and translate": {
+      "main": [
+        [
+          {
+            "node": "Text reply",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Text to Speech",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-02-21T23:21:49.280Z",
+  "id": "wphf4vwzcNNHhO7y",
+  "meta": null,
+  "name": "Traveler co-pilot",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "*",
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "d13540a2-4a3c-4bd6-83ca-9fb07dbfc803",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "position": [
+        560,
+        240
+      ],
+      "webhookId": "dc662a0e-5dbc-45ba-a3db-abf5307b2c94",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Translation : Speech to Text\n\n- Converts from speech to text.\n\n- Translates the language from the native language to translated language (as specified in settings node)\n\n",
+        "height": 586.6978417266175,
+        "width": 556.5162909529794,
+        "color": 7
+      },
+      "id": "f97b7539-b20e-47de-b226-08758152a4cf",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1520,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.text }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "93ca4acc-0dcf-48c9-bae4-879b05a1f32a",
+      "name": "Text reply",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        2500,
+        400
+      ],
+      "typeVersion": 1,
+      "webhookId": "abba9ce4-d0b8-459e-8dcd-48b8ff20e621"
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $('Telegram Trigger').item.json.message.voice.file_id }}"
+      },
+      "id": "fc02f65a-099e-401b-83e0-1864612c4a8c",
+      "name": "Telegram1",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1320,
+        220
+      ],
+      "typeVersion": 1.1,
+      "webhookId": "c612bcdb-8e26-43cd-9d80-73f3b22ee0f0"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "d7d93696-e2af-446e-8df5-372e64edd030",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        1800,
+        420
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Telegram output\n\n- Provide the output in both text as well as speech. \n\n- Many languages are supported including English,French, German, Spanish, Chinese, Japanese.\n\nFull list here:\nhttps://platform.openai.com/docs/guides/speech-to-text/supported-languages\n",
+        "height": 588.6885233117844,
+        "width": 585.8688089385912,
+        "color": 7
+      },
+      "id": "0146e0b8-f51b-4a87-b6c1-9eecbe1e67be",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2140,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Traveler co-pilot ⭐\n\n#### Unlocking Global Communication\nThe Traveler Co-Pilot empowers you to confidently traverse the world, connecting with ease and breaking language barriers:\n- Engage in conversations with locals\n- Navigate menus at foreign eateries\n- Comprehend road signs effortlessly. \n\n### Features\n1. Seamless Speech-to-Speech Translation: \nCommunicate in any of the 55 supported languages, and witness the bot translate your words into another language in real-time, all through speech.\n2. Visual Translation Magic: Capture images containing text, and the bot will work its magic by recognizing and translating the text into the desired language, right before your eyes.\n\n### Setup\n- Open the Settings node and specify the languages you would like to work with",
+        "height": 573.4892086330929,
+        "width": 489.00549958607303,
+        "color": 5
+      },
+      "id": "2e3e6ba0-6c4c-470e-838b-2cad9c1a5d65",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "501ac5cc-73e8-4e9c-bf91-df312aa9ff88",
+              "name": "language_native",
+              "type": "string",
+              "value": "english"
+            },
+            {
+              "id": "efb9a7b2-5baa-44cc-b94d-c8030f17e890",
+              "name": "language_translate",
+              "type": "string",
+              "value": "japanese"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9a783fdc-5a32-4292-a311-381fdcb9de4b",
+      "name": "Settings",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        800,
+        240
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Detect the language of the text that follows.  \n- If it is  {{ $('Settings').item.json.language_native }} translate to {{ $('Settings').item.json.language_translate }}.  \n- If it is in  {{ $('Settings').item.json.language_translate }} translate to {{ $('Settings').item.json.language_native }} .  \n- In the output just provide the translation and do not explain it.  Just provide the translation without anything else.\n\nText:\n {{ $json.text }}\n"
+      },
+      "id": "b527cee6-137a-485c-b1d5-45890bbbebe5",
+      "name": "Auto-detect and translate",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        1780,
+        220
+      ],
+      "typeVersion": 1.4
+    },
+    {
+      "parameters": {
+        "operation": "sendAudio",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "id": "631e26c3-c8db-41cd-b609-cf8d36186508",
+      "name": "Audio reply",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        2500,
+        220
+      ],
+      "typeVersion": 1.1,
+      "webhookId": "c9319185-6c8b-4d82-8ca5-702dbbab243f"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "id": "36cd3d36-97b5-4ffd-a7e9-0086f6941221",
+      "name": "OpenAI2",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        1580,
+        220
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "resource": "file",
+        "fileId": "={{ $('Telegram Trigger').item.json.message.photo[2].file_id }}"
+      },
+      "id": "6993b1a1-7f97-43dc-b166-116a694a8e53",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "position": [
+        1340,
+        860
+      ],
+      "typeVersion": 1.1,
+      "webhookId": "6897107e-429e-46af-915a-5781ef175728"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $('Telegram Trigger').item.json.message.voice.file_id }}",
+                    "rightValue": ""
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "leftValue": "",
+                  "caseSensitive": true,
+                  "typeValidation": "strict"
+                },
+                "combinator": "and",
+                "conditions": [
+                  {
+                    "id": "231a1d2d-3a48-4a77-9b9d-ea5b1f7ac201",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    },
+                    "leftValue": "={{ $('Telegram Trigger').item.json.message.photo[0].file_id }}",
+                    "rightValue": "="
+                  }
+                ]
+              },
+              "renameOutput": true,
+              "outputKey": "photo"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "511acd1d-812b-4f53-824c-84214aedb5db",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "position": [
+        1020,
+        240
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "model": "claude-3-haiku-20240307",
+        "options": {}
+      },
+      "id": "22b982da-c98e-4036-9d9a-45ae901e588f",
+      "name": "Anthropic Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "position": [
+        1800,
+        1040
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Please translate the image text into  {{ $('Settings').item.json.language_native }}.  Please add the text from original language alongside the translation",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary"
+            }
+          ]
+        }
+      },
+      "id": "84d6c6ee-4b24-4513-a719-125666a3827d",
+      "name": "Translate image",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        1780,
+        860
+      ],
+      "typeVersion": 1.4
+    },
+    {
+      "parameters": {
+        "content": "## Translation : Image to Text\n\n- Converts from image to text.\n\n- Translates the image to the native language (as specified in settings node)\n\n",
+        "height": 586.6978417266175,
+        "width": 556.5162909529794,
+        "color": 7
+      },
+      "id": "e307e918-d912-43d1-bdfa-4bbe068a61db",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1520,
+        620
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "input": "={{ $json.text }}",
+        "options": {}
+      },
+      "id": "e8d94104-ac6f-41f9-b4f1-9d7f6868eb8a",
+      "name": "Text to Speech",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "position": [
+        2280,
+        220
+      ],
+      "typeVersion": 1.3
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-02-21T23:21:49.280Z",
+  "versionId": "588d16cf-8baa-4db5-81dd-bda6e3d8dddc"
+}
