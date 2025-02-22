@@ -1,0 +1,302 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "OpenAI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI": {
+      "main": [
+        [
+          {
+            "node": "Summarization Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Summarization Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarization Chain": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "OpenAI1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI1": {
+      "main": [
+        [
+          {
+            "node": "Upload summarized audio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload summarized audio": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-02-16T18:31:18.342Z",
+  "id": "PmNzZ8gbXJK5pmSW",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Audio to summarization text to audio",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -980,
+        -60
+      ],
+      "id": "091d3a8c-14e6-4847-b525-ab42cdba2e03",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "https://drive.google.com/file/d/1uFg9FGRF-dnA7Z0OWsXA4VR9G3vHGptt/view?usp=sharing",
+          "mode": "url"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -800,
+        -60
+      ],
+      "id": "eadd97d0-8b1b-4239-a265-c77c70483a95",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tffgympi1PA8yOJL",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -600,
+        -60
+      ],
+      "id": "57c5f163-2908-4893-84f9-999781fa4b56",
+      "name": "OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "BmqwPw17lgbW5yKT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chunkSize": 4000,
+        "chunkOverlap": 400,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainSummarization",
+      "typeVersion": 2,
+      "position": [
+        -420,
+        -60
+      ],
+      "id": "b6df643d-905e-4099-b303-232d3c88a81c",
+      "name": "Summarization Chain"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-lite-preview-02-05:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        140
+      ],
+      "id": "c30ccc8c-b193-4529-b79a-d1eb5c6fc605",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "aDdfkNGscmtesLt4",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{$json.response.text}}",
+        "messages": {
+          "messageValues": [
+            {
+              "type": "HumanMessagePromptTemplate",
+              "message": "Translate to Spanish and return only the text"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.5,
+      "position": [
+        -60,
+        -60
+      ],
+      "id": "77150ddf-d3a6-477c-a146-d81d55c79218",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-lite-preview-02-05:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        140
+      ],
+      "id": "395814e0-0eb5-4ee5-b807-0f334927c4bc",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "aDdfkNGscmtesLt4",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "input": "={{$json.text}}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        300,
+        -60
+      ],
+      "id": "f3c47cf4-5c9e-4089-94d1-e3ae8b387e89",
+      "name": "OpenAI1",
+      "credentials": {
+        "openAiApi": {
+          "id": "BmqwPw17lgbW5yKT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "summarizeAudio",
+        "driveId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "My Drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1JsYkeCuvLKY201RSfqEWiinayblj0Cer",
+          "mode": "list",
+          "cachedResultName": "audios",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1JsYkeCuvLKY201RSfqEWiinayblj0Cer"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        480,
+        -60
+      ],
+      "id": "34e90949-1d7d-4839-9c20-b5f46f75ec41",
+      "name": "Upload summarized audio",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tffgympi1PA8yOJL",
+          "name": "Google Drive account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-02-21T09:36:39.000Z",
+  "versionId": "94f72f39-a55b-4adc-8877-91f575b98001"
+}
