@@ -121,6 +121,17 @@
           }
         ]
       ]
+    },
+    "Google Drive Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-02-19T08:42:00.743Z",
@@ -135,8 +146,8 @@
         "operation": "download",
         "fileId": {
           "__rl": true,
-          "value": "https://drive.google.com/file/d/1wJdIfU7p6AzOMh6sKsUooCSMImHD1XeC/view?usp=sharing",
-          "mode": "url"
+          "value": "={{ $json.id }}",
+          "mode": "id"
         },
         "options": {}
       },
@@ -186,7 +197,6 @@
     },
     {
       "parameters": {
-        "model": "text-embedding-3-small",
         "options": {}
       },
       "id": "d3db4eaa-7b17-4176-84a2-804aa8147b72",
@@ -256,14 +266,14 @@
     {
       "parameters": {
         "content": "### Fetch file from Google Drive, split it into chunks and insert into Qdrant index",
-        "height": 226.00539083557965,
-        "width": 770.0416995758376
+        "height": 226,
+        "width": 1010
       },
       "id": "88783021-6498-48a9-9394-e8d6e8d17919",
       "name": "Sticky Note",
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -40,
+        -280,
         0
       ],
       "typeVersion": 1
@@ -415,15 +425,54 @@
       "typeVersion": 1,
       "id": "14f3343f-80b4-45ad-b09d-91f92869e0e6",
       "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "17XG5Gwg64ZMVXtqpGK0-ijlYFVVF7a9k",
+          "mode": "list",
+          "cachedResultName": "chatbot",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/17XG5Gwg64ZMVXtqpGK0-ijlYFVVF7a9k"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        60
+      ],
+      "id": "d6159080-62d9-4745-8166-6e7c6f9bae7b",
+      "name": "Google Drive Trigger",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "tffgympi1PA8yOJL",
+          "name": "Google Drive account"
+        }
+      }
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
-  "staticData": null,
+  "staticData": {
+    "node:Google Drive Trigger": {
+      "lastTimeChecked": "2025-02-25T19:56:37Z"
+    }
+  },
   "tags": [],
-  "triggerCount": 2,
-  "updatedAt": "2025-02-21T22:50:49.000Z",
-  "versionId": "3775e1bc-8bc4-40b4-a67f-0721f147d5f8"
+  "triggerCount": 3,
+  "updatedAt": "2025-02-23T20:44:39.000Z",
+  "versionId": "fc07b66f-5c4d-4289-b1f8-88ff68b228e0"
 }
