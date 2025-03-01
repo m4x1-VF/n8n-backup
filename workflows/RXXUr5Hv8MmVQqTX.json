@@ -1,0 +1,639 @@
+{
+  "active": false,
+  "connections": {
+    "Split PDF into Images": {
+      "main": [
+        [
+          {
+            "node": "Extract Zip File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Zip File": {
+      "main": [
+        [
+          {
+            "node": "Images To List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Images To List": {
+      "main": [
+        [
+          {
+            "node": "Resize Images For AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Resize Images For AI": {
+      "main": [
+        [
+          {
+            "node": "Transcribe to Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "n8n Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "Split PDF into Images",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Transcribe to Markdown",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe to Markdown": {
+      "main": [
+        [
+          {
+            "node": "Extracted Results",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Knowledge Base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Knowledge Base",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Knowledge Base",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "QA with Knowledge base",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "QA with Knowledge base",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "QA with Knowledge base",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "QA with Knowledge base",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Embeddings": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Qdrant Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-02-26T18:59:36.400Z",
+  "id": "RXXUr5Hv8MmVQqTX",
+  "meta": null,
+  "name": "AI Vision powered PDF chat",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://stirlingpdf.io/api/v1/convert/pdf/img",
+        "sendBody": true,
+        "contentType": "multipart-form-data",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "parameterType": "formBinaryData",
+              "name": "fileInput",
+              "inputDataFieldName": "File"
+            },
+            {
+              "name": "imageFormat",
+              "value": "jpg"
+            },
+            {
+              "name": "singleOrMultiple",
+              "value": "multiple"
+            },
+            {
+              "name": "dpi",
+              "value": "300"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "fdeb307d-d926-4b7e-8a5f-4eb79b1be3cd",
+      "name": "Split PDF into Images",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        60,
+        80
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {},
+      "id": "5bf4e021-ee8b-4173-ba1f-08bda8ffc2f6",
+      "name": "Extract Zip File",
+      "type": "n8n-nodes-base.compression",
+      "position": [
+        220,
+        80
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "jsCode": "// Helper function to extract number from filename\nfunction getFileNumber(filename) {\n    const match = filename.match(/_(\\d+)\\./);\n    return match ? parseInt(match[1], 10) : 0;\n}\n\nlet results = [];\nfor (item of items) {\n    for (key of Object.keys(item.binary)) {\n        results.push({\n            json: {\n                fileName: item.binary[key].fileName\n            },\n            binary: {\n                data: item.binary[key],\n            }\n        });\n    }\n}\n\n// Sort results array based on the numeric portion of filenames\nresults.sort((a, b) => {\n    const numA = getFileNumber(a.json.fileName);\n    const numB = getFileNumber(b.json.fileName);\n    return numA - numB;\n});\n\nreturn results;"
+      },
+      "id": "7fd93e46-9003-454d-9882-82193fa570ac",
+      "name": "Images To List",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        400,
+        80
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "operation": "resize",
+        "width": 75,
+        "height": 75,
+        "resizeOption": "percent",
+        "options": {}
+      },
+      "id": "8009c877-8d1b-48d7-9a03-7dc42ec827c0",
+      "name": "Resize Images For AI",
+      "type": "n8n-nodes-base.editImage",
+      "position": [
+        560,
+        80
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "path": "1fd40bfe-b8fb-4c67-b8ca-68aaad05c36f",
+        "formTitle": "Extract Complex PDF",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "File",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": "*.pdf",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2bdc4e13-c6d4-454b-bf4b-0dc199c759fd",
+      "name": "n8n Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.1,
+      "position": [
+        -180,
+        80
+      ],
+      "webhookId": "1fd40bfe-b8fb-4c67-b8ca-68aaad05c36f"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "edea1762-f557-4954-8413-15633f736c6e",
+      "name": "Anthropic Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.2,
+      "position": [
+        940,
+        260
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "transcribe the image to markdown.",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You help transcribe documents to markdown, keeping faithful to all text printed and visible to the best of your ability. Ensure you capture all headings, subheadings, titles as well as small print.\nFor any tables found with the document, convert them to markdown tables. If table row descriptions overflow into more than 1 row, concatanate and fit them into a single row. If two or more tables are adjacent horizontally, stack the tables vertically instead. There should be a newline after every markdown table.\nFor any graphics, use replace with a description of the image. Images of scanned checks should be converted to the phrase \"<scanned image of check>\"."
+            },
+            {
+              "type": "HumanMessagePromptTemplate",
+              "messageType": "imageBinary"
+            }
+          ]
+        }
+      },
+      "id": "45c149a8-0ec2-434a-ab35-b8c2b226239a",
+      "name": "Transcribe to Markdown",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        880,
+        80
+      ],
+      "typeVersion": 1.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0fecb553-871f-48c1-895f-e98052c3df42",
+              "name": "result",
+              "value": "={{ $json.text }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b36cae6e-116b-4e76-9f31-fb01dcb9f225",
+      "name": "Extracted Results",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1220,
+        80
+      ]
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.text }}",
+        "options": {}
+      },
+      "id": "d2c7550c-b2c8-4c68-bfa5-dc28688ddf64",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "position": [
+        1080,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "chunkSize": 2048,
+        "options": {}
+      },
+      "id": "b7902dd8-ef5e-4737-81b8-0a3fb3b6a73c",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "position": [
+        1100,
+        860
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "id": "9964d9bd-6eb4-43b2-aa8b-076d25d8cef2",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "position": [
+        920,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "=oceanupdate",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "c0f64dc7-c70a-42c4-8fc6-b846ac21bd73",
+      "name": "Knowledge Base",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "position": [
+        920,
+        520
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "75cca722-44dc-4c5b-bb32-1a7e760dcd6c",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        80,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "name": "get_company_pitchdeck",
+        "description": "Call this tool to search for information contained in a startup/company's pitchdeck."
+      },
+      "id": "bedd8e32-1f45-47a1-be09-8da528d9e12a",
+      "name": "Vector Store Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "position": [
+        360,
+        700
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('When chat message received').first().json.sessionId }}"
+      },
+      "id": "aae703fa-78c9-417d-a667-b7ccd844a7ac",
+      "name": "Window Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        200,
+        700
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "This chat allows you to ask questions about a startup's pitch deck. Please start by giving the name of the startup.",
+        "options": {
+          "subtitle": "Ask question's about a startup's pitch deck",
+          "title": "Pitch Deck Analysis"
+        }
+      },
+      "id": "09e99c85-15c0-42db-93cf-7f31559ec227",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        -180,
+        520
+      ],
+      "webhookId": "9322ad29-d67e-4ced-abb3-46fa569393f1",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}\n",
+        "options": {}
+      },
+      "id": "ea3966ed-503f-480e-9264-ef378bde8172",
+      "name": "QA with Knowledge base",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        80,
+        520
+      ],
+      "typeVersion": 1.6
+    },
+    {
+      "parameters": {
+        "qdrantCollection": {
+          "__rl": true,
+          "value": "oceanupdate",
+          "mode": "list",
+          "cachedResultName": "oceanupdate"
+        },
+        "options": {}
+      },
+      "id": "559e6e3c-c52d-451a-b21b-a3931fb581b7",
+      "name": "Qdrant Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "position": [
+        300,
+        860
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-large",
+        "options": {}
+      },
+      "id": "4a17d255-f8d2-41be-9d3f-d4da97a4eab1",
+      "name": "OpenAI Embeddings",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "position": [
+        300,
+        1000
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "1bb06d54-e684-4a07-a079-a1b7dde368a1",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        580,
+        860
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 4. Chat with PDF\n",
+        "height": 702.3150775617221,
+        "width": 721.8602820302513,
+        "color": 5
+      },
+      "id": "c0d0669f-77bf-4f30-b3ff-4630a89e2495",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 1. Convert PDF to image to prep for AI Vision\n",
+        "height": 382.26027768923063,
+        "width": 720.0821998087374,
+        "color": 5
+      },
+      "id": "ac4b96f3-c19f-4a70-a1dc-30a149acd3bf",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 2. AI Vision for PDF extraction",
+        "height": 380.4821954677168,
+        "width": 540.4958954358394,
+        "color": 5
+      },
+      "id": "f36e3a69-1126-4f72-b575-9213bcc01b5e",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        820,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## 3. Store extracted PDF to Vector Store",
+        "height": 698.7589131186944,
+        "width": 538.7178132143256,
+        "color": 5
+      },
+      "id": "f7ce187e-2083-4f3c-b2f0-2212167ee7ad",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        820,
+        440
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-02-26T19:00:26.944Z",
+      "updatedAt": "2025-02-26T19:00:26.944Z",
+      "id": "X280Stl7CWJe4juS",
+      "name": "chat"
+    },
+    {
+      "createdAt": "2025-02-26T19:00:22.742Z",
+      "updatedAt": "2025-02-26T19:00:22.742Z",
+      "id": "b72b862eWC656mbS",
+      "name": "pdf"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-02-26T19:00:28.000Z",
+  "versionId": "a985375f-5669-495a-a7dc-815772ba608c"
+}
