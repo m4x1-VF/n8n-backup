@@ -1,33 +1,32 @@
 {
   "active": false,
   "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        []
+      ]
+    },
+    "Code1": {
+      "main": [
+        []
+      ]
+    },
     "Edit Fields": {
       "main": [
         [
           {
-            "node": "Convert to File",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Convert to File": {
-      "main": [
-        [
-          {
-            "node": "HTML",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "HTML": {
-      "main": [
-        [
-          {
-            "node": "Markdown",
+            "node": "Code1",
             "type": "main",
             "index": 0
           }
@@ -41,106 +40,73 @@
   "name": "My workflow",
   "nodes": [
     {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
       "position": [
-        -260,
-        -80
+        -600,
+        -100
       ],
-      "id": "2b39e725-e76e-45a5-8371-4f23fd1f8a15",
-      "name": "Edit Fields"
+      "id": "c8fc7a25-83b9-4365-8837-ed722bdafe81",
+      "name": "When clicking ‘Test workflow’"
     },
     {
       "parameters": {
-        "operation": "html",
-        "options": {}
+        "jsCode": "return(\n  {\n  \"data\":\n       \"ESTO ES UNA PRUEBA Y QUE ESTÁ SUJETO A FALLOS.\\n\\n**Comparativa de Pasamanerías:**\\n\\n1. **PASAMANERÍA ROMBOS LENTEJUELA BEIGE P- 6,40 MT.**\\n   - **Pros:**\\n     - Ideal para trajes de Carnaval, sobre costuras o líneas laterales.\\n     - Buena calidad y fácil aplicación, fabricada en poliéster 100%.\\n     - Ofrece un diseño de lentejuelas escarchadas distintivo.\\n   - **Contras:**\\n     - Limitada solo a unos pocos usos decorativos específicos.\\n     - Puede no ser adecuada para quienes buscan colores distintos.\\n\\n2. **PASAMANERÍA CADENA ESPIGA-ORO**\\n   - **Pros:**\\n     - Termoadhesiva, por lo que se instala fácilmente usando una plancha.\\n     - Aporta un brillo y carácter elegante, ideal para sombreros y tocados.\\n     - Versátil para la costura y la decoración en varias prendas.\\n   - **Contras:**\\n     - Su diseño puede ser demasiado específico para ciertos proyectos.\\n     - Es posible que no combine con todos los colores de vestimenta.\\n\\n3. **PASAMANERÍA CADENA FLECHAS 2cm (NEGRO, ORO, PLATA)**\\n   - **Pros:**\\n     - Disponible en tres colores, ofrece opciones de combinación.\\n     - Fácil de aplicar con plancha, proporcionando un brillo especial.\\n     - Ampliamente utilizada en trajes de Carnaval.\\n   - **Contras:**\\n     - Se requiere compra mínima de un metro.\\n     - Algunos podrían considerar su diseño de cadena demasiado informal.\\n\\nSi tengo que recomendarte un producto en función de versatilidad, la **Pasamanería Cadena Espiga-Oro** es una excelente opción para aquellos que buscan decorar una variedad de prendas con facilidad. Sin embargo, si buscas personalizar trajes de Carnaval específicamente, la **Pasamanería Cadena Flechas** en cualquiera de sus colores es muy adecuada debido a su adaptabilidad y acabado brillante. Por otro lado, para un diseño más particular y llamativo, la **Pasamanería Rombos Lentejuela Beige** es ideal.\"\n  })"
       },
-      "type": "n8n-nodes-base.convertToFile",
-      "typeVersion": 1.1,
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
       "position": [
-        -40,
-        -80
+        -500,
+        -400
       ],
-      "id": "85c648fd-249c-4446-ab32-ad9ce09c3ef2",
-      "name": "Convert to File"
+      "id": "73fa4d06-38c4-43eb-838d-6feb0b686d46",
+      "name": "Code"
     },
     {
       "parameters": {
-        "operation": "extractHtmlContent",
-        "sourceData": "binary",
-        "extractionValues": {
-          "values": [
+        "jsCode": "function procesarTexto(texto) {\n        console.log(\"Texto recibido:\", texto);\n        const lineas = texto.split('\\n');\n        const productos = [];\n        let productoActual = null;\n        let recomendacion = \"\";\n        \n        lineas.forEach(linea => {\n            linea = linea.trim();\n            console.log(\"Procesando línea:\", linea);\n            \n            if (/^\\d+\\.\\s\\*\\*/.test(linea)) {\n                if (productoActual) {\n                    productos.push(productoActual);\n                }\n                productoActual = { nombre: linea.replace(/^\\d+\\.\\s|\\*\\*/g, \"\"), pros: [], contras: [] };\n                console.log(\"Nuevo producto detectado:\", productoActual.nombre);\n            } else if (linea.startsWith(\"- **Pros:**\")) {\n                productoActual.parte = \"pros\";\n                console.log(\"Sección de pros detectada\");\n            } else if (linea.startsWith(\"- **Contras:**\")) {\n                productoActual.parte = \"contras\";\n                console.log(\"Sección de contras detectada\");\n            } else if (linea.startsWith(\"- \") && productoActual) {\n                if (productoActual.parte === \"pros\") {\n                    productoActual.pros.push(linea.replace(\"- \", \"\"));\n                    console.log(\"Añadiendo pro:\", linea);\n                } else if (productoActual.parte === \"contras\") {\n                    productoActual.contras.push(linea.replace(\"- \", \"\"));\n                    console.log(\"Añadiendo contra:\", linea);\n                }\n            } else if (linea.startsWith(\"Si tengo que recomendarte\")) {\n                recomendacion = linea;\n                console.log(\"Recomendación detectada:\", recomendacion);\n            }\n        });\n        \n        if (productoActual) {\n            productos.push(productoActual);\n        }\n        \n        console.log(\"Productos procesados:\", productos);\n        return { productos, recomendacion };\n    }\n    \n    const resultado = procesarTexto($input.first().json.data);\n    return [{ json: resultado }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        -100
+      ],
+      "id": "4e22f88a-aa6d-4966-937d-a493e5a3824d",
+      "name": "Code1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
             {
-              "key": "data",
-              "cssSelector": "body",
-              "returnValue": "html"
+              "id": "7d77e97f-b708-4abf-884b-50638cbef2d0",
+              "name": "data",
+              "value": "ESTO ES UNA PRUEBA Y QUE ESTÁ SUJETO A FALLOS.\\n\\n**Comparativa de Pasamanerías:**\\n\\n1. **PASAMANERÍA ROMBOS LENTEJUELA BEIGE P- 6,40 MT.**\\n   - **Pros:**\\n     - Ideal para trajes de Carnaval, sobre costuras o líneas laterales.\\n     - Buena calidad y fácil aplicación, fabricada en poliéster 100%.\\n     - Ofrece un diseño de lentejuelas escarchadas distintivo.\\n   - **Contras:**\\n     - Limitada solo a unos pocos usos decorativos específicos.\\n     - Puede no ser adecuada para quienes buscan colores distintos.\\n\\n2. **PASAMANERÍA CADENA ESPIGA-ORO**\\n   - **Pros:**\\n     - Termoadhesiva, por lo que se instala fácilmente usando una plancha.\\n     - Aporta un brillo y carácter elegante, ideal para sombreros y tocados.\\n     - Versátil para la costura y la decoración en varias prendas.\\n   - **Contras:**\\n     - Su diseño puede ser demasiado específico para ciertos proyectos.\\n     - Es posible que no combine con todos los colores de vestimenta.\\n\\n3. **PASAMANERÍA CADENA FLECHAS 2cm (NEGRO, ORO, PLATA)**\\n   - **Pros:**\\n     - Disponible en tres colores, ofrece opciones de combinación.\\n     - Fácil de aplicar con plancha, proporcionando un brillo especial.\\n     - Ampliamente utilizada en trajes de Carnaval.\\n   - **Contras:**\\n     - Se requiere compra mínima de un metro.\\n     - Algunos podrían considerar su diseño de cadena demasiado informal.\\n\\nSi tengo que recomendarte un producto en función de versatilidad, la **Pasamanería Cadena Espiga-Oro** es una excelente opción para aquellos que buscan decorar una variedad de prendas con facilidad. Sin embargo, si buscas personalizar trajes de Carnaval específicamente, la **Pasamanería Cadena Flechas** en cualquiera de sus colores es muy adecuada debido a su adaptabilidad y acabado brillante. Por otro lado, para un diseño más particular y llamativo, la **Pasamanería Rombos Lentejuela Beige** es ideal.\t",
+              "type": "string"
             }
           ]
         },
         "options": {}
       },
-      "type": "n8n-nodes-base.html",
-      "typeVersion": 1.2,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        180,
-        -80
+        -380,
+        -100
       ],
-      "id": "1edab420-31c4-4395-9877-2774ca3318e7",
-      "name": "HTML"
-    },
-    {
-      "parameters": {
-        "html": "={{ $json.data }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.markdown",
-      "typeVersion": 1,
-      "position": [
-        400,
-        -80
-      ],
-      "id": "6fbab9bb-abe4-45c7-8d30-3520badcf275",
-      "name": "Markdown"
-    },
-    {
-      "parameters": {
-        "workflowInputs": {
-          "values": [
-            {
-              "name": "data",
-              "type": "array"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "typeVersion": 1.1,
-      "position": [
-        -520,
-        -80
-      ],
-      "id": "c94ecbff-2be2-4ace-abb8-5c693966f97b",
-      "name": "When Executed by Another Workflow"
+      "id": "b2f5a15b-3036-4a6a-98b5-1edf00ea80f5",
+      "name": "Edit Fields"
     }
   ],
-  "pinData": {
-    "Edit Fields": [
-      {
-        "json": {
-          "assistant": "ESTO ES UNA PRUEBA Y QUE ESTÁ SUJETO A FALLOS.\n\nAquí tienes algunas opciones de pasamanería disponibles. Si necesitas más información sobre un producto específico, puedes hacer clic en el nombre para visitar la página de detalles.\n\n- PASAMANERÍA ROMBOS LENTEJUELA BEIGE P- 6,40 MT.\n- PASAMANERÍA CADENA ESPIGA-ORO\n- PASAMANERÍA CADENA FLECHAS 2CM - NEGRO\n- PASAMANERÍA CADENA FLECHAS 2CM - ORO\n- PASAMANERÍA CADENA FLECHAS 2CM - PLATA\n\nSi deseas conocer los precios, por favor visita la página web del producto haciendo clic en el título correspondiente."
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-02-21T13:28:31.000Z",
-  "versionId": "5bc19d12-84d2-46f4-b7fd-caa1ae3f65c8"
+  "updatedAt": "2025-02-26T10:14:13.000Z",
+  "versionId": "08c1034d-d2ad-45c7-b4bb-8d81cce4c376"
 }
