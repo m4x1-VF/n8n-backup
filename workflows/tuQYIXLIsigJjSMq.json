@@ -1,0 +1,242 @@
+{
+  "active": false,
+  "connections": {
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Save to Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Jina Fetch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Jina Fetch": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-03-03T19:20:48.810Z",
+  "id": "tuQYIXLIsigJjSMq",
+  "meta": null,
+  "name": "AI powered Web Scraping",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "41a7a7bf-0582-49b7-955a-1fbddfaa62dd",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        660,
+        200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.results",
+        "options": {}
+      },
+      "id": "a424c0f1-4e34-4c80-8d49-9ff05a48e62b",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        1560,
+        200
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1VDbfi2PpeheD2ZlO6feX3RdMeSsm0XukQlNVW8uVcuo",
+          "mode": "list",
+          "cachedResultName": "Book Prices",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VDbfi2PpeheD2ZlO6feX3RdMeSsm0XukQlNVW8uVcuo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 258629074,
+          "mode": "list",
+          "cachedResultName": "Sheet2",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VDbfi2PpeheD2ZlO6feX3RdMeSsm0XukQlNVW8uVcuo/edit#gid=258629074"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [
+            "Book prices"
+          ],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "availability",
+              "displayName": "availability",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "image",
+              "displayName": "image",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d5dc0eea-7b8c-42d7-80e5-aa8987877b84",
+      "name": "Save to Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1820,
+        200
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        420
+      ],
+      "id": "e0ff75f0-0939-47d0-bc80-1839ab039dd8",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.data }}",
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"results\": {\n      \"type\": \"array\",\n      \"items\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"price\": {\n              \"type\": \"string\"\n              },\n            \"title\": {\n              \"type\": \"string\"\n            },\n            \"image_url\": {\n              \"type\": \"string\"\n            },\n            \"product_url\": {\n              \"type\": \"string\"\n            },\n            \"availability\": {\n              \"type\": \"string\"\n            }            \n           }\n      }\n  }\n}",
+        "options": {
+          "systemPromptTemplate": "You are an expert extraction algorithm.\nOnly extract relevant information from the text.\nIf you do not know the value of an attribute asked to extract, you may omit the attribute's value.\nAlways output the data in a json array called results.  Each book should have a title, price, availability and product_url, image_url"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1,
+      "position": [
+        1180,
+        200
+      ],
+      "id": "9f4946aa-af18-4660-b84f-dc8c28cb49d5",
+      "name": "Information Extractor"
+    },
+    {
+      "parameters": {
+        "url": "https://r.jina.ai/http://books.toscrape.com/catalogue/category/books/historical-fiction_4/index.html",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "options": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "id": "6d62b780-7c5a-4e4c-a71e-ae00fdaa43a7",
+      "name": "Jina Fetch",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        940,
+        200
+      ],
+      "typeVersion": 4.1,
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "9LgxyrT8WdcGLAco",
+          "name": "HuggingFaceFlux"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-03-04T22:54:06.000Z",
+  "versionId": "6810937e-5be3-42a7-864b-a6d1f68dc062"
+}
