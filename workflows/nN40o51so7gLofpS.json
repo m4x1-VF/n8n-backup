@@ -6,22 +6,6 @@
         []
       ]
     },
-    "Workflow Variables": {
-      "main": [
-        [
-          {
-            "node": "Create YouTube API URL",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Get YouTube Transcript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "YouTube Video Agent": {
       "main": [
         []
@@ -38,56 +22,12 @@
         ]
       ]
     },
-    "Create One JSON Object": {
-      "main": [
-        [
-          {
-            "node": "Respond with YouTube Details & Transcript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create YouTube API URL": {
-      "main": [
-        [
-          {
-            "node": "Get YouTube Video Details",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get YouTube Transcript": {
-      "main": [
-        [
-          {
-            "node": "Split Out Transcript Segments",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "YouTube Processing Tool": {
       "ai_tool": [
         [
           {
             "node": "YouTube Video Agent",
             "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get YouTube Video Details": {
-      "main": [
-        [
-          {
-            "node": "Merge YouTube Details & Transcript",
-            "type": "main",
             "index": 0
           }
         ]
@@ -104,44 +44,11 @@
         ]
       ]
     },
-    "Combine Transcript Segments": {
-      "main": [
-        [
-          {
-            "node": "Merge YouTube Details & Transcript",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Split Out Transcript Segments": {
-      "main": [
-        [
-          {
-            "node": "Combine Transcript Segments",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "When Executed by Another Workflow": {
       "main": [
         [
           {
-            "node": "Workflow Variables",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Merge YouTube Details & Transcript": {
-      "main": [
-        [
-          {
-            "node": "Create One JSON Object",
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -158,6 +65,79 @@
           }
         ]
       ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code1": {
+      "main": [
+        [
+          {
+            "node": "Respond with YouTube Details & Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code2": {
+      "main": [
+        [
+          {
+            "node": "Translate-text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Code2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Code1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Translate-text": {
+      "main": [
+        [
+          {
+            "node": "Respond with YouTube Details & Transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2025-02-23T22:23:42.401Z",
@@ -170,19 +150,6 @@
   "nodes": [
     {
       "parameters": {
-        "jsCode": "// Get all input items\nconst items = $input.all();\nconst results = [];\n\n// Import the YoutubeTranscript module from the youtube-transcript package\n// npm i -g youtube-transcript\nconst { YoutubeTranscript } = require('youtube-transcript');\n\nfor (let i = 0; i < items.length; i++) {\n  // Extract the VIDEO_ID from the input JSON\n  const VIDEO_ID = items[i].json.VIDEO_ID;\n  \n  if (!VIDEO_ID) {\n    throw new Error('The video ID parameter is empty.');\n  }\n  \n  try {\n    // Fetch the transcript for the provided video ID\n    const transcript = await YoutubeTranscript.fetchTranscript(VIDEO_ID);\n    \n    // Append the fetched transcript data to the results\n    results.push({\n      json: {\n        youtubeId: VIDEO_ID,\n        transcript,\n      },\n    });\n  } catch (error) {\n    // In case of an error, add an error message to the output for this item\n    results.push({\n      json: {\n        youtubeId: VIDEO_ID,\n        error: error.message,\n      },\n    });\n  }\n}\n\n// Return the results to be used by the next node in the workflow\nreturn results;\n"
-      },
-      "id": "10cfb27f-ef93-41cd-972e-37dfdcab97ad",
-      "name": "Get YouTube Transcript",
-      "type": "n8n-nodes-base.code",
-      "position": [
-        1040,
-        1560
-      ],
-      "typeVersion": 2
-    },
-    {
-      "parameters": {
         "inputSource": "jsonExample",
         "jsonExample": "{\n  \"query\": {\n\t\"videoId\": \"YouTube video id\"\n  }\n}"
       },
@@ -190,8 +157,8 @@
       "name": "When Executed by Another Workflow",
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "position": [
-        440,
-        1380
+        500,
+        1280
       ],
       "typeVersion": 1.1
     },
@@ -314,7 +281,7 @@
         "promptType": "define",
         "text": "={{ $json.chatInput }}",
         "options": {
-          "systemMessage": "=You are an AI assistant tasked with analyzing and summarizing the transcript of a YouTube video. Your role is to answer user questions and extract relevant insights from the video content. Additionally, identify and extract the **YouTube video ID** from the user's input.\n\nYou have access to a tool called `youtube_video_analyzer`, which can analyze YouTube videos. Use this tool effectively to process video transcripts and generate structured summaries.\n\n#### Instructions:\n1. **Extract YouTube Video ID**:\n   - Identify the **video ID** from the user's input.\n   - Use this ID to analyze the video using the `youtube_video_analyzer` tool.\n\n2. **Analyze and Summarize**:\n   - Break down the video content into main topics using Level 2 headers (##).\n  2.1. Under each header:\n     - List only the most essential concepts and key points\n     - Use bullet points for clarity\n     - Keep explanations concise\n     - Preserve technical accuracy\n     - Highlight key terms in bold\n  2.2. Organize the information in this sequence:\n     - Definition/Background\n     - Main characteristics\n     - Implementation details\n     - Advantages/Disadvantages\n  2.3. Format requirements:\n     - Use markdown formatting\n     - Keep bullet points simple (no nesting)\n     - Bold important terms using **term**\n     - Use tables for comparisons\n     - Include relevant technical details\n\n3. **Organize Output**:\n   - Structure your response in this sequence:\n     1. **Definition/Background**: Provide a brief overview or context of the topic.\n     2. **Main Characteristics**: Highlight critical features or ideas.\n     3. **Implementation Details**: Explain how concepts are applied or executed.\n     4. **Advantages/Disadvantages**: Summarize benefits and limitations.\n\n4. **Formatting Requirements**:\n   - Use markdown formatting for clarity.\n   - Keep bullet points simple (no nested lists).\n   - Use tables for comparisons when applicable.\n   - Include relevant technical details where necessary.\n\nPlease provide a clear, structured summary that captures the core concepts while maintaining technical accuracy.\n\n#### Example Output Structure:\n## Title: Title of video.\n\n## Topic 1: [Main Topic]\n- **Definition/Background**: Brief explanation of the topic.\n- **Main Characteristics**:\n  - Key feature 1\n  - Key feature 2\n- **Implementation Details**:\n  - How it works\n- **Advantages/Disadvantages**:\n  - Advantage 1\n  - Disadvantage 1\n\n## Topic 2: [Next Main Topic]\n...\n\n#### Additional Notes:\n- Ensure your summaries are clear, structured, and technically accurate.\n- If any information is missing or unclear, note it explicitly in your response.\n\nCurrent date: {{ $now }}\n\n\n\n\n \n"
+          "systemMessage": "=Eres un asistente de IA encargado de analizar y resumir la transcripción de un vídeo de YouTube. Tu función es responder a las preguntas de los usuarios y extraer información relevante del contenido del vídeo. Además, identificar y extraer el **identificador del vídeo de YouTube** a partir de la información introducida por el usuario.\n\nTienes acceso a una herramienta llamada `youtube_video_analyzer`, que puede analizar vídeos de YouTube. Utiliza esta herramienta eficazmente para procesar transcripciones de vídeos y generar resúmenes estructurados.\n\n#### Instrucciones:\n1. **Extraer el ID del vídeo de YouTube**:\n   - Identifica el **identificador de vídeo** a partir de la entrada del usuario.\n   - Utilice este ID para analizar el vídeo utilizando la herramienta `youtube_video_analyzer`.\n\n2. **Analizar y resumir**:\n   - Desglosa el contenido del vídeo en temas principales utilizando cabeceras de nivel 2 (##).\n  2.1. Debajo de cada encabezado:\n     - Enumera los conceptos más esenciales y los puntos clave.\n     - Utiliza viñetas para mayor claridad\n     - Las explicaciones deben ser concisas.\n     - Preserve la precisión técnica\n     - Resalte en negrita los términos clave.\n  2.2. Requisitos de formato:\n     - Utilice el formato markdown\n     - Las viñetas deben ser sencillas (sin anidamiento).\n     - Ponga en negrita los términos importantes utilizando **término**.\n     - Utilice tablas para las comparaciones.\n     - Incluya detalles técnicos relevantes\n3. **Requisitos de formato**:\n   - Utilice el formato markdown para mayor claridad.\n   - Utilice viñetas sencillas (sin listas anidadas).\n   - Utilice tablas comparativas cuando proceda.\n   - Incluya detalles técnicos pertinentes cuando sea necesario.\n\nPresente un resumen claro y estructurado que capte los conceptos básicos sin perder la precisión técnica.\n\n#### Notas adicionales:\n- Asegúrese de que sus resúmenes sean claros, estructurados y técnicamente precisos.\n- Si falta alguna información o no está clara, indíquelo explícitamente en su respuesta.\n\nFecha actual: {{ $now }}"
         }
       },
       "id": "8d841054-2096-49bf-8539-822b14f598df",
@@ -328,121 +295,13 @@
     },
     {
       "parameters": {
-        "content": "## 🛠️YouTube Video Processing Tool",
-        "height": 720,
-        "width": 1910,
-        "color": 7
-      },
-      "id": "5252b7ce-0e3f-4f1d-a76a-6df780b4f8d4",
-      "name": "Sticky Note10",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        380,
-        1060
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "jsCode": "// Define the base URL for the YouTube Data API\nconst BASE_URL = 'https://www.googleapis.com/youtube/v3/videos';\n\n// Get the first input item\nconst item = $input.first();\n\n// Extract the videoId and google_api_key from the input JSON\nconst VIDEO_ID = item.json.VIDEO_ID;\nconst GOOGLE_API_KEY = item.json.GOOGLE_API_KEY; // Dynamically retrieve API key\n\nif (!VIDEO_ID) {\n  throw new Error('The video ID parameter is empty.');\n}\n\nif (!GOOGLE_API_KEY) {\n  throw new Error('The Google API Key is missing.');\n}\n\n// Construct the API URL with the video ID and dynamically retrieved API key\nconst youtubeUrl = `${BASE_URL}?part=snippet,contentDetails,status,statistics,player,topicDetails&id=${VIDEO_ID}&key=${GOOGLE_API_KEY}`;\n\n// Return the constructed URL\nreturn [\n  {\n    json: {\n      youtubeUrl: youtubeUrl,\n    },\n  },\n];\n"
-      },
-      "id": "d458ef6c-9149-4515-89ac-1c0569186123",
-      "name": "Create YouTube API URL",
-      "type": "n8n-nodes-base.code",
-      "position": [
-        1040,
-        1220
-      ],
-      "typeVersion": 2
-    },
-    {
-      "parameters": {
-        "fieldToSplitOut": "transcript",
-        "options": {}
-      },
-      "id": "f6cf2215-8ad2-4890-a67d-f91a4752e076",
-      "name": "Split Out Transcript Segments",
-      "type": "n8n-nodes-base.splitOut",
-      "position": [
-        1240,
-        1560
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "fieldsToSummarize": {
-          "values": [
-            {
-              "aggregation": "concatenate",
-              "field": "text",
-              "separateBy": " "
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "93c499e0-a10d-4cfb-959f-9590390722f3",
-      "name": "Combine Transcript Segments",
-      "type": "n8n-nodes-base.summarize",
-      "position": [
-        1440,
-        1560
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "url": "={{ $json.youtubeUrl }}",
-        "options": {}
-      },
-      "id": "39e4c739-e241-4113-a003-25cee18b01e1",
-      "name": "Get YouTube Video Details",
-      "type": "n8n-nodes-base.httpRequest",
-      "position": [
-        1240,
-        1220
-      ],
-      "typeVersion": 4.2
-    },
-    {
-      "parameters": {
-        "mode": "combine",
-        "combineBy": "combineByPosition",
-        "options": {}
-      },
-      "id": "a76d8498-5556-40b6-b259-3d93940f0a04",
-      "name": "Merge YouTube Details & Transcript",
-      "type": "n8n-nodes-base.merge",
-      "position": [
-        1680,
-        1360
-      ],
-      "typeVersion": 3
-    },
-    {
-      "parameters": {
-        "aggregate": "aggregateAllItemData",
-        "options": {}
-      },
-      "id": "db7233ee-8491-47e2-b3c6-ef3f7765470e",
-      "name": "Create One JSON Object",
-      "type": "n8n-nodes-base.aggregate",
-      "position": [
-        1880,
-        1360
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
               "id": "56c5bc98-fdd1-41c0-8da8-bc81a257570d",
               "name": "response",
               "type": "string",
-              "value": "={{ $json.data }}"
+              "value": "={{ $json.combinedTranscript || $json.trans}}"
             }
           ]
         },
@@ -452,86 +311,10 @@
       "name": "Respond with YouTube Details & Transcript",
       "type": "n8n-nodes-base.set",
       "position": [
-        2080,
-        1360
+        2040,
+        1400
       ],
       "typeVersion": 3.4
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "e656b8ef-4266-4f50-bd41-703b4bdb04df",
-              "name": "GOOGLE_API_KEY",
-              "type": "string",
-              "value": "[Your-Google-API-Key]"
-            },
-            {
-              "id": "32db428d-a2e2-48a0-92c6-3880e744d140",
-              "name": "VIDEO_ID",
-              "type": "string",
-              "value": "={{ $json.query.videoId }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "id": "961cec25-9f95-4564-bbdb-4c136bea34f6",
-      "name": "Workflow Variables",
-      "type": "n8n-nodes-base.set",
-      "position": [
-        680,
-        1380
-      ],
-      "typeVersion": 3.4
-    },
-    {
-      "parameters": {
-        "content": "## Workflow Variables\nhttps://cloud.google.com/docs/get-started/access-apis\n\n",
-        "height": 340,
-        "width": 260
-      },
-      "id": "2819e5fb-4c6d-4672-9fe5-ce83bb51b92f",
-      "name": "Sticky Note12",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        600,
-        1260
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## YouTube Video Details\nhttps://developers.google.com/youtube/v3/docs\n",
-        "height": 300,
-        "width": 500,
-        "color": 4
-      },
-      "id": "cdf3e883-8835-408a-901e-037ad46e9bde",
-      "name": "Sticky Note14",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        920,
-        1100
-      ],
-      "typeVersion": 1
-    },
-    {
-      "parameters": {
-        "content": "## YouTube Video Transcript\nhttps://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/\nhttps://www.npmjs.com/package/youtube-transcript",
-        "height": 300,
-        "width": 700,
-        "color": 5
-      },
-      "id": "d34d3603-f527-4c77-b219-3db3fe634d1f",
-      "name": "Sticky Note15",
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        920,
-        1440
-      ],
-      "typeVersion": 1
     },
     {
       "parameters": {
@@ -649,6 +432,253 @@
         740
       ],
       "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://youtube-video-summarizer-gpt-ai.p.rapidapi.com/api/v1/get-transcript-v2",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "video_id",
+              "value": "={{ $json.query.videoId }}"
+            },
+            {
+              "name": "platform",
+              "value": "youtube"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-key",
+              "value": "5fc944689fmshc8a838af0f22342p1489ecjsn37b075f5c4c3"
+            },
+            {
+              "name": "x-rapidapi-host",
+              "value": "youtube-video-summarizer-gpt-ai.p.rapidapi.com"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        1280
+      ],
+      "id": "b335510c-5189-440b-81e7-a2c1cdc4a635",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Initialize an empty string to hold the concatenated transcript\nlet combinedTranscript = \"\";\n\n// Safeguard against undefined paths and ensure required properties exist\nif (\n    $json.data &&\n    $json.data.transcripts &&\n    $json.data.transcripts.es_auto_auto && // Cambiado de en_auto_auto a es_auto_auto\n    $json.data.transcripts.es_auto_auto.custom\n) {\n    // Access the 'custom' array\n    const customArray = $json.data.transcripts.es_auto_auto.custom;\n\n    // Loop through the 'custom' array to extract and append the 'text' property\n    for (const item of customArray) {\n        if (item.text) {\n            combinedTranscript += item.text + \" \"; // Add a space between texts\n        }\n    }\n}\n\n// Return the combined transcript as a new field\nreturn {\n    json: {\n        combinedTranscript: combinedTranscript.trim() // Clean extra spaces\n    }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1420,
+        1400
+      ],
+      "id": "0225d672-ed83-46be-b9a9-a3b2ceba9775",
+      "name": "Code1",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1a54b1d-a2e6-4ade-b209-5b8f3550478e",
+              "name": "data.transcripts",
+              "value": "={{ $json.data.transcripts }}",
+              "type": "object"
+            },
+            {
+              "id": "d7da5e30-1090-4c67-a3e6-b7947a0a251e",
+              "name": "title",
+              "value": "={{ $json.data.videoInfo.name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        900,
+        1280
+      ],
+      "id": "815bc649-ca58-4844-b77c-a54fc1abf274",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "2a716f89-cd6b-432a-b8ac-4cf16efa8276",
+              "name": "transcript_final",
+              "value": "={{ $json.combinedTranscript || $json.trans}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2400,
+        880
+      ],
+      "id": "62e6e876-dc54-4a9b-ac14-e0404877b487",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Initialize an empty string to hold the concatenated transcript\nlet combinedTranscript = \"\";\n\n// Safeguard against undefined paths and ensure required properties exist\nif (\n    $json.data &&\n    $json.data.transcripts &&\n    $json.data.transcripts.en_auto && // Cambiado de en_auto_auto a en_auto\n    $json.data.transcripts.en_auto.custom\n) {\n    // Access the 'custom' array\n    const customArray = $json.data.transcripts.en_auto.custom;\n\n    // Loop through the 'custom' array to extract and append the 'text' property\n    for (const item of customArray) {\n        if (item.text) {\n            combinedTranscript += item.text + \" \"; // Add a space between texts\n        }\n    }\n}\n\n// Return the combined transcript as a new field\nreturn {\n    json: {\n        combinedTranscript: combinedTranscript.trim() // Clean extra spaces\n    }\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1420,
+        1220
+      ],
+      "id": "7f1b9fce-5ed8-4365-ad71-cded12d1f9f5",
+      "name": "Code2",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ Object.keys($json.data.transcripts).includes(\"en_auto_auto\") }}",
+                    "rightValue": "true",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Ingles"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "49bc3338-e491-443f-b1b2-fb8d787d40b0",
+                    "leftValue": "={{ Object.keys($json.data.transcripts).includes(\"es_auto_auto\") }}",
+                    "rightValue": "{\"es_auto\":",
+                    "operator": {
+                      "type": "boolean",
+                      "operation": "true",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Español"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        1120,
+        1280
+      ],
+      "id": "77ebe9b2-fa3e-456e-aabe-7f5562b07219",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://google-translate113.p.rapidapi.com/api/v1/translator/text",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "x-rapidapi-host",
+              "value": "google-translate113.p.rapidapi.com"
+            },
+            {
+              "name": "x-rapidapi-key",
+              "value": "5fc944689fmshc8a838af0f22342p1489ecjsn37b075f5c4c3"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "from",
+              "value": "auto"
+            },
+            {
+              "name": "to",
+              "value": "es"
+            },
+            {
+              "name": "text",
+              "value": "={{ $json.combinedTranscript }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "49d07aaa-1be7-4867-a2f2-9704bf5563c4",
+      "name": "Translate-text",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1720,
+        1220
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Youtube Transcript",
+        "height": 400,
+        "width": 1820,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        460,
+        1180
+      ],
+      "id": "0b6dc497-a61d-421b-8d57-b03169014461",
+      "name": "Sticky Note8"
     }
   ],
   "pinData": {},
@@ -669,6 +699,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-02-23T22:27:55.000Z",
-  "versionId": "90132245-1f94-4d14-bc0f-273f98584b8e"
+  "updatedAt": "2025-03-03T20:35:32.000Z",
+  "versionId": "c947876e-6227-438d-bb1c-2e33e95b54da"
 }
