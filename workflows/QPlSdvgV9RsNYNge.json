@@ -1,0 +1,412 @@
+{
+  "active": true,
+  "connections": {
+    "url submission": {
+      "main": [
+        [
+          {
+            "node": "shorted?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "shorted?": {
+      "main": [
+        [
+          {
+            "node": "url",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "store url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "url": {
+      "main": [
+        [
+          {
+            "node": "shorted url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "shorted url": {
+      "main": [
+        [
+          {
+            "node": "store shorted url",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "get all urls",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get all urls": {
+      "main": [
+        [
+          {
+            "node": "delete?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "delete?": {
+      "main": [
+        [
+          {
+            "node": "delete url",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-03-07T17:59:02.598Z",
+  "id": "QPlSdvgV9RsNYNge",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Shorted url",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Escriba la url",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "url"
+            },
+            {
+              "fieldLabel": "shorted",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Yes"
+                  },
+                  {
+                    "option": "No"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -840,
+        -260
+      ],
+      "id": "33bb12b7-2f60-4315-8a67-cf0bba82f685",
+      "name": "url submission",
+      "webhookId": "4275e9b6-6339-41ad-aa61-687c541f97f9"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "49cea7f1-6fd7-41a1-b7b3-25817b593caf",
+              "leftValue": "={{ $json.shorted }}",
+              "rightValue": "Yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -620,
+        -260
+      ],
+      "id": "64e80d90-42e9-460b-967a-cf54d750a5ce",
+      "name": "shorted?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad3407cd-219e-4c20-b558-6098bf90dd0a",
+              "name": "url",
+              "value": "={{ $json.url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -340,
+        -280
+      ],
+      "id": "131d1196-8834-487d-80c7-eff6b9bbdf08",
+      "name": "url"
+    },
+    {
+      "parameters": {
+        "jsCode": "\n  let item = $input.first().json.url;\n  const regex = /^(https?:\\/\\/[^?]+)/;\n  const match = item.match(regex);\n  \n  if (match && match[1]) {\n    item = match[1];\n  } \n\n  return [\n    {\"url\": item}\n    ];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -120,
+        -280
+      ],
+      "id": "567f0fa6-6868-4367-8e07-a4b50a20aaab",
+      "name": "shorted url"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "workspaceId": "wevkor8t",
+        "projectId": "psj9uffrgkck2rh",
+        "table": "m2kosbuwrnr0rs8",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "url",
+              "fieldValue": "={{ $json.url }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        100,
+        -280
+      ],
+      "id": "234c1a1e-8ca9-410a-be5c-e85257d5ba67",
+      "name": "store shorted url",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "ibC3tIiaPKnQ0LgM",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "workspaceId": "wevkor8t",
+        "projectId": "psj9uffrgkck2rh",
+        "table": "m2kosbuwrnr0rs8",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "url",
+              "fieldValue": "={{ $json.url }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -340,
+        -80
+      ],
+      "id": "b6bb8394-d689-4c6a-b870-72bb67bbeeaf",
+      "name": "store url",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "ibC3tIiaPKnQ0LgM",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -840,
+        300
+      ],
+      "id": "8f405ce7-9f33-48e6-abf3-7f1326180c52",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "workspaceId": "wevkor8t",
+        "projectId": "psj9uffrgkck2rh",
+        "table": "m2kosbuwrnr0rs8",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -660,
+        300
+      ],
+      "id": "76c32dd1-c9a4-4ff4-afa6-18548039509d",
+      "name": "get all urls",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "ibC3tIiaPKnQ0LgM",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "a49c3156-5c16-4984-ab10-22345818492c",
+              "leftValue": "={{ $json.Delete }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -440,
+        300
+      ],
+      "id": "f0ff7cbb-3c02-40c1-ad2f-7b9a31c56715",
+      "name": "delete?"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "delete",
+        "workspaceId": "wevkor8t",
+        "projectId": "psj9uffrgkck2rh",
+        "table": "m2kosbuwrnr0rs8",
+        "id": "={{ $json.Id }}"
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        -180,
+        180
+      ],
+      "id": "9537f2b9-498d-4c4e-8909-0cd3fac9a7f1",
+      "name": "delete url",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "ibC3tIiaPKnQ0LgM",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Shorted url \n",
+        "height": 400,
+        "width": 1200,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -900,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "aea32886-4e51-409c-9c1a-f1154e8fbc9e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Delete url\n",
+        "height": 400,
+        "width": 960,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -900,
+        100
+      ],
+      "typeVersion": 1,
+      "id": "a58d7b3f-bea4-4536-999b-417d858dd7ca",
+      "name": "Sticky Note1"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 3,
+  "updatedAt": "2025-03-08T16:05:08.000Z",
+  "versionId": "77a9874c-fca7-4796-9207-666c3210e52a"
+}
