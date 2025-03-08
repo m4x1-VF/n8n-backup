@@ -1,0 +1,646 @@
+{
+  "active": false,
+  "connections": {
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Data Analyst Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract_Columns": {
+      "main": [
+        [
+          {
+            "node": "Data Analyst Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NocoDB": {
+      "ai_tool": [
+        [
+          {
+            "node": "Data Analyst Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "node": "nocodb_extract_table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "nocodb_extract_table": {
+      "main": [
+        [
+          {
+            "node": "Extract_Columns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Visualization Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Visualization Agent": {
+      "main": [
+        [
+          {
+            "node": "Get Chat id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate chart": {
+      "ai_tool": [
+        [
+          {
+            "node": "Data Analyst Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Listen for incoming events": {
+      "main": [
+        [
+          {
+            "node": "Store chat id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Analyst Agent": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Chart": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Chat id": {
+      "main": [
+        [
+          {
+            "node": "QuickChart",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Store chat id": {
+      "main": [
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "QuickChart": {
+      "main": [
+        [
+          {
+            "node": "Send Chart",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate_tool": {
+      "main": [
+        [
+          {
+            "node": "Visualization Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Data Analyst Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Visualization Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-03-06T14:52:43.683Z",
+  "id": "iR9Jga3UZ6Mvi4SP",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "AI Spreadsheet Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Listen for incoming events').item.json.message.chat.id }}",
+        "contextWindowLength": 6
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1240,
+        160
+      ],
+      "id": "5b9c4dcd-50b5-4c12-b64b-d6d644abfa36",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c5d1f5ab-91dd-4067-ad51-7707ef1ec8bb",
+              "name": "columns",
+              "value": "={{ $json.columns.map(item => item.title).toJsonString() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        780,
+        -60
+      ],
+      "id": "987c60a9-933e-43fa-a769-446954dbadee",
+      "name": "Extract_Columns"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "workspaceId": "wse2vl0o",
+        "projectId": "ppltdbh6c0a30cj",
+        "table": "={{ $('Settings').item.json.table_id }}",
+        "options": {
+          "where": "={{ $fromAI('filter_formula','formula to filter. for example, (Ticker,eq,IMMR) will filter for Ticker column equal to IMMR. the operators are neq for not equal, gt for greater than, gte Greater than or equal to, lt: Less than, lte: Less than or equal to, like: SQL LIKE operation, nlike: Not LIKE, in: In a list of values, nin: Not in a list of values, empty: Is empty, notempty: Is not empty, null: Is null, notnull: Is not nulletc.  Compound conditions can be expressed like (MCAP,gt,500000000)~or(MCAP,lt,1000000000)' ) }}"
+        }
+      },
+      "type": "n8n-nodes-base.nocoDbTool",
+      "typeVersion": 3,
+      "position": [
+        1500,
+        160
+      ],
+      "id": "15b84890-126f-4dd8-8be0-e0b81f1bdf9a",
+      "name": "NocoDB",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "ibC3tIiaPKnQ0LgM",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "968e6040-5ff3-40d1-901a-ba1fa7576c0c",
+              "name": "table_id",
+              "value": "m7c7lrw7n0bne4j",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        380,
+        -60
+      ],
+      "id": "b0fa0b7b-345a-4da7-a9d5-a668622ba344",
+      "name": "Settings"
+    },
+    {
+      "parameters": {
+        "url": "=https://app.nocodb.com/api/v2/meta/tables/{{ $json.table_id }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "nocoDbApiToken",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        580,
+        -60
+      ],
+      "id": "ad5b2d66-26ef-4218-9ffc-549e3adfb23c",
+      "name": "nocodb_extract_table",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "ibC3tIiaPKnQ0LgM",
+          "name": "NocoDB Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Listen for incoming events').item.json.message.text }}",
+        "options": {
+          "systemMessage": "=You are a helpful Data Analyst assistant who is skilled at working with a database called nocodb.  \n\nYou goal is to help the user understand the table that is specified.  \n\nGuidelines:\n\n-Only use the chart tool when the user asks to do so.\n-For each answer, always send reply to Telegram text tool. Never include chart URL in the reply. It is really important not to include chart URL in the reply. Do NOT do this.\n- Please only generate one chart per user request.  Don't generate multiple.\n-Always use the nocodb tool to get the relevant data. If the data is not available from nocodb tool, reply with \"Data not available\"\n\nHere is the query language for nocodb:\n\nBasic Syntax\nThe basic structure is:\ntext\n(column,operator,value)\n\nOperators\nNocoDB supports various operators:\neq: Equal to\nneq: Not equal to\ngt: Greater than\ngte: Greater than or equal to\nlt: Less than\nlte: Less than or equal to\nlike: SQL LIKE operation\nnlike: Not LIKE\nin: In a list of values\nnin: Not in a list of values\nempty: Is empty\nnotempty: Is not empty\nnull: Is null\nnotnull: Is not null\n\nCompound Conditions\nFor compound conditions, NocoDB uses:\n~and: for AND operations\n~or: for OR operations\n\nExamples\nSingle condition:\ntext\n(Ticker,eq,IMMR)\nMultiple conditions with AND:\ntext\n(MCAP,gt,500000000)~and(MCAP,lt,1000000000)\nMultiple conditions with OR:\ntext\n(Ticker,eq,AAPL)~or(Ticker,eq,GOOGL)\nComplex query:\ntext\n(MCAP,gt,1000000000)~and((Sector,eq,Technology)~or(Sector,eq,Healthcare))\nThis syntax is particularly useful when using NocoDB's REST API for querying data or when setting up advanced filters in the user interface.\n\n\n\nHere are the column names for the table.\n{{ $json.columns }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1180,
+        -60
+      ],
+      "id": "00ce5cc8-b6b2-4440-b16c-0644a8e21b83",
+      "name": "Data Analyst Agent",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "## Prepare meta information\n",
+        "height": 440,
+        "width": 580,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        340,
+        -140
+      ],
+      "id": "46d4e034-38f1-4670-9a79-8333cf354636",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n    \"name\": \"chart_configuration\",\n    \"description\": \"Configuration schema for Chart.js charts\",\n    \"strict\": true,\n    \"schema\": {\n  \"type\": \"object\",\n  \"properties\": {\n    \"type\": {\n      \"type\": \"string\",\n      \"enum\": [\"bar\", \"line\", \"radar\", \"pie\", \"doughnut\", \"polarArea\", \"bubble\", \"scatter\", \"area\"]\n    },\n    \"data\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"labels\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"string\"\n          }\n        },\n        \"datasets\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"label\": {\n                \"type\": [\"string\", \"null\"]\n              },\n              \"data\": {\n                \"type\": \"array\",\n                \"items\": {\n                  \"type\": \"number\"\n                }\n              },\n              \"backgroundColor\": {\n                \"type\": [\"array\", \"null\"],\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              \"borderColor\": {\n                \"type\": [\"array\", \"null\"],\n                \"items\": {\n                  \"type\": \"string\"\n                }\n              },\n              \"borderWidth\": {\n                \"type\": [\"number\", \"null\"]\n              }\n            },\n            \"required\": [\"data\", \"label\", \"backgroundColor\", \"borderColor\", \"borderWidth\"],\n            \"additionalProperties\": false\n          }\n        }\n      },\n      \"required\": [\"labels\", \"datasets\"],\n      \"additionalProperties\": false\n    },\n    \"options\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"scales\": {\n          \"type\": [\"object\", \"null\"],\n          \"properties\": {\n            \"yAxes\": {\n              \"type\": \"array\",\n              \"items\": {\n                \"type\": [\"object\", \"null\"],\n                \"properties\": {\n                  \"ticks\": {\n                    \"type\": [\"object\", \"null\"],\n                    \"properties\": {\n                      \"max\": {\n                        \"type\": [\"number\", \"null\"]\n                      },\n                      \"min\": {\n                        \"type\": [\"number\", \"null\"]\n                      },\n                      \"stepSize\": {\n                        \"type\": [\"number\", \"null\"]\n                      },\n                      \"beginAtZero\": {\n                        \"type\": [\"boolean\", \"null\"]\n                      }\n                    },\n                    \"required\": [\"max\", \"min\", \"stepSize\", \"beginAtZero\"],\n                    \"additionalProperties\": false\n                  },\n                  \"stacked\": {\n                    \"type\": [\"boolean\", \"null\"]\n                  }\n                },\n                \"required\": [\"ticks\", \"stacked\"],\n                \"additionalProperties\": false\n              }},\n              \"xAxes\": {\n                \"type\": [\"object\", \"null\"],\n                \"properties\": {\n                  \"stacked\": {\n                    \"type\": [\"boolean\", \"null\"]\n                  }\n                },\n                \"required\": [\"stacked\"],\n                \"additionalProperties\": false\n              }\n          },\n          \"required\": [\"yAxes\", \"xAxes\"],\n          \"additionalProperties\": false\n        },\n        \"plugins\": {\n          \"type\": [\"object\", \"null\"],\n          \"properties\": {\n            \"title\": {\n              \"type\": [\"object\", \"null\"],\n              \"properties\": {\n                \"display\": {\n                  \"type\": [\"boolean\", \"null\"]\n                },\n                \"text\": {\n                  \"type\": [\"string\", \"null\"]\n                }\n              },\n              \"required\": [\"display\", \"text\"],\n              \"additionalProperties\": false\n            },\n            \"legend\": {\n              \"type\": [\"object\", \"null\"],\n              \"properties\": {\n                \"display\": {\n                  \"type\": [\"boolean\", \"null\"]\n                },\n                \"position\": {\n                  \"type\": [\"string\", \"null\"],\n                  \"enum\": [\"top\", \"left\", \"bottom\", \"right\", null]\n                }\n              },\n              \"required\": [\"display\", \"position\"],\n              \"additionalProperties\": false\n            }\n          },\n          \"required\": [\"title\", \"legend\"],\n          \"additionalProperties\": false\n        }\n      },\n      \"required\": [\"scales\", \"plugins\"],\n      \"additionalProperties\": false\n    }\n  },\n  \"required\": [\"type\", \"data\", \"options\"],\n  \"additionalProperties\": false\n}\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        960,
+        620
+      ],
+      "id": "a674435a-183b-4c58-ba21-26ae044fb661",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Input data:{{ $json.query.query }}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=I want you to act as a Chart.js visualization expert. Your primary goal is to generate valid and clearly labeled Chart.js configuration objects based on user requests.  These configurations should be directly usable within a Chart.js environment.\n\nInput: You will receive user requests describing the desired visualization. These requests may include:\n\nChart Type: (e.g., bar, line, pie, scatter, radar, bubble, etc.)\nData: The data to be visualized. This can be provided in various formats (CSV, JSON, lists). Clarify ambiguous data formats with the user. Handle data extraction as needed.\nLabels: Labels for data points, axes, and other elements. Specifically, the user must provide clear axis titles and units (if applicable). Ask clarifying questions if this information is missing.\nStyling: Customization options (colors, fonts, gridlines, titles, legends, tooltips, axis scales). Use Chart.js defaults if no specific styling is requested.\nSpecific Chart.js options: Users might request specific Chart.js features (logarithmic scales, animations, plugins).\nNatural language descriptions: Interpret less structured descriptions and translate them into valid Chart.js configurations.\nAxis information: Request and expect clear details on axis labels, including:\nAxis Titles: Concise titles for x and y axes. (e.g., \"Month\", \"Sales (USD)\")\nUnits: Units of measurement, if relevant. (e.g., \"(USD)\", \"kg\")\nData Type: The type of data on each axis (categorical, numerical, time series).\nSpecific Formatting: Requirements for date/number formats, currency symbols, etc.\n\nOutput:  A valid, well-formatted, and easily readable JSON object representing a Chart.js configuration, ready to be used in a new Chart() constructor.  The output must include properly configured axis labels based on the provided input. This includes adding titles and units to both axes within the options.scales section of the JSON.  The output should be of the form:\n\n{\n  width: string;                        // Pixel width\n  height: string;                       // Pixel height\n  devicePixelRatio: number;             // Pixel ratio (2.0 by default)\n  format: string;                       // png, svg, or webp\n  backgroundColor: string;              // Canvas background\n  version: string;                      // Chart.js version\n  key: string;                          // API key (optional)\n  chart: string | ChartConfiguration;   // Chart.js configuration\n}\n\n\nExample Input (Improved):\n\n\"Create a bar chart showing the monthly sales for the first quarter of 2024.  January had $10,000 in sales, February had $12,000, and March had $15,000.  Use blue for the bars. The chart title should be 'Q1 2024 Sales'. The x-axis represents the 'Month' and the y-axis represents 'Sales (USD)'.\"\n\nImportant Considerations:\n\nData Validation: Perform basic validation and ask for clarification if data is inconsistent or incomplete.\nError Handling: Handle errors gracefully and inform the user if their request cannot be fulfilled.\nChart.js Version: Assume the latest stable version unless specified otherwise.\nBest Practices: Adhere to Chart.js best practices for effective visualizations.\nClear Axis Labels: Prioritize clear and informative axis labels in all generated Chart.js configurations."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        720,
+        420
+      ],
+      "id": "c1a16102-20b0-42c2-8ae7-54fc66041f69",
+      "name": "Visualization Agent",
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "## Data Visualization Tool\n",
+        "height": 420,
+        "width": 1580,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        340,
+        360
+      ],
+      "id": "1d3b301b-d897-4e4c-84bb-2d3399890c6a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "name": "generate_a_chart",
+        "description": "Call this tool whenever you need to generate a chart. All string values must be properly escaped, especially for multi-line strings. The response from the tool is success or fail.\n",
+        "workflowId": "={{ $workflow.id }}",
+        "specifyInputSchema": true,
+        "schemaType": "manual",
+        "inputSchema": "{\n\"type\": \"object\",\n\"properties\": {\n\t\"query\": {\n\t\t\"type\": \"string\",\n\t\t\"description\": \"a query describing the chart to generate in json format\"\n\t\t}\n\t}\n}"
+      },
+      "id": "cbc1a766-a8a7-4bf6-a835-c575abe2ffe5",
+      "name": "Generate chart",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        1380,
+        160
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "content": "## Data Analysis\n",
+        "height": 440,
+        "width": 980,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        940,
+        -140
+      ],
+      "id": "3c9f0002-7790-43bd-965d-8e1d3ef393b5",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "d37af794-f5a7-4ba8-bc05-acd2461d5f71",
+      "name": "Listen for incoming events",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "position": [
+        -60,
+        -60
+      ],
+      "webhookId": "0e3e1894-4fbd-4f4c-bbcc-ca4c46ce789a",
+      "typeVersion": 1,
+      "credentials": {
+        "telegramApi": {
+          "id": "1HWOvyIDwApyzLdc",
+          "name": "Telegram_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "37512e1a-8376-4ba0-bdcd-34bb9329ae4b",
+              "name": "response",
+              "type": "string",
+              "value": "=Success\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b7118d37-e408-4e3a-ac66-2c1894e68739",
+      "name": "Response",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1720,
+        420
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "={{$('Get Chat id').item.json.chat_id }}",
+        "binaryData": true,
+        "binaryPropertyName": "=data",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1540,
+        420
+      ],
+      "id": "7856bd73-85ec-4fc8-b6b8-098cd372b645",
+      "name": "Send Chart",
+      "webhookId": "9617906b-0e06-4297-b1f4-f4a3a6a5ebe8",
+      "credentials": {
+        "telegramApi": {
+          "id": "1HWOvyIDwApyzLdc",
+          "name": "Telegram_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// initialize staticData object\nconst workflowStaticData = $getWorkflowStaticData('global');\n\n// initialize accessToken on staticData if it desn't exist yet\nif (!workflowStaticData.hasOwnProperty('chat_id')) {\n  workflowStaticData.chat_id = $input.all()[0].json.message\n}\n\n\nreturn [\n  {\n      // data: $input.all(),\n      chat_id: workflowStaticData.chat_id.from.id \n  }\n];"
+      },
+      "id": "64391d8c-5ec8-48e8-9a01-82f18e66fdda",
+      "name": "Store chat id",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        140,
+        -60
+      ],
+      "notesInFlow": false,
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "jsCode": "// initialize staticData object\nconst workflowStaticData = $getWorkflowStaticData('global');\n\n\nreturn [\n  {\n      // data: $input.all(),\n      chat_id: workflowStaticData.chat_id.from.id \n  }\n];"
+      },
+      "id": "5b2b6237-d292-4910-b28a-46cbb3eccf40",
+      "name": "Get Chat id",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1120,
+        420
+      ],
+      "notesInFlow": false,
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Listen for incoming events').first().json.message.from.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {
+          "appendAttribution": false,
+          "parse_mode": "HTML"
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1540,
+        -60
+      ],
+      "id": "00a56d92-a2e8-42fa-a08b-0e56911905ca",
+      "name": "Telegram",
+      "webhookId": "38c4de3c-2a9a-4315-9ca9-c29a068e429f",
+      "credentials": {
+        "telegramApi": {
+          "id": "1HWOvyIDwApyzLdc",
+          "name": "Telegram_bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://quickchart.io/chart",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $('Visualization Agent').item.json.output.toJsonString() }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1320,
+        420
+      ],
+      "id": "b9ff1482-7db4-44e6-aa7d-5b17f09448aa",
+      "name": "QuickChart"
+    },
+    {
+      "parameters": {},
+      "id": "0f5fec45-44f8-4752-b0fb-527dee76dc53",
+      "name": "Generate_tool",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        420,
+        420
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        160
+      ],
+      "id": "7a1551b2-37b6-4b0a-8447-4d4c9b4f7ca4",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "aDdfkNGscmtesLt4",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        700,
+        620
+      ],
+      "id": "53d83f88-4861-4480-86ae-85df8255741e",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "aDdfkNGscmtesLt4",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-03-06T14:57:46.999Z",
+      "updatedAt": "2025-03-06T14:57:46.999Z",
+      "id": "8pmaIyRT6wNgHzVF",
+      "name": "NocoDB"
+    },
+    {
+      "createdAt": "2024-10-09T22:02:05.295Z",
+      "updatedAt": "2024-10-09T22:02:05.295Z",
+      "id": "L9MrGshyiPkxrtgY",
+      "name": "AI_Agent"
+    },
+    {
+      "createdAt": "2025-02-12T14:53:37.338Z",
+      "updatedAt": "2025-02-12T14:53:37.338Z",
+      "id": "xi5uAEkMWzCnrGZS",
+      "name": "telegram"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-03-06T14:57:48.000Z",
+  "versionId": "635b7b9a-a346-43db-920a-bd3909166934"
+}
