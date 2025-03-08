@@ -1,0 +1,1095 @@
+{
+  "active": false,
+  "connections": {
+    "Perplexity API": {
+      "main": [
+        [
+          {
+            "node": "Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Settings": {
+      "main": [
+        [
+          {
+            "node": "Research Leader 🔬",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge chapters title and text": {
+      "main": [
+        [
+          {
+            "node": "Final article text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final article text": {
+      "main": [
+        [
+          {
+            "node": "Editor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Leader 🔬": {
+      "main": [
+        [
+          {
+            "node": "Project Planner",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Project Planner",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delegate to Research Assistants": {
+      "main": [
+        [
+          {
+            "node": "Merge chapters title and text",
+            "type": "main",
+            "index": 1
+          },
+          {
+            "node": "Research Assistant",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Research Assistant": {
+      "main": [
+        [
+          {
+            "node": "Merge chapters title and text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Project Planner": {
+      "main": [
+        [
+          {
+            "node": "Delegate to Research Assistants",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Title1": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Editor": {
+      "main": [
+        [
+          {
+            "node": "Title1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity_tool2": {
+      "ai_tool": [
+        [
+          {
+            "node": "Research Leader 🔬",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Perplexity_tool1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Research Assistant",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Settings",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reddit": {
+      "main": [
+        [
+          {
+            "node": "Extract Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Reddit Newsletter Topic Scout",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Reddit Newsletter Topic Scout",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Reddit Newsletter Topic Scout",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Save to Hot Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reddit Newsletter Topic Scout": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Reddit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Post": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Save to Hot Topics": {
+      "main": [
+        [
+          {
+            "node": "Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approval": {
+      "main": [
+        [
+          {
+            "node": "Fetch From Topics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt4o": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Research Leader 🔬",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt4o-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Research Assistant",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch From Topics": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Perplexity API",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt4o2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Editor",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Title1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "gpt4o1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Project Planner",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-03-07T08:15:12.604Z",
+  "id": "b2K1bgBK2i2kRXAZ",
+  "meta": null,
+  "name": "Reddit AI Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "33b7b279-e993-45cf-9e34-37a29a5819ee",
+              "name": "response",
+              "value": "={{ $json.choices[0].message.content }}\n\nCitations:\n{{ $json.citations }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1300,
+        1380
+      ],
+      "id": "f032a9e7-81d0-4ad1-b7ec-372fdf1f8cf0",
+      "name": "Response"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.perplexity.ai/chat/completions",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"sonar-reasoning\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are a professional news monitoring assistant. Monitor and analyze key events to provide clear, factual summaries with verified sources.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"{{ $json.query.query }}\"\n    }\n  ],\n  \"temperature\": 0.2,\n  \"top_p\": 0.9,\n  \"return_images\": false,\n  \"search_recency_filter\": \"{{ $json.query.window }}\",\n  \"return_related_questions\": false,\n  \"top_k\": 0,\n  \"stream\": false,\n  \"presence_penalty\": 0,\n  \"frequency_penalty\": 1\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1100,
+        1380
+      ],
+      "id": "d99b9feb-c2dd-41a9-a221-09d6081cd9cc",
+      "name": "Perplexity API"
+    },
+    {
+      "parameters": {
+        "content": "## Perplexity\n-  Get account and API key from https://www.perplexity.ai/settings/api\n- Set API key in the Perplexity API node\n- **Credential** \n   Name : Authorization \n   Value: Bearer <api-key value>",
+        "height": 274,
+        "width": 1214,
+        "color": 7
+      },
+      "id": "9459c58d-0fa6-466c-8b9f-1cb551f81898",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        340,
+        1320
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "4ab064c5-35c8-4604-993a-e1bede60a911",
+              "name": "topics",
+              "value": "={{ $json.Topics }}",
+              "type": "string"
+            },
+            {
+              "id": "5b1619aa-3bd5-46f6-b520-9b525132e362",
+              "name": "time_window",
+              "value": "day",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        880
+      ],
+      "id": "34756524-d847-4520-b8e2-f7982d457941",
+      "name": "Settings"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "id": "6a24be70-2796-48d7-958a-5ec7afed2d7b",
+      "name": "Merge chapters title and text",
+      "type": "n8n-nodes-base.merge",
+      "position": [
+        1920,
+        880
+      ],
+      "typeVersion": 2.1
+    },
+    {
+      "parameters": {
+        "jsCode": "let article = \"\";\n\n// Introduction\narticle += $('Project Planner').first().json.output.introduction;\n\nfor (const item of $input.all()) {\n  article += \"<strong>\" + item.json.title + \"</strong>\";\n  article += item.json.output;\n  article += \"<br>\";\n}\n\n// Conclusions\narticle += \"<strong> Conclusions </strong>\";\narticle += $('Project Planner').first().json.output.conclusions;\n\n\nreturn [\n  {\n    \"article\": article\n  }\n];"
+      },
+      "id": "0c15569d-ce9d-4314-a0d7-43de72b122da",
+      "name": "Final article text",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        2260,
+        880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Topic to research: {{ $json.topics }}",
+        "options": {
+          "systemMessage": "=You are Research Leader specialized in comprehensive topic analysis, research and content structuring. Your task is to create an enriched, research-backed table of contents for a given topic. \n\nFollow these steps:\n1. Analyze the provided topic thoroughly.\n\n2. Conduct web research to gather current insights, trends, and expert perspectives on the topic.\n\n3. Synthesize the gathered information to identify:\n   - Core concepts and principles\n   - Current trends and developments\n   - Expert opinions and best practices\n   - Real-world applications and examples\n   - Potential challenges and solutions\n\n4. Create a comprehensive table of contents that:\n   - Reflects both foundational knowledge and current developments\n   - Incorporates relevant case studies and examples\n   - Addresses common questions and concerns\n   - Includes practical applications and future implications\n\n5. Structure the content hierarchically, ensuring:\n   - Logical flow and progression\n   - Clear relationships between sections\n   - Balanced coverage of theoretical and practical aspects\n   - Integration of research-backed insights\n\nPlease format your response as follows:\n\nTopic Analysis:\n[Brief overview of the topic and its significance based on current research]\n\nKey Research Insights:\n- [Insight 1 from web research]\n- [Insight 2 from web research]\n- [Insight 3 from web research]\n\nProposed Table of Contents:\n\nI. Introduction\n   A. Topic Overview and Current Relevance\n   B. Key Trends and Developments\n   C. Why This Matters Now\n\nII. Background and Context\n    A. Historical Development\n    B. Fundamental Concepts\n    C. Current State of the Field\n\nIII. [Main Theme 1 from Research]\n     A. [Key Finding/Aspect]\n     B. [Expert Perspectives]\n     C. [Real-world Applications]\n\nIV. [Main Theme 2 from Research]\n    A. [Key Finding/Aspect]\n    B. [Case Studies]\n    C. [Practical Implications]\n\n[Continue with additional research-based sections]\n\nIX. Future Perspectives\n    A. Emerging Trends\n    B. Potential Developments\n    C. Recommendations\n\nX. Conclusion\n   A. Summary of Key Insights\n   B. Actionable Takeaways\n   C. Final Thoughts\n\nResearch Sources:\n[List of key sources consulted]\n\nUsage Instructions:\n1. Provide a specific topic you want to analyze\n2. The AI will conduct web research using available tools including perplexity_ai_search tool\n3. Based on the research, it will generate a comprehensive, current, and well-structured table of contents\n4. Each section will be enriched with recent findings and expert insights\n5. The final structure will be suitable for various content formats (blog posts, articles, whitepapers)\n\nToday's date is {{ $now }}"
+        }
+      },
+      "id": "2d4af89f-5cdc-4d99-8672-99961e60e2e8",
+      "name": "Research Leader 🔬",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        420,
+        880
+      ],
+      "typeVersion": 1.6,
+      "retryOnFail": true,
+      "maxTries": 5
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"subtitle\": {\n      \"type\": \"string\"\n    },\n    \"introduction\": {\n      \"type\": \"string\"\n    },\n    \"conclusions\": {\n      \"type\": \"string\"\n    },\n    \"imagePrompt\": {\n      \"type\": \"string\"\n    },\n    \"chapters\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"title\": {\n            \"type\": \"string\"\n          },\n          \"prompt\": {\n            \"type\": \"string\"\n          }\n        },\n        \"required\": [\n          \"title\",\n          \"prompt\"\n        ]\n      }\n    }\n  },\n  \"required\": [\n    \"subtitle\",\n    \"introduction\",\n    \"conclusions\",\n    \"imagePrompt\",\n    \"chapters\"\n  ]\n}"
+      },
+      "id": "44125ced-9474-4018-b214-5c5ef216ecf8",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1060,
+        1080
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output.chapters",
+        "options": {}
+      },
+      "id": "27c452d6-7ff1-4903-812f-a475ef5e709f",
+      "name": "Delegate to Research Assistants",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        1260,
+        880
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write a chapter for the article: {{ $('Project Planner').item.json.output.subtitle }}\n\nWrite the chapter titled {{ $json.title }}that {{ $json.prompt }}.\n\nMake sure to include citations in the final output.  They are provided by the perplexity_ai_search tool\n\n\n",
+        "options": {
+          "systemMessage": "=You are a dedicated Research Assistant AI agent, working as part of a research team under the guidance of a Research Leader and Project Planner. Your task is to write a chapter in the as part of the overall research into a topic.\n\nGuidelines:\n- Just return the plain text for each chapter (no JSON structure).\n- Use the perplexity_ai_search tool to research the topic in the chapter\n- Use html format for output\n- Don't add internal titles or headings.\n- The length of each chapther should be around 350 words long- Go deep in the topic you treat, don't just throw some superficial info\n{{ $itemIndex > 0 ? \"- The previous chapter talks about \" + $input.all()[$itemIndex-1].json.title : \"\" }}\n{{ $itemIndex > 0 ? \"- The promt for the previous chapter is \" + $input.all()[$itemIndex-1].json.prompt : \"\" }}\n{{ $itemIndex < $input.all().length ? \"- The following chapter will talk about \" + $input.all()[$itemIndex+1].json.title: \"\" }}\n{{ $itemIndex < $input.all().length ? \"- The prompt for the following chapter is \" + $input.all()[$itemIndex+1].json.prompt : \"\" }}\n- Consider the previous and following chapters what writing the text for this chapter. The text must be coherent with the previous and following chapters.\n- This chapter should not repeat the concepts already exposed in the previous chapter.\n- This chapter is a part of a larger article so don't include an introduction or conclusions. This chapter should merge with the rest of the article.\n- Please write in a style that is professional\n- Please use the perplexity online tool as source of information to use to write the chapter\n- Make sure to include citations from the perplexity_ai_search tool in your writing\n\nCitation Guidelines:\n- Use the perplexity_ai_search tool to gather information and cite sources\n- For each major claim or piece of information, include a hyperlinked inline citation\n- Format citations as HTML links with descriptive text:\n  <a href=\"[URL]\">[Source: Publication Name]</a>\n  Examples of proper citation format:\n  - \"According to recent data <a href=\"https://www.mckinsey.com/article-url\">[Source: McKinsey & Company]</a>...\"\n- When directly quoting from a source, use quotation marks and include the citation\n- Integrate citations naturally into the flow of the text without disrupting readability\n- Ensure all cited information is relevant and supports the chapter's main points\n- Verify that citations are accurate and come directly from the perplexity_ai_search results\n- Balance cited content with original analysis and synthesis\n- When citing statistics or specific data points, include the year if available in the citation\n\n\nContent Integration:\n- Smoothly blend cited information with original analysis\n- Use transitions to connect cited material with your own insights\n- Maintain the specified tone while incorporating citations\n- Ensure citations support rather than dominate the narrative\n- Use a mix of paraphrasing and direct quotes when citing sources\n\nSources Section Requirements:\n- At the end of your chapter, include a \"Sources\" section\n- Format the sources section as follows:\n\n<hr>\n<h3>Sources</h3>\n<ul>\n<li><a href=\"[URL]\">[Publication Name] - [Article Title]</a></li>\n[Additional sources...]\n</ul>\n\nSource List Guidelines:\n- List each unique source used in your chapter\n- Include the full URL from the perplexity_ai_search results\n- Order sources alphabetically by publication name\n- Include article titles when available\n- Each source should only appear once in the list\n- Ensure all URLs are functional and properly formatted\n- Include all sources referenced in your in-text citations\n- Match source names exactly as used in in-text citations\n\nExample Source Entry:\n<li><a href=\"https://www.mckinsey.com/article-path\">McKinsey & Company - The Future of AI in Business</a></li>\n\nQuality Control:\n- Verify that every in-text citation has a corresponding entry in the Sources section\n- Check that all URLs are complete and accurate\n- Ensure consistency between in-text citation names and source list entries\n- Confirm all cited information is relevant and supports the chapter's main points\n- Balance cited content with original analysis and synthesis\n\n\nToday's date is : {{ $now }}\n"
+        }
+      },
+      "id": "a25ed6db-6812-4e28-932e-3a970049ba3a",
+      "name": "Research Assistant",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        1500,
+        880
+      ],
+      "retryOnFail": true,
+      "typeVersion": 1.6
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Write the title, the subtitle, the chapters details, the introduction, the conclusions, and an image prompt for a SEO-friendly article.  \n\nPlease use this set of topics to create chapters:\n{{ $json.output }}\n\n\nInstructions:\n- Place the article title in a JSON field called `title`\n- Place the subtitle in a JSON field called `subtitle`\n- Place the introduction in a JSON field called `introduction`\n- In the introduction introduce the topic that is then explored in depth in the rest of the text\n- The introduction should be around 100 words\n- Place the conclusions in a JSON field called `conclusions`\n- The conclusions should be around 100 words\n- Use the conclusions to sum all said in the article and offer a conclusion to the reader\n- The image prompt will be used to produce a photographic cover image for the article and should depict the topics discussed in the article\n- Place the image prompt in a JSON field called `imagePrompt`\n- There should be 5 chapters.\n- For each chapter provide a title and an exaustive prompt that will be used to write the chapter text.\n- Place the chapters in an array field called `chapters`\n- For each chapter provide the fields `title` and `prompt`\n- The chapters should follow a logical flow and not repeat the same concepts.\n- The chapters should be one related to the other and not isolated blocks of text. The text should be fluent and folow a linear logic.\n- Don't start the chapters with \"Chapter 1\", \"Chapter 2\", \"Chapter 3\"... just write the title of the chapter\n- For the title and the capthers' titles don't use colons (`:`)\n- For the text, use html format\n- Please write in a style that is professional\n- Go deep in the topic you treat, don't just throw some superficial info\n- Please use perplexity tool as source to do research on the topics needed to create the chapter:\n\nToday's date is : {{ $now }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "id": "5004ff0e-dac2-4dda-919d-3c558d2e6112",
+      "name": "Project Planner",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        880,
+        880
+      ],
+      "executeOnce": false,
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "content": "## Research Leader 🔬\nBuild table of contents\n\n",
+        "height": 428.96012242189374,
+        "width": 457.8111495531946,
+        "color": 7
+      },
+      "id": "165607cd-fead-4fd6-8692-5b6e4e0dbb4e",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        340,
+        760
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Plan the work and Delegate to writers 📅\n",
+        "height": 430.74703747002076,
+        "width": 576.6288165877254,
+        "color": 7
+      },
+      "id": "59768baf-8506-4881-a7a5-577a1941504e",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        820,
+        760
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Team of Research Assistants  ✍️\nEach Assistant works on a chapter",
+        "height": 434.28473716292865,
+        "width": 677.4186673497638,
+        "color": 7
+      },
+      "id": "00455306-138d-4821-8049-b0656c30db7e",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1440,
+        760
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Editor polishing draft 📝 ",
+        "height": 428.9420572202205,
+        "width": 650.6330068295307,
+        "color": 7
+      },
+      "id": "d3265bb0-9c06-4eb9-a3fc-68b84d29512c",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2160,
+        760
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Suggest an appropriate title of email that summarizes this content. Just one sentence output please in plain text.\n {{ $json.output }}"
+      },
+      "id": "999ae92f-2694-4f23-8b83-c15131e1e388",
+      "name": "Title1",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "position": [
+        2880,
+        880
+      ],
+      "typeVersion": 1.4
+    },
+    {
+      "parameters": {
+        "sendTo": "derekcheungsa@gmail.com",
+        "subject": "={{ $json.text.replaceAll('\\\"','') }}",
+        "message": "={{ $('Editor').item.json.output }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "id": "79a822b7-fa75-4f28-8566-60abeed5231d",
+      "name": "Gmail1",
+      "type": "n8n-nodes-base.gmail",
+      "position": [
+        3380,
+        1040
+      ],
+      "typeVersion": 2.1,
+      "webhookId": "21edb812-2600-4b7c-8ed7-53ff54bcc594"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Article to edit:\n {{ $json.article }}\n\nProvide polished output in html format. ",
+        "options": {
+          "systemMessage": "=You are an expert Editor specializing in refining and polishing content to ensure it meets the highest quality standards. Your role is to review and improve the written material produced by multiple Writers while maintaining academic integrity and proper source attribution. Your task is to provide a highly polished, SEO-optimized article with proper citation management that respects the original content.\n\nContent Review Instructions:\nReview the content while maintaining its core message and key points\nFix only clear grammar, spelling, and punctuation errors\nPreserve the original tone and voice\nEnsure content alignment with the original brief\nMake minimal adjustments to sentence structure, focusing only on clarity\nOptimize headlines and subheadings without changing their core meaning\n\nContent Preservation Rules:\nNever remove substantive content\nMaintain all original examples and illustrations\nPreserve section ordering\nKeep all relevant details and supporting points\nRetain nuanced language and specific terminology\n\nCitation Management Instructions:\nPreserve all inline citations from the original writers in the format: [Source: Publication Name].\nEnsure all inline citations are hyperlinked by embedding the publication name in the citation with the corresponding URL. Example: [Source: [Publication Name](URL)].\nIdentify and remove any duplicate citations across different sections.\nStandardize citation formats if writers used different styles.\nVerify that all cited claims are properly attributed.\nEnsure citations don't disrupt the flow of reading.\nCross-reference all inline citations with their corresponding source links.\n\nUnified Source Documentation Format:\nCreate ONE \"Sources\" section at the very end of the article (after the conclusions section).\n\nFormat each source entry consistently using HTML list items:\n\nhtml\n\n<li><a href=\"[URL]\">[Publication Name] - [Article Title]</a></li>\nInclude for each source:\n\nPublication Name\nArticle Title (if available)\nComplete URL\nDate Accessed (if available)\nEnsure all source entries are hyperlinked properly.\n\nOrganize all sources alphabetically by publication name.\n\nRemove any duplicate entries.\n\nVerify all links are functional.\n\nSEO and Formatting Guidelines:\nMaintain proper HTML formatting throughout.\nEnsure citations and hyperlinks don't interfere with keyword optimization.\nFormat the \"Sources\" section with proper HTML tags.\nUse appropriate heading tags (<h1>, <h2>, <h3>) for structure.\nInclude proper meta descriptions and title tags if required.\nOutput Format:\nThe edited article should be structured as follows:\n\nMain content with inline citations (hyperlinked).\n\"Sources\" section at the end of the article with all reference links. There should only be one \"Sources\" section.\n\nAdditional Requirements:\nMaintain academic integrity while ensuring readability.\nBalance SEO optimization with proper citation practices.\nEnsure all writers' contributions are properly attributed.\nPreserve the original meaning and intent of cited material.\nCreate smooth transitions between sections from different writers.\n\nToday's date is: {{ $now }}"
+        }
+      },
+      "id": "0a412eeb-2379-403a-ad80-27683c7fcc76",
+      "name": "Editor",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        2460,
+        880
+      ],
+      "typeVersion": 1.6
+    },
+    {
+      "parameters": {
+        "name": "perplexity_ai_search",
+        "description": "Useful when conducting research using Perplexity AI online model. When using tool, all string values must be properly escaped, especially for multi-line strings",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id}}",
+          "cachedResultName": "={{ $workflow.id}}"
+        },
+        "specifyInputSchema": true,
+        "schemaType": "manual",
+        "inputSchema": "{\n\"type\": \"object\",\n\"properties\": {\n\t\"query\": {\n\t\t\"type\": \"string\",\n\t\t\"description\": \"perplexity search term\"\n     },\n    \"window\" :{\n       \"type\": \"string\",\n       \"description\": \"the time window to query. Can be one of these values : day, week, month\"\n\t}\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        600,
+        1080
+      ],
+      "id": "8226a3da-a127-4011-8399-567a7ed518c8",
+      "name": "Perplexity_tool2"
+    },
+    {
+      "parameters": {
+        "name": "perplexity_ai_search",
+        "description": "Useful when conducting research using Perplexity AI online model. When using tool, all string values must be properly escaped, especially for multi-line strings",
+        "workflowId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $workflow.id}}",
+          "cachedResultName": "={{ $workflow.id}}"
+        },
+        "specifyInputSchema": true,
+        "schemaType": "manual",
+        "inputSchema": "{\n\"type\": \"object\",\n\"properties\": {\n\t\"query\": {\n\t\t\"type\": \"string\",\n\t\t\"description\": \"perplexity search term\"\n     },\n    \"window\" :{\n       \"type\": \"string\",\n       \"description\": \"the time window to query. Can be one of these values : day, week, month\"\n\t}\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1.2,
+      "position": [
+        1700,
+        1080
+      ],
+      "id": "d18703ed-d981-473e-aa95-7912b5c3d7eb",
+      "name": "Perplexity_tool1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -40,
+        880
+      ],
+      "id": "beaf8738-20f5-4171-acfe-4c2a359c6e1b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "subreddit": "SideProject",
+        "keyword": "struggling with, AI side projects, niche SaaS",
+        "limit": 10,
+        "additionalFields": {
+          "sort": "top"
+        }
+      },
+      "type": "n8n-nodes-base.reddit",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        340
+      ],
+      "id": "4646a0b0-a80a-47f2-b236-ffaf0dad7c11",
+      "name": "Reddit"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        320,
+        340
+      ],
+      "id": "809d0f66-b98e-4919-a04d-aa5db9347921",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        580,
+        540
+      ],
+      "id": "58bb58a9-5b7d-4300-9219-ed879dd46756",
+      "name": "OpenRouter Chat Model"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"title\": \"HotTopicTitles\",\n  \"description\": \"Array of trending topics.  Specific business idea defined in the topic title\",\n  \"oneOf\": [\n    {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"string\",\n        \"minLength\": 2,\n        \"maxLength\": 100,\n        \"pattern\": \"^\\\\S+( \\\\S+)*$\",\n        \"description\": \"Title of a trending topic with specific business idea\"\n      },\n      \"uniqueItems\": true\n    }\n  ],\n  \"not\": {\n    \"type\": \"object\"\n  },\n  \"additionalProperties\": false\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        780,
+        540
+      ],
+      "id": "6ad83274-1972-4e68-9632-6e17baac9b39",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        960,
+        340
+      ],
+      "id": "81315759-8790-4de3-91bf-fde2e236e797",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Here are the reddit posts:\n{{ $json.data.toJsonString() }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# Reddit Newsletter Topic Scout Agent\n\nYou are an expert content curator and newsletter strategist specialized in transforming Reddit's trending content into valuable newsletter topics. Your goal is to identify, analyze, and adapt popular Reddit posts into engaging newsletter content while maintaining professionalism and adding unique insights.\n\nOutput only the top 3 topics.  Only the best topics.\n\n## Core Responsibilities\n- Analyze Reddit's hot posts across various subreddits\n- Identify posts with potential for deeper exploration\n- Transform casual Reddit discussions into professional newsletter topics\n- Add value through expert insights and broader context\n- Ensure topics are evergreen when possible\n- Maintain high editorial standards\n\n## Topic Selection Criteria\n1. Business Value\n   - Will this topic help readers solve problems?\n   - Does it contain actionable insights?\n   - Is there potential for professional growth?\n\n2. Engagement Potential\n   - Does it spark curiosity?\n   - Can it generate meaningful discussion?\n   - Does it connect to broader trends?\n\n3. Credibility Factors\n   - Can claims be verified?\n   - Are there expert sources to cite?\n   - Is there data to support key points?\n\n## Output Format\nFor each topic, provide:\n\n1. Newsletter-Ready Title\n   - Professional tone\n   - Clear value proposition\n   - 60-80 characters optimal length\n\n2. Topic Analysis\n   - Original Reddit context\n   - Why it matters to your audience\n   - Potential angles for exploration\n\n3. Supporting Elements\n   - Key discussion points\n   - Relevant statistics or research\n   - Expert perspectives to include\n\n## Working Method\n1. Review hot posts from relevant subreddits\n2. Apply selection criteria\n3. Transform informal discussions into professional insights\n4. Add expert context and analysis\n5. Format for newsletter readability\n6. Include suggestions for further research\n\n## Voice and Style\n- Professional but approachable\n- Solution-oriented\n- Evidence-based\n- Forward-thinking\n- Industry-aware\n- Balanced perspective\n\n## Exclusion Criteria\n- Avoid controversial political topics\n- Skip purely entertainment content\n- Exclude unverifiable claims\n- Pass on temporary trends without lasting value\n- Avoid topics requiring extensive technical knowledge\n- Skip posts focused on personal drama\n\n## Examples of Good Transformations\n\nOriginal Reddit Post:\n\"Just automated my entire invoice process with Python, saved 4 hours a week!\"\n\nNewsletter Topic:\n\"Scaling Your Business: Effective Strategies for Creative Teams\"\n\nWhy It Works:\n- Focuses on broader business impact\n- Applies to wider audience\n- Maintains professionalism\n- Adds strategic context\n\n## Quality Checklist\n- [ ] Topic is relevant to target audience\n- [ ] Title is professional and engaging\n- [ ] Content adds value beyond original post\n- [ ] Includes actionable insights\n- [ ] Maintains editorial standards\n- [ ] Provides broader context\n- [ ] Links to current trends\n- [ ] Has potential for deep dive\n\nRemember: Your role is to elevate casual Reddit discussions into professional, valuable newsletter content that serves your audience's needs while maintaining high editorial standards."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        600,
+        340
+      ],
+      "id": "eb8e4fe5-0af6-4820-a8b0-9f503226050c",
+      "name": "Reddit Newsletter Topic Scout"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1ejBmg964pFNux8Ww7T964z6djAllzgH7_olP-2dDKPs",
+          "mode": "list",
+          "cachedResultName": "Hot Topics",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ejBmg964pFNux8Ww7T964z6djAllzgH7_olP-2dDKPs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ejBmg964pFNux8Ww7T964z6djAllzgH7_olP-2dDKPs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Topics": "={{ $json.output }}"
+          },
+          "matchingColumns": [
+            "Topics"
+          ],
+          "schema": [
+            {
+              "id": "Topics",
+              "displayName": "Topics",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1160,
+        340
+      ],
+      "id": "3f44e333-5c05-4131-8839-eedf18749050",
+      "name": "Save to Hot Topics"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -300,
+        340
+      ],
+      "id": "5ef244c5-23a5-4075-bdc5-c1651f7db5a6",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5b7a8f5a-16b6-42e4-8d98-a7dadcb33d35",
+              "name": "reddit_posts",
+              "value": "={{ $json.selftext }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        120,
+        340
+      ],
+      "id": "d14a3429-5e98-412e-ac9a-febbad0be808",
+      "name": "Extract Post"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "sendTo": "Derekcheungsa@gmail.com",
+        "subject": "Approval requested",
+        "message": "New topics discovered.  Please see spreadsheet:\nhttps://docs.google.com/spreadsheets/d/1ejBmg964pFNux8Ww7T964z6djAllzgH7_olP-2dDKPs/edit?usp=sharing",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1480,
+        520
+      ],
+      "id": "9058c3bf-6dd6-4786-b229-cca37c2e8a68",
+      "name": "Approval",
+      "webhookId": "5976a21d-1c9b-4428-bdb3-717ea32bf923"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4o",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        420,
+        1080
+      ],
+      "id": "6bd56678-c0d0-4b30-a636-7766b194f7af",
+      "name": "gpt4o"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1500,
+        1080
+      ],
+      "id": "30b93557-51cb-4f35-812e-804a66699ab9",
+      "name": "gpt4o-mini"
+    },
+    {
+      "parameters": {
+        "content": "## Reddit Search\nSearch subreddit for ideas\n",
+        "height": 429,
+        "width": 598,
+        "color": 7
+      },
+      "id": "f78b90db-5efa-4878-85ae-b6be2eacfd27",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -140,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Reddit Newsletter Topic Scout\nIdeate topic ideas\n",
+        "height": 429,
+        "width": 798,
+        "color": 7
+      },
+      "id": "ee04ddd5-fe8b-48ff-9ac0-4e60c61d16bd",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        520,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1ejBmg964pFNux8Ww7T964z6djAllzgH7_olP-2dDKPs",
+          "mode": "list",
+          "cachedResultName": "Hot Topics",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ejBmg964pFNux8Ww7T964z6djAllzgH7_olP-2dDKPs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ejBmg964pFNux8Ww7T964z6djAllzgH7_olP-2dDKPs/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        -260,
+        880
+      ],
+      "id": "f32cb2fe-d5bc-4bcf-80f9-013138fb6aec",
+      "name": "Fetch From Topics"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        880,
+        1380
+      ],
+      "id": "c4b5a35a-c8b0-4fe9-b688-e4576cbc94e4",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4o",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        2660,
+        1080
+      ],
+      "id": "c94be621-a90a-4f1a-aaa9-14469b57211f",
+      "name": "gpt4o2"
+    },
+    {
+      "parameters": {
+        "model": "openai/gpt-4o",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        880,
+        1080
+      ],
+      "id": "a330d9b2-a16c-4eb8-9080-8a640926b7de",
+      "name": "gpt4o1"
+    },
+    {
+      "parameters": {
+        "content": "# Automate Content Curation and Creation: Reddit-to-Newsletter Pipeline Using AI Research Agents with Auto-Citations 📰\n\n",
+        "height": 80,
+        "width": 2198,
+        "color": 7
+      },
+      "id": "3a013d28-3e01-47ad-9408-99ec80801ef2",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-03-07T08:15:22.140Z",
+      "updatedAt": "2025-03-07T08:15:22.140Z",
+      "id": "4j1mwlE7PzBzJQWw",
+      "name": "reddit"
+    },
+    {
+      "createdAt": "2024-10-09T22:02:05.295Z",
+      "updatedAt": "2024-10-09T22:02:05.295Z",
+      "id": "L9MrGshyiPkxrtgY",
+      "name": "AI_Agent"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-03-07T08:15:23.000Z",
+  "versionId": "52ece7fe-4fc5-481a-a95d-a5b2f4bec6f9"
+}
