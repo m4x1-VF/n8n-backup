@@ -1,0 +1,513 @@
+{
+  "active": false,
+  "connections": {
+    "get_videos1": {
+      "main": [
+        [
+          {
+            "node": "loop_over_items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "group_data1": {
+      "main": [
+        [
+          {
+            "node": "loop_over_items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "youtube_search": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "find_video_data1": {
+      "main": [
+        [
+          {
+            "node": "if_longer_than_3_",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "loop_over_items1": {
+      "main": [
+        [
+          {
+            "node": "NocoDB",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "find_video_data1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "if_longer_than_3_": {
+      "main": [
+        [
+          {
+            "node": "group_data1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "loop_over_items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "window_buffer_memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "chat_message_received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "get_videos1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NocoDB": {
+      "main": [
+        [
+          {
+            "node": "response1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-03-04T23:20:47.108Z",
+  "id": "ceaclzRGxNesj4Eh",
+  "meta": {
+    "templateId": "2606",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "AI Youtube Trend Finder Based On Niche",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You help youtube creators find trending videos based on a specific niche.\n\nVerify if the user informed a niche before doing anything. If not, then ask him for one by giving him suggestions for him to select from.\n\nAfter you know what type of content the user might produce, use the \"youtube_search\" tool up to 3 times with different search terms based on the user's content type and niche.\n\nThe tool will answer with a list of videos from the last 2 days that had the most amount of relevancy. It returns a list of json's covering each video's id, view count, like count, comment count, description, channel title, tags and channel id. The JSON response will be an array of video objects, each containing an id, viewCount, likeCount, commentCount, description, title, channelTitle, tags, and channelId.\".\n\nYou should then proceed to understand the data received then provide the user with insightful data of what could be trending from the past 2 days. Provide the user links to the trending videos which should be in this structure:\n\nhttps://www.youtube.com/watch?v={video_id}\n\nto reach the channel's link you should use:\n\nhttps://www.youtube.com/channel/{channel_id}\n\nFind patterns in the tags, titles and especially in the related content for the videos found.\n\nYour mission isn't to find the trending videos. It's to provide the user with valuable information of what is trending in that niche in terms of content news. Remember to provide the user with the numbers of views, likes and comments while commenting about any video. So you should not talk about any particular video, focus rather in explaining the overall senario of all that was found.\n\nExample of response:\n\n\"It seems like what is trending in digital marketing right now is talking about mental triggers, since 3 of the most trending videos in the last 2 days were about...\""
+        }
+      },
+      "id": "fd74706b-609b-4723-b4a4-067e1b064194",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        680,
+        300
+      ],
+      "typeVersion": 1.6
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "ced4b937-b590-4727-b1f2-a5e88b96091a",
+      "name": "chat_message_received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "position": [
+        460,
+        300
+      ],
+      "webhookId": "ff9622a4-a6ec-4396-b9de-c95bd834c23c",
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "name": "youtube_search",
+        "description": "Call this tool to search for trending videos based on a query.",
+        "workflowId": {
+          "__rl": true,
+          "value": "ceaclzRGxNesj4Eh",
+          "mode": "id"
+        },
+        "specifyInputSchema": true,
+        "jsonSchemaExample": "{\n\t\"search_term\": \"some_value\"\n}"
+      },
+      "id": "35a91359-5007-407d-a750-d6642e595690",
+      "name": "youtube_search",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "position": [
+        940,
+        460
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {},
+      "id": "e4bda5b9-abd4-4cd6-8c95-126a01aa6e21",
+      "name": "window_buffer_memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        780,
+        460
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "content": "Main Workflow",
+        "height": 354.53098948245656,
+        "width": 693.2572054941234,
+        "color": 7
+      },
+      "id": "f6d86c5a-393a-4bcf-bdaf-3b06c79fa51d",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        380,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "url": "https://www.googleapis.com/youtube/v3/videos?",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "=AIzaSyDMl027BhUv4JqF0p74xqLKWS4UivKuZnw"
+            },
+            {
+              "name": "id",
+              "value": "={{ $json.id.videoId }}"
+            },
+            {
+              "name": "part",
+              "value": "contentDetails, snippet, statistics"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "4ddbc3f0-e3d7-4ce4-a732-d731c05024d2",
+      "name": "find_video_data1",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1080,
+        960
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "limit": 3,
+        "filters": {
+          "publishedAfter": "={{ new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() }}",
+          "q": "={{ $json.query.search_term }}",
+          "regionCode": "US"
+        },
+        "options": {
+          "order": "relevance",
+          "safeSearch": "moderate"
+        }
+      },
+      "id": "fdb28635-801d-4ce0-8919-11446c6a7a82",
+      "name": "get_videos1",
+      "type": "n8n-nodes-base.youTube",
+      "position": [
+        660,
+        800
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "oajUF4pfjBjFrqFq",
+          "name": "YouTube account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b9b9117b-ea14-482e-a13b-e68b8e6b441d",
+              "name": "response",
+              "type": "string",
+              "value": "={{ $input.all() }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "60e9e61d-0e5e-4212-8b55-71299aeec4d5",
+      "name": "response1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1540,
+        780
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "47c172ad-90c8-4cf6-a9f5-50607e04cc90",
+              "name": "videoId",
+              "type": "string",
+              "value": "={{ $json.items[0].id }}"
+            },
+            {
+              "id": "9e639efa-0714-4b06-9847-f7b4b2fbef59",
+              "name": "viewCount",
+              "type": "string",
+              "value": "={{ $json.items[0].statistics.viewCount }}"
+            },
+            {
+              "id": "93328f00-91b8-425b-ad0f-a330b2f95242",
+              "name": "likeCount",
+              "type": "string",
+              "value": "={{ $json.items[0].statistics.likeCount }}"
+            },
+            {
+              "id": "015b0fb2-2a98-464c-a21b-51100616f26a",
+              "name": "commentCount",
+              "type": "string",
+              "value": "={{ $json.items[0].statistics.commentCount }}"
+            },
+            {
+              "id": "cf1e1ec3-a138-42b8-8747-d249afa58dd3",
+              "name": "description",
+              "type": "string",
+              "value": "={{ $json.items[0].snippet.description }}"
+            },
+            {
+              "id": "c5c9a3a2-b820-4932-a38a-e21102992215",
+              "name": "title",
+              "type": "string",
+              "value": "={{ $json.items[0].snippet.title }}"
+            },
+            {
+              "id": "38216ead-1f8d-4f93-b6ad-5ef709a1ad2a",
+              "name": "channelTitle",
+              "type": "string",
+              "value": "={{ $json.items[0].snippet.channelTitle }}"
+            },
+            {
+              "id": "ff34194d-3d46-43a8-9127-84708987f536",
+              "name": "tags",
+              "type": "string",
+              "value": "={{ $json.items[0].snippet.tags.join(', ') }}"
+            },
+            {
+              "id": "e50b0f7b-3e37-4557-8863-d68d4fa505c8",
+              "name": "channelId",
+              "type": "string",
+              "value": "={{ $json.items[0].snippet.channelId }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "254a6740-8b25-4898-9795-4c3f0009471f",
+      "name": "group_data1",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1540,
+        940
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "685820ba-b089-4cdc-984d-52f134754b5c",
+      "name": "loop_over_items1",
+      "type": "n8n-nodes-base.splitInBatches",
+      "position": [
+        880,
+        800
+      ],
+      "typeVersion": 3
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "08ba3db9-6bcf-47f8-a74d-9e26f28cb08f",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              },
+              "leftValue": "={{ \n  (() => {\n    const duration = $json.items[0].contentDetails.duration;\n\n    // Helper function to convert ISO 8601 duration to seconds\n    const iso8601ToSeconds = iso8601 => {\n      const match = iso8601.match(/PT(?:(\\d+)H)?(?:(\\d+)M)?(?:(\\d+)S)?/);\n      const hours = parseInt(match[1] || 0, 10);\n      const minutes = parseInt(match[2] || 0, 10);\n      const seconds = parseInt(match[3] || 0, 10);\n      return hours * 3600 + minutes * 60 + seconds;\n    };\n\n    // Convert duration to seconds\n    const durationInSeconds = iso8601ToSeconds(duration);\n\n    // Check if greater than 210 seconds (3 minutes 30 seconds)\n    return durationInSeconds > 210;\n  })() \n}}",
+              "rightValue": ""
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3d4d5a4b-d06b-41db-bb78-a64a266d5308",
+      "name": "if_longer_than_3_",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1300,
+        960
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {
+        "content": "This part should be abstracted to another workflow and called inside the \"youtube_search\" tool of the main AI Agent.",
+        "height": 520,
+        "width": 1607,
+        "color": 5
+      },
+      "id": "7c6b8b82-fd6c-4f44-bccf-88c5a76f0319",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        380,
+        660
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-lite-preview-02-05:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        620,
+        460
+      ],
+      "id": "40a94474-cad6-424e-ac77-e32099fb7a33",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "aDdfkNGscmtesLt4",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        420,
+        800
+      ],
+      "id": "049d9680-98f3-4d26-8126-0941c84da613",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "create",
+        "workspaceId": "wevkor8t",
+        "projectId": "pxbokg8o40j2jp6",
+        "table": "mmh0zokgmgingt8",
+        "dataToSend": "autoMapInputData"
+      },
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 3,
+      "position": [
+        1120,
+        780
+      ],
+      "id": "ed369c2d-9a62-4c42-a1cb-3881a6faf28b",
+      "name": "NocoDB",
+      "credentials": {
+        "nocoDbApiToken": {
+          "id": "ibC3tIiaPKnQ0LgM",
+          "name": "NocoDB Token account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": {
+    "global": {
+      "lastExecution": {
+        "response": "{\"json\":\"[object Object]\",\"pairedItem\":\"[object Object]\"},{\"json\":\"[object Object]\",\"pairedItem\":\"[object Object]\"},{\"json\":\"[object Object]\",\"pairedItem\":\"[object Object]\"},[object Object],[object Object],[object Object]\n\n### NEXT VIDEO FOUND: ###\n\n\n **Título:** undefined\n **Canal:** undefined\n **Likes:** undefined   **Comentarios:** undefined   **Vistas:** undefined\n **Descripción:** undefined\n **Video:** https://www.youtube.com/watch?v=undefined\n **Canal:** https://www.youtube.com/channel/undefined\n\n\n### NEXT VIDEO FOUND: ###\n\n\n **Título:** undefined\n **Canal:** undefined\n **Likes:** undefined   **Comentarios:** undefined   **Vistas:** undefined\n **Descripción:** undefined\n **Video:** https://www.youtube.com/watch?v=undefined\n **Canal:** https://www.youtube.com/channel/undefined\n\n\n### NEXT VIDEO FOUND: ###\n\n\n **Título:** N/A\n **Canal:** N/A\n **Likes:** 0   **Comentarios:** 0   **Vistas:** 0\n **Descripción:** Sin descripción disponible\n **Video:** https://www.youtube.com/watch?v=N/A\n **Canal:** https://www.youtube.com/channel/N/A\n\n\n### NEXT VIDEO FOUND: ###\n\n\n **Título:** N/A\n **Canal:** N/A\n **Likes:** 0   **Comentarios:** 0   **Vistas:** 0\n **Descripción:** Sin descripción disponible\n **Video:** https://www.youtube.com/watch?v=N/A\n **Canal:** https://www.youtube.com/channel/N/A\n ### NEXT VIDEO FOUND: ### {\"json\":{\"id\":\"GcznA_gM3ag\",\"viewCount\":\"36863\",\"likeCount\":\"2255\",\"commentCount\":\"415\",\"description\":\"La nueva ley migratoria del presidente Javier Milei en la Argentina que se viene. Ayuda a crecer al canal con una donación Alias Mercado Pago: break.point.mp Donación Paypal: te olvides de suscribirte Agradezco Sponsor de Break Point, ZBL: #milei #javiermilei #mileipresidente\",\"title\":\"URGENTE MILEI LANZA MEGA MEDIDA SOBRE INMIGRANTES QUE CAMBIA ARGENTINA PARA SIEMPRE  BREAK POINT\",\"channelTitle\":\"BREAK POINT\",\"tags\":\"milei, javier milei, milei javier, milei hoy, javier milei hoy, milei javier hoy, break point, breakpoint, break point milei, milei break point, breakpoint milei, milei breakpoint, MILEI PRESIDENTE, presidente milei, milei anuncio, milei medida, medida milei, nueva medida milei, milei inmigrantes, inmigrantes milei, milei ley migratoria, ley migratoria milei\",\"channelId\":\"UC_49ElhhVd1BO7MsdBPm77Q\"},\"pairedItem\":{\"item\":0}} ### NEXT VIDEO FOUND: ### {\"json\":{\"id\":\"D6_fhUKbYsg\",\"viewCount\":\"11229\",\"likeCount\":\"349\",\"commentCount\":\"177\",\"description\":\"Mario Grinman aseguró en “Alguien tiene que decirlo” que Javier Milei sorprende al cumplir con lo que prometió en campaña. Suscribite a nuestro canal de YouTube: oficial de Radio Mitre: Twitter oficial de Radio Mitre: oficial de Radio Mitre: en #alguientienequedecirlo #javiermilei\",\"title\":\"La Cámara Argentina de Comercio defendió a Javier Milei: \"No prometió heladera llena\"\",\"channelTitle\":\"Radio Mitre\",\"tags\":\"Radio, Mitre, Radio Mitre\",\"channelId\":\"UCYvINPByAdCcpA0sWrF3I_w\"},\"pairedItem\":{\"item\":0}} ### NEXT VIDEO FOUND: ### {\"json\":{\"id\":\"y9TBJ-_ldYw\",\"viewCount\":\"17179\",\"likeCount\":\"405\",\"commentCount\":\"184\",\"description\":\"Visitá a nuestro canal: también en: · Instagram: Facebook: Twitter: TikTok: WhatsApp: líder de noticias de Argentina. #C5NEnVivo #C5N #Noticias\",\"title\":\"El BIÓGRAFO de JAVIER MILEI atropelló a un MOTOCICLISTA en MAR DEL PLATA\",\"channelTitle\":\"C5N\",\"tags\":\"c5n, c5n en vivo, noticias, informacion, politica, breaking news, news, economia, deportes, sociedad, argentina, c5n news, canal 5 noticias, c5n vivo, c5n live, c5ndigital\",\"channelId\":\"UCFgk2Q2mVO1BklRQhSv6p0w\"},\"pairedItem\":{\"item\":0}} ### NEXT VIDEO FOUND: ### {\"json\":{\"id\":\"PgpJWPCwLAI\",\"viewCount\":\"706599\",\"likeCount\":\"55377\",\"commentCount\":\"2710\",\"description\":\"Dungeon Master and Dimension 20 host Brennan Lee Mulligan visits WIRED to answer the internet's burning questions about Dungeons & Dragons. What are Brennan's tips for first time DMs? How do you make compelling characters? What does someone need to get started playing Dungeons & Dragons? What's the most accurate representation of DnD in pop culture? Answers to these questions and many more await on Dungeons & Dragons Support. SPECIAL THANKS TO BEX SCHWARTZ and The Montauk CLUB D&D Club 0:00 DnD Support 0:15 Most iconic monster 1:04 A great DnD character design tip 1:54 Friendship 2:54 Getting started with DnD 5:03 The best representation of DnD in pop culture? 6:23 Practicing your girl voice 7:20 How DnD alignments work 8:36 Paladins, Warlocks, and Sugar Daddies 9:21 Squish squish 9:51 I think he has dice but he’s afraid to show them to anyone 12:49 Fudging 14:04 The DnD golden rule 14:37 Favorite DnD character race and class combo 15:46 How do you handle a tpk? 17:05 But first, the tavern. 17:40 First time dungeon master tips 19:09 Critical roll vs Nat 20 20:05 When the dice won’t commit to the bit 21:02 Favorite spell 21:27 Can I play with you guys 22:34 Visiting another person’s campaign 24:30 Favorite magical item 25:09 You know what grinds my gears 26:11 Niche lore 26:59 If anything it’s the opposite 27:40 How much prep? 28:51 How many different editions 29:51 New rules? 30:42 Yee…haw? 31:32 Dungeons and Drag Queens? I’m in. 32:18 What does a Mimic look like when it's not mimicking? Director: Lisandro Perez-Rey Director of Photography: Kevin Dynia Editor: Richard Trammell Expert: Brennan Lee Mulligan Line Producer: Joseph Buscemi Associate Producer: Paul Gulyas; Brandon White Production Manager: Peter Brunette Production Coordinator: Rhyan Lark Talent Booker: Mica Medoff Camera Operator: Christopher Eustache Sound Mixer: Sean Paulsen Production Assistant: Ryan Coppola Groomer: Denise Renee Valentine Post Production Supervisor: Christian Olguin Post Production Coordinator: Rachel Kim Supervising Editor: Rob Lombardi Additional Editor: Jason Malizia Assistant Editor: Billy Ward Still haven’t subscribed to WIRED on YouTube? ►► Listen to the Get WIRED podcast ►► Want more WIRED? Get the magazine ►► Follow WIRED: Instagram ►► Twitter ►► Facebook ►► Tik Tok ►► Get more incredible stories on science and tech with our daily newsletter: Also, check out the free WIRED channel on Roku, Apple TV, Amazon Fire TV, and Android TV. ABOUT WIRED WIRED is where tomorrow is realized. Through thought-provoking stories and videos, WIRED explores the future of business, innovation, and culture.\",\"title\":\"Dungeon Master Brennan Lee Mulligan Answers DnD Questions  Tech Support  WIRED\",\"channelTitle\":\"WIRED\",\"tags\":\"adventure campaigns, brennan dnd, brennan lee mulligan, character classes, character creation, collaborative storytelling, critical role, d&d, d20, dice rolling, dimension 20, dm, dnd, dnd support, dragons, dropout tv, dungeon master, dungeons & dragons, dungeons and dragons, epic battles, fantasy gaming, fantasy high, game mechanics, magic systems, ott tech support, role playing games, science & technology, tabletop rpg, tech support, ttrpg, wired, wired tech support\",\"channelId\":\"UCftwRNsjfRo08xYE31tkiyw\"},\"pairedItem\":{\"item\":0}} ### NEXT VIDEO FOUND: ### {\"json\":{\"id\":\"0VkevA7n2rI\",\"viewCount\":\"1634\",\"likeCount\":\"112\",\"commentCount\":\"10\",\"description\":\"In this video sponsored by the makers of Call of Dragons we'll spin the wheel for Falgrim! Download Call of Dragons Here: Farlight Store: THAT LIKE BUTTON AND SUBSCRIBE! -------------------------------------------------------------------------------------- SUBSCRIBE ►► A MEMBER ►► CHANNEL ►► ►► ►► ►► Popular Playlists and Videos: ► Ultimate Guides from Start to T5: ← VERY POPULAR ► 2024 Refreshed Commander Guides: ALL Commander Guides: Beginner Guides: BEST CIVILIZATION: Restarting: Jumper Accounts: Kingdom Versus Kingdom: Farm thousands of gems a day: ROK Toolkit & Data: Gear I use to create content: My NEW FAVORITE tea brand (seriously next-level): --this is an affiliate link -------------------------------------------------------------------------------------- Cheers, -Chisgule #cod #callofdragons\",\"title\":\"Falgrim is here! [full lucky spins] Call of Dragons\",\"channelTitle\":\"Chisgule Gaming\",\"tags\":\"falgrim, falgrim cod, falgrim call of dragons, falgrim lucky spin, gen 4 cod, generation 4 cod, gen 4 call of dragons, generation 4 call of dragons, falgrim lucky spins, how to get fallgrim call of dragons\",\"channelId\":\"UChqXRquQhtswoAqlt3ayyXA\"},\"pairedItem\":{\"item\":0}} ### NEXT VIDEO FOUND: ### {\"json\":{\"id\":\"LMN7bg6Q12w\",\"viewCount\":\"41564\",\"likeCount\":\"3292\",\"commentCount\":\"874\",\"description\":\" Get NOTIFICATIONS of New Uploads Here - & Dragons YouTube is in serious decline, the 2024 sourcebooks don't seem to be selling all that well, many players are saying they don't want to switch, and general interest in DnD seems to be cooling off.  Become a MEMBER of The Reef at Merch Store: Audio Podcast (iTunes): Audio Podcast (Spotify): Website: Clownfish TV subreddit: Sparkles' Blog: Us: Clownfish TV is an independent, opinionated news and commentary channel that covers Entertainment and Tech from a consumer’s point of view. We talk about Gaming, Comics, Anime, TV, Movies, Animation and more. Hosted by Kneon and Geeky Sparkles. Disclaimer: This series is produced by Clownfish Studios and WebReef Media, and is part of ClownfishTV.com. Opinions expressed by our contributors do not necessarily reflect the views of our guests, affiliates, sponsors, or advertisers. ClownfishTV.com is an unofficial news source and has no connection to any company that we may cover. This channel and website and the content made available through this site are for educational, entertainment and informational purposes only. These so-called “fair uses” are permitted even if the use of the work would otherwise be infringing. #Games #TTRPG #Movies #News #Commentary #Reaction #Podcast #Comedy #Entertainment #Hollywood #PopCulture #Tech\",\"title\":\"Dungeons & Dragons is OVER.\",\"channelTitle\":\"Clownfish TV\",\"tags\":\"Clownfish TV, VTuber, Entertainment, Pop Culture News, Animation, Tech News, Reaction, Commentary, News, Comedy, Trending, dungeons and dragons, dungeons & dragons, tabletop rpgs, wizards of the coast, how to play dnd, dungeon master, dungeons & dragons: honor among thieves, dungeons & dragons 202, dungeons & dragons 2024 players handbook, dungeons & dragons 2024\",\"channelId\":\"UC4gD0czpXVv_LpADTSU624g\"},\"pairedItem\":{\"item\":0}} ### NEXT VIDEO FOUND: ### {\"json\":{\"id\":\"2Gz_hxhgIgM\",\"viewCount\":\"530741\",\"likeCount\":\"14670\",\"commentCount\":\"1634\",\"description\":\"Change your car with Carwow: is the all-new Audi A6 Avant! Audi has reversed its naming policy of even-numbered cars being electric only, so the new A6 Avant will come with both petrol and diesel engines! The question is, what else has changed? Let’s take a closer look. On the outside, the A6 has undergone a design overhaul, but it is still distinctly an Audi. Up front, there’s a large aggressive grille, flanked on either side by sharp headlights. Being an Audi, it’s naturally equipped with fantastic headlights, which come with the option to personalise in several different ways. Along the side the car sports flush door handles, and at the back there’s a large wraparound light bar, as well as a set of taillights. And of course, given it’s powered by a petrol or diesel engine, there looks to be a set of real exhaust tips as well! The A6 also looks super smart on the inside. It’s equipped with Audi’s latest panoramic driving display, as well as the option to add a third screen for the front passenger! The A6 is likely to be equipped with soft-touch materials throughout most of the cabin, and there are ambient lights fitted throughout. It looks seriously impressive! Regarding engines in the UK, there will be a choice of a 2-litre 4-cylinder turbo petrol or diesel engine. The petrol is front-wheel drive, while the diesel comes with a mild hybrid system and is equipped with Quattro all-wheel-drive - both cars produce 204hp. Elsewhere a 3-litre turbo V6 will also be available, and an S6 is also in the works. We also hope that a petrol-powered RS6 will arrive in the not-too-distant future! The new Audi A6 goes on sale from April 1st 2025 costing from £52,500. So is it the best premium estate around? Or is a 5 Series Touring the better option? You’ll need to stick with Mat to see for yourself! Chapters 00:00 Intro 00:27 Design 01:59 Naming Strategy 02:26 Interior 03:00 Engines 04:23 RS6 06:38 Practicality 07:38 Tech 08:27 Sound 08:55 Chassis 10:08 Price\",\"title\":\"New Audi A6 revealed: it has something BMW doesn't…\",\"channelTitle\":\"carwow\",\"tags\":\"carwow, mat watson, car review, new car review, car review 2025, new car 2025, audi, audi a6, audi a6 avant, petrol audi, petrol audi a6, diesel audi a6, new audi a6 estate, audi estate, new petrol-powered audi, audi a6 avant reveal, new audi a6 avant 2025, new audi a6 avant 2025 reveal, new audi estate, best audi estate, best premium estate, best premium wagon, new audi wagon, audi a6 wagon\",\"channelId\":\"UCUhFaUpnq31m6TNX2VKVSVA\"},\"pairedItem\":{\"item\":0}}"
+      }
+    }
+  },
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-03-05T09:30:26.000Z",
+  "versionId": "654a1489-d234-4964-8eeb-c3bd2e9c65bb"
+}
