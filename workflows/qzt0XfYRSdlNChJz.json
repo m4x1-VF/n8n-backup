@@ -1,0 +1,210 @@
+{
+  "active": false,
+  "connections": {
+    "Salesforce Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Salesforce",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Salesforce": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-03-07T10:02:45.473Z",
+  "id": "qzt0XfYRSdlNChJz",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Salesforce Account",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "accountCreated"
+      },
+      "type": "n8n-nodes-base.salesforceTrigger",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        -80
+      ],
+      "id": "1850b938-e4ed-4425-81aa-647e5213ce05",
+      "name": "Salesforce Trigger",
+      "credentials": {
+        "salesforceOAuth2Api": {
+          "id": "fB6V1ZmDElkF7jNP",
+          "name": "Salesforce account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "441036e1-f7bb-45b6-8b3f-3d2e1f309590",
+              "name": "id",
+              "value": "={{ $json.Id }}",
+              "type": "string"
+            },
+            {
+              "id": "18e3a1a8-3b6f-4a4d-ab6d-41d375fc2262",
+              "name": "name",
+              "value": "={{ $json.Name }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        60,
+        -80
+      ],
+      "id": "16ddeb47-06b8-4c61-a82d-3fb5d78f3729",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1MdGcAQzJg30CfoSeRxTfbcTb-PYNDXG6mpSRAu_rdEo",
+          "mode": "list",
+          "cachedResultName": "salesforce account",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MdGcAQzJg30CfoSeRxTfbcTb-PYNDXG6mpSRAu_rdEo/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Hoja 1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1MdGcAQzJg30CfoSeRxTfbcTb-PYNDXG6mpSRAu_rdEo/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ID": "={{ $json.id }}",
+            "NAME": "={{ $json.name }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NAME",
+              "displayName": "NAME",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        280,
+        -80
+      ],
+      "id": "5faef28c-b661-4e89-b7d4-b0815a788cc6",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "PEKMfK7IJS1efHkk",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "task",
+        "status": "Not Started",
+        "additionalFields": {
+          "description": "Llamar para ofrecer servicios.",
+          "owner": "005gK000000QI4YQAW",
+          "priority": "Normal",
+          "subject": "Call",
+          "whatId": "={{ $json.ID }}"
+        }
+      },
+      "type": "n8n-nodes-base.salesforce",
+      "typeVersion": 1,
+      "position": [
+        500,
+        -80
+      ],
+      "id": "37f20ecd-8d22-43ee-9e02-f9fd63891df3",
+      "name": "Salesforce",
+      "credentials": {
+        "salesforceOAuth2Api": {
+          "id": "fB6V1ZmDElkF7jNP",
+          "name": "Salesforce account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": {
+    "node:Salesforce Trigger": {
+      "lastTimeChecked": "2025-03-07T12:25:07.007+01:00"
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-03-07T12:41:01.000Z",
+  "versionId": "386b1165-8638-4e8b-b013-7814bbb4262f"
+}
