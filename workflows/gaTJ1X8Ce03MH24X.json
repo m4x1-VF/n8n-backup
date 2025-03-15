@@ -97,7 +97,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
       "typeVersion": 1,
       "position": [
-        -520,
+        -560,
         -260
       ],
       "id": "c27d37cb-3fd1-4058-91e1-dbc3ea9b21a4",
@@ -124,7 +124,7 @@
       "parameters": {
         "name": "Data",
         "description": "Usa esta tool cuando te pregunten sobre pasamaneria",
-        "jsCode": "return(\n       \"ESTO ES UNA PRUEBA Y QUE ESTÁ SUJETO A FALLOS.\\n\\n**Comparativa de Pasamanerías:**\\n\\n1. **PASAMANERÍA ROMBOS LENTEJUELA BEIGE P- 6,40 MT.**\\n   - **Pros:**\\n     - Ideal para trajes de Carnaval, sobre costuras o líneas laterales.\\n     - Buena calidad y fácil aplicación, fabricada en poliéster 100%.\\n     - Ofrece un diseño de lentejuelas escarchadas distintivo.\\n   - **Contras:**\\n     - Limitada solo a unos pocos usos decorativos específicos.\\n     - Puede no ser adecuada para quienes buscan colores distintos.\\n\\n2. **PASAMANERÍA CADENA ESPIGA-ORO**\\n   - **Pros:**\\n     - Termoadhesiva, por lo que se instala fácilmente usando una plancha.\\n     - Aporta un brillo y carácter elegante, ideal para sombreros y tocados.\\n     - Versátil para la costura y la decoración en varias prendas.\\n   - **Contras:**\\n     - Su diseño puede ser demasiado específico para ciertos proyectos.\\n     - Es posible que no combine con todos los colores de vestimenta.\\n\\n3. **PASAMANERÍA CADENA FLECHAS 2cm (NEGRO, ORO, PLATA)**\\n   - **Pros:**\\n     - Disponible en tres colores, ofrece opciones de combinación.\\n     - Fácil de aplicar con plancha, proporcionando un brillo especial.\\n     - Ampliamente utilizada en trajes de Carnaval.\\n   - **Contras:**\\n     - Se requiere compra mínima de un metro.\\n     - Algunos podrían considerar su diseño de cadena demasiado informal.\\n\\nSi tengo que recomendarte un producto en función de versatilidad, la **Pasamanería Cadena Espiga-Oro** es una excelente opción para aquellos que buscan decorar una variedad de prendas con facilidad. Sin embargo, si buscas personalizar trajes de Carnaval específicamente, la **Pasamanería Cadena Flechas** en cualquiera de sus colores es muy adecuada debido a su adaptabilidad y acabado brillante. Por otro lado, para un diseño más particular y llamativo, la **Pasamanería Rombos Lentejuela Beige** es ideal.\"\n       )"
+        "jsCode": "return\n  \n   \"ESTO ES UNA PRUEBA Y QUE ESTÁ SUJETO A FALLOS.\\n\\n**Comparativa de Pasamanerías:**\\n\\n1. **PASAMANERÍA ROMBOS LENTEJUELA BEIGE P- 6,40 MT.**\\n   - **Pros:**\\n     - Ideal para trajes de Carnaval, sobre costuras o líneas laterales.\\n     - Buena calidad y fácil aplicación, fabricada en poliéster 100%.\\n     - Ofrece un diseño de lentejuelas escarchadas distintivo.\\n   - **Contras:**\\n     - Limitada solo a unos pocos usos decorativos específicos.\\n     - Puede no ser adecuada para quienes buscan colores distintos.\\n\\n2. **PASAMANERÍA CADENA ESPIGA-ORO**\\n   - **Pros:**\\n     - Termoadhesiva, por lo que se instala fácilmente usando una plancha.\\n     - Aporta un brillo y carácter elegante, ideal para sombreros y tocados.\\n     - Versátil para la costura y la decoración en varias prendas.\\n   - **Contras:**\\n     - Su diseño puede ser demasiado específico para ciertos proyectos.\\n     - Es posible que no combine con todos los colores de vestimenta.\\n\\n3. **PASAMANERÍA CADENA FLECHAS 2cm (NEGRO, ORO, PLATA)**\\n   - **Pros:**\\n     - Disponible en tres colores, ofrece opciones de combinación.\\n     - Fácil de aplicar con plancha, proporcionando un brillo especial.\\n     - Ampliamente utilizada en trajes de Carnaval.\\n   - **Contras:**\\n     - Se requiere compra mínima de un metro.\\n     - Algunos podrían considerar su diseño de cadena demasiado informal.\\n\\nSi tengo que recomendarte un producto en función de versatilidad, la **Pasamanería Cadena Espiga-Oro** es una excelente opción para aquellos que buscan decorar una variedad de prendas con facilidad. Sin embargo, si buscas personalizar trajes de Carnaval específicamente, la **Pasamanería Cadena Flechas** en cualquiera de sus colores es muy adecuada debido a su adaptabilidad y acabado brillante. Por otro lado, para un diseño más particular y llamativo, la **Pasamanería Rombos Lentejuela Beige** es ideal.);"
       },
       "type": "@n8n/n8n-nodes-langchain.toolCode",
       "typeVersion": 1.1,
@@ -143,6 +143,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-02-25T13:10:51.000Z",
-  "versionId": "f27f8a40-931e-4aae-b835-8371d6e7b3a0"
+  "updatedAt": "2025-03-12T08:01:11.000Z",
+  "versionId": "a9a10a5f-97e9-43c6-9d8b-a81aef27ffde"
 }
