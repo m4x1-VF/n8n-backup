@@ -724,6 +724,10 @@
             {
               "key": "Envio mail factura|checkbox",
               "condition": "equals"
+            },
+            {
+              "key": "Numero factura|rich_text",
+              "condition": "is_not_empty"
             }
           ]
         },
@@ -802,6 +806,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2025-02-10T11:53:05.000Z",
-  "versionId": "dc742b5f-9374-4831-b804-be4590e26e63"
+  "updatedAt": "2025-03-13T21:33:00.000Z",
+  "versionId": "434bc030-1861-4769-a202-e7ed59c1d244"
 }
