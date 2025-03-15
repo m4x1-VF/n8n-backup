@@ -729,6 +729,22 @@
             {
               "key": "=Envio mail factura|checkbox",
               "condition": "equals"
+            },
+            {
+              "key": "Número de factura|rich_text",
+              "condition": "is_not_empty"
+            },
+            {
+              "key": "Cantidad|number",
+              "condition": "is_not_empty"
+            },
+            {
+              "key": "Concepto|title",
+              "condition": "is_not_empty"
+            },
+            {
+              "key": "Precio unitario|number",
+              "condition": "is_not_empty"
             }
           ]
         },
@@ -814,6 +830,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2025-02-10T11:58:01.000Z",
-  "versionId": "31e17387-d246-4419-99dc-36dee68936fb"
+  "updatedAt": "2025-03-14T07:56:09.000Z",
+  "versionId": "b77f7883-b8b8-45b1-a9cb-39be66d1d7a9"
 }
