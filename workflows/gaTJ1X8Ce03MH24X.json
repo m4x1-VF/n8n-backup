@@ -49,6 +49,11 @@
           }
         ]
       ]
+    },
+    "API": {
+      "ai_tool": [
+        []
+      ]
     }
   },
   "createdAt": "2025-02-13T12:57:57.258Z",
@@ -77,7 +82,7 @@
     {
       "parameters": {
         "options": {
-          "systemMessage": "=Usa la tool Data si te preguntan sobre pasamaneria. Si la respuesta contiene pros y contras devuelve la respuesta en una tabla bien formateada para chat.\nEl formato de salida debe ser en Markdown para asegurar una correcta visualización.\nEstructura la tabla con dos columnas: 'Pros' y 'Contras'."
+          "systemMessage": "=Utiliza la Tool Data para todas las preguntas que te haga el usuario, independientemente de lo que te pregunte, siempre habrá una respuesta.\nFormato de salida:\n- Siempre tiene que ser en Markdown.\n- Si la respuesta tiene Pros y Contras muestralo en formato tabla simple de Markdown."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -91,7 +96,7 @@
     },
     {
       "parameters": {
-        "model": "google/gemini-2.0-flash-exp:free",
+        "model": "google/gemini-2.0-flash-lite-preview-02-05:free",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
@@ -123,8 +128,8 @@
     {
       "parameters": {
         "name": "Data",
-        "description": "Usa esta tool cuando te pregunten sobre pasamaneria",
-        "jsCode": "return\n  \n   \"ESTO ES UNA PRUEBA Y QUE ESTÁ SUJETO A FALLOS.\\n\\n**Comparativa de Pasamanerías:**\\n\\n1. **PASAMANERÍA ROMBOS LENTEJUELA BEIGE P- 6,40 MT.**\\n   - **Pros:**\\n     - Ideal para trajes de Carnaval, sobre costuras o líneas laterales.\\n     - Buena calidad y fácil aplicación, fabricada en poliéster 100%.\\n     - Ofrece un diseño de lentejuelas escarchadas distintivo.\\n   - **Contras:**\\n     - Limitada solo a unos pocos usos decorativos específicos.\\n     - Puede no ser adecuada para quienes buscan colores distintos.\\n\\n2. **PASAMANERÍA CADENA ESPIGA-ORO**\\n   - **Pros:**\\n     - Termoadhesiva, por lo que se instala fácilmente usando una plancha.\\n     - Aporta un brillo y carácter elegante, ideal para sombreros y tocados.\\n     - Versátil para la costura y la decoración en varias prendas.\\n   - **Contras:**\\n     - Su diseño puede ser demasiado específico para ciertos proyectos.\\n     - Es posible que no combine con todos los colores de vestimenta.\\n\\n3. **PASAMANERÍA CADENA FLECHAS 2cm (NEGRO, ORO, PLATA)**\\n   - **Pros:**\\n     - Disponible en tres colores, ofrece opciones de combinación.\\n     - Fácil de aplicar con plancha, proporcionando un brillo especial.\\n     - Ampliamente utilizada en trajes de Carnaval.\\n   - **Contras:**\\n     - Se requiere compra mínima de un metro.\\n     - Algunos podrían considerar su diseño de cadena demasiado informal.\\n\\nSi tengo que recomendarte un producto en función de versatilidad, la **Pasamanería Cadena Espiga-Oro** es una excelente opción para aquellos que buscan decorar una variedad de prendas con facilidad. Sin embargo, si buscas personalizar trajes de Carnaval específicamente, la **Pasamanería Cadena Flechas** en cualquiera de sus colores es muy adecuada debido a su adaptabilidad y acabado brillante. Por otro lado, para un diseño más particular y llamativo, la **Pasamanería Rombos Lentejuela Beige** es ideal.);"
+        "description": "Usa esta tool para dar la respuesta al usuario.",
+        "jsCode": "return(\"ESTO ES UNA PRUEBA Y QUE ESTÁ SUJETO A FALLOS.\\n\\n**Comparativa de Pasamanerías:**\\n\\n1. **PASAMANERÍA ROMBOS LENTEJUELA BEIGE P- 6,40 MT.**\\n   - **Pros:**\\n     - Ideal para trajes de Carnaval, sobre costuras o líneas laterales.\\n     - Buena calidad y fácil aplicación, fabricada en poliéster 100%.\\n     - Ofrece un diseño de lentejuelas escarchadas distintivo.\\n   - **Contras:**\\n     - Limitada solo a unos pocos usos decorativos específicos.\\n     - Puede no ser adecuada para quienes buscan colores distintos.\\n\\n2. **PASAMANERÍA CADENA ESPIGA-ORO**\\n   - **Pros:**\\n     - Termoadhesiva, por lo que se instala fácilmente usando una plancha.\\n     - Aporta un brillo y carácter elegante, ideal para sombreros y tocados.\\n     - Versátil para la costura y la decoración en varias prendas.\\n   - **Contras:**\\n     - Su diseño puede ser demasiado específico para ciertos proyectos.\\n     - Es posible que no combine con todos los colores de vestimenta.\\n\\n3. **PASAMANERÍA CADENA FLECHAS 2cm (NEGRO, ORO, PLATA)**\\n   - **Pros:**\\n     - Disponible en tres colores, ofrece opciones de combinación.\\n     - Fácil de aplicar con plancha, proporcionando un brillo especial.\\n     - Ampliamente utilizada en trajes de Carnaval.\\n   - **Contras:**\\n     - Se requiere compra mínima de un metro.\\n     - Algunos podrían considerar su diseño de cadena demasiado informal.\\n\\nSi tengo que recomendarte un producto en función de versatilidad, la **Pasamanería Cadena Espiga-Oro** es una excelente opción para aquellos que buscan decorar una variedad de prendas con facilidad. Sin embargo, si buscas personalizar trajes de Carnaval específicamente, la **Pasamanería Cadena Flechas** en cualquiera de sus colores es muy adecuada debido a su adaptabilidad y acabado brillante. Por otro lado, para un diseño más particular y llamativo, la **Pasamanería Rombos Lentejuela Beige** es ideal.\");"
       },
       "type": "@n8n/n8n-nodes-langchain.toolCode",
       "typeVersion": 1.1,
@@ -134,6 +139,31 @@
       ],
       "id": "1e223e94-cc53-4af9-bec2-2f35c1b7f5eb",
       "name": "Code Tool"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Utiliza esta herramienta para cualquier pregunta que te hagan, independientemente de la que sea, aquí siempre habrá una respuesta.",
+        "method": "POST",
+        "url": "=http://192.168.208.129:5678/webhook/09c7ec45-3849-4aae-b51a-5a84fbbbdc58",
+        "sendBody": true,
+        "parametersBody": {
+          "values": [
+            {
+              "name": "input",
+              "valueProvider": "fieldValue",
+              "value": "{{ $('When chat message received').item.json.chatInput }}"
+            }
+          ]
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
+      "typeVersion": 1.1,
+      "position": [
+        280,
+        -240
+      ],
+      "id": "5aa970dc-2d15-472c-9c87-950fd6474f9f",
+      "name": "API"
     }
   ],
   "pinData": {},
@@ -143,6 +173,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-03-12T08:01:11.000Z",
-  "versionId": "a9a10a5f-97e9-43c6-9d8b-a81aef27ffde"
+  "updatedAt": "2025-03-17T12:11:27.000Z",
+  "versionId": "dfe82591-002f-4b91-9a11-45c0fbee24e4"
 }
