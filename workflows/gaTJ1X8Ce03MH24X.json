@@ -66,7 +66,6 @@
     {
       "parameters": {
         "public": true,
-        "mode": "webhook",
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
@@ -173,6 +172,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-03-17T12:11:27.000Z",
-  "versionId": "dfe82591-002f-4b91-9a11-45c0fbee24e4"
+  "updatedAt": "2025-03-26T21:56:04.000Z",
+  "versionId": "1431f1a2-82e3-4246-bc02-ad814a935820"
 }
