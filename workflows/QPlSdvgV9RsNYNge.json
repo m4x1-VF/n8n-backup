@@ -126,7 +126,7 @@
       "typeVersion": 2.2,
       "position": [
         -840,
-        -260
+        -180
       ],
       "id": "33bb12b7-2f60-4315-8a67-cf0bba82f685",
       "name": "url submission",
@@ -161,7 +161,7 @@
       "typeVersion": 2.2,
       "position": [
         -620,
-        -260
+        -180
       ],
       "id": "64e80d90-42e9-460b-967a-cf54d750a5ce",
       "name": "shorted?"
@@ -183,7 +183,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -340,
+        -400,
         -280
       ],
       "id": "131d1196-8834-487d-80c7-eff6b9bbdf08",
@@ -196,7 +196,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -120,
+        -180,
         -280
       ],
       "id": "567f0fa6-6868-4367-8e07-a4b50a20aaab",
@@ -221,7 +221,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        100,
+        40,
         -280
       ],
       "id": "234c1a1e-8ca9-410a-be5c-e85257d5ba67",
@@ -252,7 +252,7 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -340,
+        -400,
         -80
       ],
       "id": "b6bb8394-d689-4c6a-b870-72bb67bbeeaf",
@@ -276,7 +276,7 @@
       "typeVersion": 1.2,
       "position": [
         -840,
-        300
+        180
       ],
       "id": "8f405ce7-9f33-48e6-abf3-7f1326180c52",
       "name": "Schedule Trigger"
@@ -293,8 +293,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 3,
       "position": [
-        -660,
-        300
+        -620,
+        180
       ],
       "id": "76c32dd1-c9a4-4ff4-afa6-18548039509d",
       "name": "get all urls",
@@ -333,8 +333,8 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        -440,
-        300
+        -400,
+        180
       ],
       "id": "f0ff7cbb-3c02-40c1-ad2f-7b9a31c56715",
       "name": "delete?"
@@ -372,7 +372,7 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -900,
+        -950,
         -320
       ],
       "typeVersion": 1,
@@ -388,8 +388,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -900,
-        100
+        -960,
+        80
       ],
       "typeVersion": 1,
       "id": "a58d7b3f-bea4-4536-999b-417d858dd7ca",
@@ -407,6 +407,6 @@
   },
   "tags": [],
   "triggerCount": 3,
-  "updatedAt": "2025-03-14T18:19:29.000Z",
-  "versionId": "77a9874c-fca7-4796-9207-666c3210e52a"
+  "updatedAt": "2025-04-01T06:54:41.000Z",
+  "versionId": "69b5df60-5884-45fe-a39a-59ac1ab8a06d"
 }
