@@ -49,11 +49,6 @@
           }
         ]
       ]
-    },
-    "API": {
-      "ai_tool": [
-        []
-      ]
     }
   },
   "createdAt": "2025-02-13T12:57:57.258Z",
@@ -138,31 +133,6 @@
       ],
       "id": "1e223e94-cc53-4af9-bec2-2f35c1b7f5eb",
       "name": "Code Tool"
-    },
-    {
-      "parameters": {
-        "toolDescription": "Utiliza esta herramienta para cualquier pregunta que te hagan, independientemente de la que sea, aquí siempre habrá una respuesta.",
-        "method": "POST",
-        "url": "=http://192.168.208.129:5678/webhook/09c7ec45-3849-4aae-b51a-5a84fbbbdc58",
-        "sendBody": true,
-        "parametersBody": {
-          "values": [
-            {
-              "name": "input",
-              "valueProvider": "fieldValue",
-              "value": "{{ $('When chat message received').item.json.chatInput }}"
-            }
-          ]
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolHttpRequest",
-      "typeVersion": 1.1,
-      "position": [
-        280,
-        -240
-      ],
-      "id": "5aa970dc-2d15-472c-9c87-950fd6474f9f",
-      "name": "API"
     }
   ],
   "pinData": {},
@@ -172,6 +142,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 2,
-  "updatedAt": "2025-03-26T21:56:04.000Z",
-  "versionId": "1431f1a2-82e3-4246-bc02-ad814a935820"
+  "updatedAt": "2025-04-03T06:51:56.000Z",
+  "versionId": "3876eab9-f741-4c7c-b2c9-5fb42c41c8a7"
 }
