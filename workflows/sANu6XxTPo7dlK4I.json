@@ -1,0 +1,965 @@
+{
+  "active": false,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Form Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract URLs": {
+      "main": [
+        [
+          {
+            "node": "Get all URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Form Fields": {
+      "main": [
+        [
+          {
+            "node": "Extract URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all URLs": {
+      "main": [
+        [
+          {
+            "node": "Filter based on directories",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter based on directories": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Exact Match": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML to binary": {
+      "main": [
+        [
+          {
+            "node": "Extract paragraphs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop": {
+      "main": [
+        [
+          {
+            "node": "Filter out Undefined or null Rows2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get All URL rows",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge URLs and Paragraphs",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Request HTML of page": {
+      "main": [
+        [
+          {
+            "node": "HTML to binary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge URLs and Paragraphs": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract paragraphs": {
+      "main": [
+        [
+          {
+            "node": "Merge URLs and Paragraphs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter out Undefined or null Rows": {
+      "main": [
+        [
+          {
+            "node": "Supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get All URL rows": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Find Exact Match1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Request HTML of page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase": {
+      "main": [
+        [
+          {
+            "node": "Find Exact Match",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Filter out Undefined or null Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Exact Match1": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter out Undefined or null Rows2": {
+      "main": [
+        [
+          {
+            "node": "Convert to Excel",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Supabase2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Supabase1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission1": {
+      "main": [
+        [
+          {
+            "node": "Get Entries for URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over URLs": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Delete rows for URL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Entries for URL": {
+      "main": [
+        [
+          {
+            "node": "Loop Over URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete rows for URL": {
+      "main": [
+        [
+          {
+            "node": "Loop Over URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-04-07T20:34:19.172Z",
+  "id": "sANu6XxTPo7dlK4I",
+  "meta": null,
+  "name": "Oportunidad de enlaces internos",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Keyword",
+        "formDescription": "Enter your keyword to identify internal links",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Keyword",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your Website Sitemap",
+              "placeholder": "E.g. https://yourdomain.com/sitemap.xml",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Directory",
+              "placeholder": "E.g. /blog/, /services/ etc."
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -1860,
+        520
+      ],
+      "id": "b2814979-5ceb-481b-8921-7007c62da2b5",
+      "name": "On form submission",
+      "webhookId": "921a1df7-c109-47c9-b820-a2b50066b7f4"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['Website Sitemap'] }}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "text"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1420,
+        520
+      ],
+      "id": "ee32eef9-bde5-4a1b-9c76-807c450ec43d",
+      "name": "Extract URLs"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ead9b21b-0798-4b3c-964a-0e68717ada74",
+              "name": "Keyword",
+              "value": "={{ $json.Keyword }}",
+              "type": "string"
+            },
+            {
+              "id": "fbd68d99-cdf9-4c4f-adb4-1b1ffdabf7b8",
+              "name": "Website Sitemap",
+              "value": "={{ $json['Your Website Sitemap'] }}",
+              "type": "string"
+            },
+            {
+              "id": "25a37eb6-a600-44a6-aba5-f8318c956ef0",
+              "name": "Directory",
+              "value": "={{ $json.Directory }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1640,
+        520
+      ],
+      "id": "26b64cb6-3f21-4abd-b451-702ac60f0c41",
+      "name": "Form Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const urls = [];\nconst xml = $input.first().json.data || $json;\n\n// Matches: <loc>https://example.com</loc> with optional whitespace, tabs, newlines\nconst regex = /<loc>\\s*([^<\\s]+)\\s*<\\/loc>/g;\nlet match;\n\nwhile ((match = regex.exec(xml)) !== null) {\n  const url = match[1].trim();\n  // Optional: add your own filtering logic here\n  urls.push({ url });\n}\n\nreturn urls;\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1200,
+        520
+      ],
+      "id": "1b510dad-34ff-4cde-9c79-aa4feaa3e9b9",
+      "name": "Get all URLs",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const dirsRaw = $('Form Fields').first().json.Directory || \"\";\nconst dirs = dirsRaw\n  .split(\",\")\n  .map(d => d.trim().toLowerCase())\n  .filter(Boolean);\n\nconst urls = $input.all();\n\nif (dirs.length === 0) {\n  return urls; // No filter provided — return all\n}\n\nreturn urls.filter(item => {\n  const url = item.json.url.toLowerCase();\n  return dirs.some(dir => url.includes(dir));\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -980,
+        520
+      ],
+      "id": "b2d6492e-8087-4eaf-8a95-7f3f70bba69b",
+      "name": "Filter based on directories"
+    },
+    {
+      "parameters": {
+        "jsCode": "const keyword = $('Form Fields').first().json.Keyword.trim().toLowerCase();\nconst matches = [];\n\nfor (const item of items) {\n  const para = item.json.content;\n\n  if (para && para.toLowerCase().includes(keyword)) {\n    matches.push({\n      matchType: 'Exact',\n      foundinPara: para.trim(),\n      keyword: keyword,\n      url: item.json.url\n    });\n  }\n}\n\nreturn matches.length ? matches.map(m => ({ json: m })) : [];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        680,
+        1660
+      ],
+      "id": "22c16ac7-05aa-4d02-b232-22bfe9a5cc37",
+      "name": "Find Exact Match",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "let combinedHTML = '';\n\nfor (const item of items) {\n  const html = item.json.data || '';\n  const url = $('Loop').first().json.url || 'Unknown URL';\n\n  if (!html) continue;\n\n  combinedHTML += `\n<!-- START: ${url} -->\n${html}\n<!-- END: ${url} -->\n\n<hr />\n`;\n}\n\nconst buffer = Buffer.from(combinedHTML, 'utf8');\n\nreturn [\n  {\n    binary: {\n      data: {\n        data: buffer.toString('base64'),\n        mimeType: 'text/html',\n        fileName: 'combined-pages.html',\n      },\n    },\n  },\n];\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -40,
+        960
+      ],
+      "id": "4104419c-3c19-4ed2-9841-fcca9a2887ef",
+      "name": "HTML to binary"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -760,
+        520
+      ],
+      "id": "05ef778a-309e-4bdf-a659-f61bc57f81f0",
+      "name": "Loop"
+    },
+    {
+      "parameters": {
+        "url": "={{ $('Loop').item.json.url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -260,
+        960
+      ],
+      "id": "67d8bed2-2a0a-4ed1-a9c8-27dbc551e009",
+      "name": "Request HTML of page"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        180,
+        1200
+      ],
+      "id": "ab75d6c4-c580-4e1d-ae0b-b93ac2a79a55",
+      "name": "Merge URLs and Paragraphs"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "sourceData": "binary",
+        "dataPropertyName": "=data",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "Paragraphs",
+              "cssSelector": "p",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        180,
+        960
+      ],
+      "id": "e36e8103-11b8-489b-80c0-1a4bc5518543",
+      "name": "Extract paragraphs"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine all input items into one array \nconst inputArray = items;\n\n//Filter out items with no 'foundinPara' or only whitespace\nconst filtered = inputArray.filter (item => {\n  return item.json.Paragraphs && item.json.Paragraphs.trim() !== '';\n  \n});\n\nreturn filtered;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        180,
+        1660
+      ],
+      "id": "37518717-04d2-4d8f-a2eb-44d0b3d973a3",
+      "name": "Filter out Undefined or null Rows"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "website content",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "url",
+              "condition": "eq",
+              "keyValue": "={{ $json.url }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -420,
+        540
+      ],
+      "id": "58f7a7eb-d97f-440b-8667-69e741dd5a73",
+      "name": "Get All URL rows",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "c72d461c-1c18-429b-84cb-ce825fe38f13",
+              "leftValue": "={{ Object.keys($json).length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -200,
+        540
+      ],
+      "id": "4c887362-a817-4669-8962-8641bd896ccb",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "tableId": "website content",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldId": "url",
+              "fieldValue": "={{ $json.url }}"
+            },
+            {
+              "fieldId": "content",
+              "fieldValue": "={{ $json.Paragraphs }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        420,
+        1660
+      ],
+      "id": "1cd6fc09-640c-474f-aa25-f6bd9e59013b",
+      "name": "Supabase"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "Paragraphs",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        180,
+        1440
+      ],
+      "id": "de2dde76-d20a-45b2-9b89-3c6fc7368d87",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "jsCode": "const keyword = $('Form Fields').first().json.Keyword.trim().toLowerCase();\nconst matches = [];\n\nfor (const item of items) {\n  const para = item.json.content;\n\n  if (para && para.toLowerCase().includes(keyword)) {\n    matches.push({\n      matchType: 'Exact',\n      foundinPara: para.trim(),\n      keyword: keyword,\n      url: item.json.url\n    });\n  }\n}\n\nreturn matches.length ? matches.map(m => ({ json: m })) : [];\n\n\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        520
+      ],
+      "id": "7186cadf-a357-4c39-96ce-da07247ff42e",
+      "name": "Find Exact Match1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// Combine all input items into one array \nconst inputArray = items;\n\n//Filter out items with no 'foundinPara' or only whitespace\nconst filtered = inputArray.filter (item => {\n  return item.json.foundinPara && item.json.foundinPara.trim() !== '';\n  \n});\n\nreturn filtered;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -440,
+        100
+      ],
+      "id": "33546cc8-0109-42b2-8de7-98e024a0cbae",
+      "name": "Filter out Undefined or null Rows2"
+    },
+    {
+      "parameters": {
+        "content": "## Check if URLs exist in Supabase\nIf found, skip to exact match step.\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 340,
+        "width": 420
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -460,
+        420
+      ],
+      "typeVersion": 1,
+      "id": "4a0057a7-e9de-4fbf-8f31-d4c15b5d1e6f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Scrape & Add\nIf new URLs are detected, an HTTP request is made, the content is split into paragraphs, stored in Supabase for future use, and then exact matches are identified.\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 1080,
+        "width": 1340,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -460,
+        820
+      ],
+      "typeVersion": 1,
+      "id": "0ddfb1fc-f08a-4b08-afaf-bdda57c51e46",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        60,
+        100
+      ],
+      "id": "e628a7ea-40ae-40e3-8467-59915fa42e0b",
+      "name": "Convert to Excel"
+    },
+    {
+      "parameters": {
+        "content": "## Output\nGenerate a csv\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 280,
+        "width": 260,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "1869f57c-611a-495e-a104-e00884e84da4",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1800,
+        2220
+      ],
+      "id": "6c3038f8-18eb-4831-8b9b-edb75ca14b9c",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "website content",
+        "returnAll": true
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1580,
+        2220
+      ],
+      "id": "5bc13321-16c6-45c4-8baa-b74080177de5",
+      "name": "Supabase2"
+    },
+    {
+      "parameters": {
+        "batchSize": 50,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1360,
+        2220
+      ],
+      "id": "5f9fc390-3785-4144-ba1a-13a009b9b0ce",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "website content",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "url",
+              "condition": "eq",
+              "keyValue": "={{ $json.url }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1140,
+        2320
+      ],
+      "id": "d11b7687-3971-43e4-b81e-446b17740078",
+      "name": "Supabase1"
+    },
+    {
+      "parameters": {
+        "content": "## Clear Supabase DB\nThis deletes all the rows in the supabase table\n\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 540,
+        "width": 960,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1880,
+        2060
+      ],
+      "typeVersion": 1,
+      "id": "269f1192-dc84-4431-ae27-00fcb656522a",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## Clear Supabase DB for specific URL\nThis deletes all the rows in the supabase table for the specified URL\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 500,
+        "width": 960,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1880,
+        2780
+      ],
+      "typeVersion": 1,
+      "id": "bd52efb2-fd49-4dc5-af7b-4afd83e429a7",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "formTitle": "Remove Entries for specific URL",
+        "formDescription": "This will remove all entries in Supabase for the specified URL",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Enter URL"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -1820,
+        2920
+      ],
+      "id": "2869c7d6-2907-4bda-a624-a7d160ad6bff",
+      "name": "On form submission1",
+      "webhookId": "2e0a6e90-e2f3-42ca-8a65-4bbc0eddbb7e"
+    },
+    {
+      "parameters": {
+        "batchSize": 50,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -1380,
+        2920
+      ],
+      "id": "9bb98828-91c0-4a3a-99b1-767ad5b4922a",
+      "name": "Loop Over URLs"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "tableId": "website content",
+        "returnAll": true,
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "url",
+              "condition": "eq",
+              "keyValue": "={{ $json[\"Enter URL\"] }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1600,
+        2920
+      ],
+      "id": "c6233189-1572-4b2b-86fb-a99ec92680b1",
+      "name": "Get Entries for URL"
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "website content",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "url",
+              "condition": "eq",
+              "keyValue": "={{ $json.url }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        -1160,
+        3020
+      ],
+      "id": "fe53b37b-19ea-432a-82ed-6983b2d1e02d",
+      "name": "Delete rows for URL"
+    },
+    {
+      "parameters": {
+        "content": "## Start Here\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 280,
+        "width": 260,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1940,
+        420
+      ],
+      "typeVersion": 1,
+      "id": "859e1ca8-bcca-4129-b323-13b1aa5d9a19",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Supabase Instructions\n\n### Step 1: Create a Free Supabase Account\nGo to https://supabase.com\n\nSign up with GitHub or email\n\nClick “New Project”\n\nGive your project a name, password, and select a region.\n\n### Step 2: Create a Table to Store Paragraphs\nGo to your Supabase project\n\nHead to \"Table Editor\" > \"New Table\"\n\nName it: website content\n\n### Columns to add:\n\nColumn (type)\n\nid (int8)\nPrimary key, auto-increment.\n→ Make sure this is set to auto-increment and primary.\n\nurl (text)\nIndexed if you want.\n\ncontent (text)\nThe paragraph itself.\n\nlastUpdated (timestamp)\nDefault: now() (optional).                 \n\n\n> Make sure `id` is set to auto-increment and primary.\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 740,
+        "width": 660,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        920,
+        1160
+      ],
+      "typeVersion": 1,
+      "id": "d90d995b-d3a7-43ff-802b-01426bb60990",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Plans for V2\n\nImplementation of AI so instead of just exact matches, we can find paragraphs that are semantically linked as well. \n\nYou can subscribe to my site (form in the footer) - https://www.spressostudio.com/ as I'll be sharing that workflow in a newsletter when it's ready. \n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 200,
+        "width": 660,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1940,
+        160
+      ],
+      "typeVersion": 1,
+      "id": "fe77b3e4-937b-4c06-a950-97f13a745dc2",
+      "name": "Sticky Note7"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-04-07T20:34:19.172Z",
+  "versionId": "bd317153-af82-46aa-827e-d2a26d3a4f9e"
+}
