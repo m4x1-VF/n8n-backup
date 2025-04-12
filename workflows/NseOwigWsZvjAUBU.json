@@ -1,0 +1,174 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get News URLs",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get News URLs": {
+      "main": [
+        [
+          {
+            "node": "Scrape URL news",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape URL news": {
+      "main": [
+        []
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Summarization Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-04-08T18:05:17.992Z",
+  "id": "NseOwigWsZvjAUBU",
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Create Sports News",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -2140,
+        -100
+      ],
+      "id": "59becc79-e666-4258-b752-44863d35a962",
+      "name": "When clicking ‘Test workflow’"
+    },
+    {
+      "parameters": {
+        "databaseId": 207010,
+        "tableId": 498805,
+        "limit": 10,
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-base.baserow",
+      "typeVersion": 1,
+      "position": [
+        -1960,
+        -100
+      ],
+      "id": "9c358ec2-4752-4fae-9ee6-4f0d997dc64a",
+      "name": "Get News URLs",
+      "credentials": {
+        "baserowApi": {
+          "id": "T6ikemrOmdHh9O44",
+          "name": "Baserow account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://r.jina.ai/{{ $json.URL }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Target-Selector",
+              "value": ".Post-content"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7814a5fe-1b47-49f2-be18-0b8a880e7470",
+      "name": "scrapeURL",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        0
+      ],
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "url": "=https://r.jina.ai/{{ $json.url_news }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Target-Selector",
+              "value": ".post-content-wrapper"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f186a084-722d-4776-88b7-005e250d566f",
+      "name": "Scrape URL news",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -1760,
+        -100
+      ],
+      "retryOnFail": true
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainSummarization",
+      "typeVersion": 2,
+      "position": [
+        -1140,
+        -120
+      ],
+      "id": "35dbfbd8-29d4-4744-b8e9-e60e75656235",
+      "name": "Summarization Chain"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-pro-exp-03-25:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -1120,
+        100
+      ],
+      "id": "3119ab37-c4af-4c8b-9ae2-cf4508e3ce8d",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "aDdfkNGscmtesLt4",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-04-08T21:59:29.000Z",
+  "versionId": "343994b5-bfd5-4dff-a8ed-fee20042869c"
+}
